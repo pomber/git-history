@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { getHistory } from "./github";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const repo = "pomber/didact";
+const sha = "master";
+const path = "/src/element.js";
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+getHistory(repo, sha, path).then(commits => {
+  ReactDOM.render(<App commits={commits} />, document.getElementById("root"));
+});
