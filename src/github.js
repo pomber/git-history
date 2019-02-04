@@ -4,7 +4,7 @@ async function getContent(repo, sha, path) {
   );
   const contentJson = await contentResponse.json();
   const content = window.atob(contentJson.content);
-  return content;
+  return { content, url: contentJson.html_url };
 }
 
 export async function getHistory(repo, sha, path, top = 10) {
@@ -14,19 +14,20 @@ export async function getHistory(repo, sha, path, top = 10) {
   const commitsJson = await commitsResponse.json();
   const commits = commitsJson.map(commit => ({
     sha: commit.sha,
-    date: commit.author.date,
+    date: new Date(commit.commit.author.date),
     author: {
-      // or commiter?
       login: commit.author.login,
       avatar: commit.author.avatar_url
     },
-    url: commit.html_url,
+    commitUrl: commit.html_url,
     message: commit.commit.message
   }));
 
   await Promise.all(
     commits.slice(0, top).map(async commit => {
-      commit.content = await getContent(repo, commit.sha, path);
+      const info = await getContent(repo, commit.sha, path);
+      commit.content = info.content;
+      commit.fileUrl = info.url;
     })
   );
 
