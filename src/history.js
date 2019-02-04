@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSlides } from "./differ";
 import { useSpring } from "react-use";
+import Slide from "./slide";
 
 export default function History({ commits, language }) {
   const codes = commits.map(commit => commit.content);
@@ -22,7 +23,11 @@ export default function History({ commits, language }) {
       }
     };
   });
-  return <pre>{codes[index]}</pre>;
+  return (
+    <React.Fragment>
+      <Slide time={current - index} lines={slideLines[index]} />
+    </React.Fragment>
+  );
 }
 function useSliderSpring(initial) {
   const [target, setTarget] = useState(initial);
