@@ -12,16 +12,20 @@ export async function getHistory(repo, sha, path, top = 10) {
     `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`
   );
   const commitsJson = await commitsResponse.json();
-  const commits = commitsJson.map(commit => ({
-    sha: commit.sha,
-    date: new Date(commit.commit.author.date),
-    author: {
-      login: commit.author.login,
-      avatar: commit.author.avatar_url
-    },
-    commitUrl: commit.html_url,
-    message: commit.commit.message
-  }));
+  const commits = commitsJson
+    .map(commit => ({
+      sha: commit.sha,
+      date: new Date(commit.commit.author.date),
+      author: {
+        login: commit.author.login,
+        avatar: commit.author.avatar_url
+      },
+      commitUrl: commit.html_url,
+      message: commit.commit.message
+    }))
+    .sort(function(a, b) {
+      return a.date - b.date;
+    });
 
   await Promise.all(
     commits.slice(0, top).map(async commit => {

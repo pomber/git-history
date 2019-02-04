@@ -1,7 +1,9 @@
 import React from "react";
+import History from "./history";
 
 function App({ commits }) {
-  return <pre>{JSON.stringify(commits, null, 2)}</pre>;
+  console.log(commits);
+  return <History commits={commits} />;
 }
 
 export default App;
