@@ -3,18 +3,24 @@ import { getSlides } from "./differ";
 import { useSpring } from "react-use";
 import Slide from "./slide";
 
-function CommitInfo({ commit }) {
+function CommitInfo({ commit, move, onClick }) {
   const message = commit.message.split("\n")[0].slice(0, 80);
   return (
     <div
       style={{
+        position: "absolute",
+        left: "50%",
+        transform: `translateX(-50%) translateX(${250 * move}px)`,
+        opacity: 1 / (1 + Math.min(0.8, Math.abs(move))),
         height: "50px",
-        width: "200px",
+        minWidth: "200px",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        cursor: "pointer"
       }}
+      onClick={onClick}
     >
       <img
         src={commit.author.avatar}
@@ -34,6 +40,28 @@ function CommitInfo({ commit }) {
         {message}
         {message !== commit.message ? "..." : ""}
       </div> */}
+    </div>
+  );
+}
+
+function CommitList({ commits, currentIndex, selectCommit }) {
+  return (
+    <div
+      style={{
+        overflow: "hidden",
+        width: "100%",
+        height: "50px",
+        position: "relative"
+      }}
+    >
+      {commits.map((commit, commitIndex) => (
+        <CommitInfo
+          commit={commit}
+          move={commitIndex - currentIndex}
+          key={commitIndex}
+          onClick={() => selectCommit(commitIndex)}
+        />
+      ))}
     </div>
   );
 }
@@ -60,7 +88,11 @@ export default function History({ commits, language }) {
   });
   return (
     <React.Fragment>
-      <CommitInfo commit={commits[index]} />
+      <CommitList
+        commits={commits}
+        currentIndex={current}
+        selectCommit={index => setTarget(index)}
+      />
       <Slide time={current - index} lines={slideLines[index]} />
     </React.Fragment>
   );
