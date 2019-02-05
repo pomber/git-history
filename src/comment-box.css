@@ -1,0 +1,31 @@
+.comment-box {
+  position: relative;
+  border: 2px solid rgb(214, 222, 235, 0.5);
+  color: rgb(214, 222, 235, 0.8);
+  padding: 6px;
+  min-width: 500px;
+}
+.comment-box:after,
+.comment-box:before {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.comment-box:after {
+  border-color: rgba(1, 22, 39, 0);
+  border-bottom-color: rgb(1, 22, 39);
+  border-width: 11px;
+  margin-left: -11px;
+}
+.comment-box:before {
+  border-color: rgba(1, 22, 39, 0);
+  border-bottom-color: rgb(214, 222, 235, 0.5);
+  border-width: 14px;
+  margin-left: -14px;
+}

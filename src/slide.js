@@ -10,6 +10,7 @@ export default function Slide({ time, lines }) {
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
         overflow: "hidden",
+        width: "calc(100% - 20px)",
         maxWidth: "978px",
         margin: "auto",
         padding: "10px"
@@ -23,9 +24,13 @@ export default function Slide({ time, lines }) {
           )}
           key={line.key}
         >
-          {line.tokens.map(token => {
+          {line.tokens.map((token, i) => {
             const props = theme.styles.find(s => s.types.includes(token.type));
-            return <span {...props}>{token.content}</span>;
+            return (
+              <span {...props} key={i}>
+                {token.content}
+              </span>
+            );
           })}
         </div>
       ))}
