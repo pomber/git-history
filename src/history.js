@@ -3,6 +3,41 @@ import { getSlides } from "./differ";
 import { useSpring } from "react-use";
 import Slide from "./slide";
 
+function CommitInfo({ commit }) {
+  const message = commit.message.split("\n")[0].slice(0, 80);
+  return (
+    <div
+      style={{
+        height: "50px",
+        width: "200px",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
+      }}
+    >
+      <img
+        src={commit.author.avatar}
+        height={40}
+        width={40}
+        style={{ borderRadius: "4px" }}
+      />
+      <div style={{ paddingLeft: "6px" }}>
+        <div style={{ fontSize: "1.1rem", fontWeight: "500" }}>
+          {commit.author.login}
+        </div>
+        <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
+          on {commit.date.toDateString()}
+        </div>
+      </div>
+      {/* <div title={commit.message}>
+        {message}
+        {message !== commit.message ? "..." : ""}
+      </div> */}
+    </div>
+  );
+}
+
 export default function History({ commits, language }) {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes);
@@ -25,6 +60,7 @@ export default function History({ commits, language }) {
   });
   return (
     <React.Fragment>
+      <CommitInfo commit={commits[index]} />
       <Slide time={current - index} lines={slideLines[index]} />
     </React.Fragment>
   );

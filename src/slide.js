@@ -10,7 +10,7 @@ export default function Slide({ time, lines }) {
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
         overflow: "hidden",
-        width: "100%",
+        width: "calc(100% - 20px)",
         maxWidth: "978px",
         margin: "auto",
         padding: "10px"
