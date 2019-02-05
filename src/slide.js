@@ -17,7 +17,7 @@ export default function Slide({ time, lines }) {
         style={{
           display: "block",
           width: "calc(100% - 20px)",
-          maxWidth: "978px",
+          maxWidth: "900px",
           margin: "auto",
           padding: "10px"
         }}
