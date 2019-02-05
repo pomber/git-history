@@ -2,6 +2,10 @@ async function getContent(repo, sha, path) {
   const contentResponse = await fetch(
     `https://api.github.com/repos/${repo}/contents${path}?ref=${sha}`
   );
+
+  if (!contentResponse.ok) {
+    throw contentResponse;
+  }
   const contentJson = await contentResponse.json();
   const content = window.atob(contentJson.content);
   return { content, url: contentJson.html_url };
@@ -11,7 +15,11 @@ export async function getHistory(repo, sha, path, top = 10) {
   const commitsResponse = await fetch(
     `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`
   );
+  if (!commitsResponse.ok) {
+    throw commitsResponse;
+  }
   const commitsJson = await commitsResponse.json();
+  console.log(commitsJson);
   const commits = commitsJson
     .map(commit => ({
       sha: commit.sha,
