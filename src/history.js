@@ -12,34 +12,40 @@ function CommitInfo({ commit, move, onClick }) {
         left: "50%",
         transform: `translateX(-50%) translateX(${250 * move}px)`,
         opacity: 1 / (1 + Math.min(0.8, Math.abs(move))),
-        height: "50px",
-        minWidth: "200px",
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer"
+        overflow: "hidden"
       }}
-      onClick={onClick}
     >
-      <img
-        src={commit.author.avatar}
-        height={40}
-        width={40}
-        style={{ borderRadius: "4px" }}
-      />
-      <div style={{ paddingLeft: "6px" }}>
-        <div style={{ fontSize: "1.1rem", fontWeight: "500" }}>
-          {commit.author.login}
-        </div>
-        <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
-          on {commit.date.toDateString()}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          padding: "5px 0 10px"
+        }}
+        onClick={onClick}
+      >
+        <img
+          src={commit.author.avatar}
+          height={40}
+          width={40}
+          style={{ borderRadius: "4px" }}
+        />
+        <div style={{ paddingLeft: "6px" }}>
+          <div style={{ fontSize: "1.1rem", fontWeight: "500" }}>
+            {commit.author.login}
+          </div>
+          <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
+            on {commit.date.toDateString()}
+          </div>
         </div>
       </div>
-      {/* <div title={commit.message}>
-        {message}
-        {message !== commit.message ? "..." : ""}
-      </div> */}
+      {Math.abs(move) < 0.5 && (
+        <div title={commit.message} style={{ opacity: 1 - 2 * Math.abs(move) }}>
+          {message}
+          {message !== commit.message ? "..." : ""}
+        </div>
+      )}
     </div>
   );
 }
@@ -50,7 +56,7 @@ function CommitList({ commits, currentIndex, selectCommit }) {
       style={{
         overflow: "hidden",
         width: "100%",
-        height: "50px",
+        height: "80px",
         position: "relative"
       }}
     >
