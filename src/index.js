@@ -3,13 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./app";
 import { getHistory } from "./github";
 
-// const repo = "pomber/didact";
-// const sha = "master";
-// const path = "/src/element.js";
-
 function getParams() {
   const [
-    _,
+    ,
     owner,
     reponame,
     action,
@@ -35,7 +31,17 @@ if (!repo) {
 
   root.innerText = `Loading ${repo} ${path} history...`;
 
-  getHistory(repo, sha, path).then(commits => {
-    ReactDOM.render(<App commits={commits} />, root);
-  });
+  getHistory(repo, sha, path)
+    .then(commits => {
+      ReactDOM.render(<App commits={commits} />, root);
+    })
+    .catch(error => {
+      if (error.status === 403) {
+        root.innerText =
+          "GitHub API rate limit exceeded for your IP (60 requests per hour). I need to add authentication.";
+      } else {
+        console.error(error);
+        root.innerText = `Unexpected error. Check the console.`;
+      }
+    });
 }
