@@ -24,9 +24,13 @@
     -->
     <title>Github History</title>
     <style>
+      html {
+        height: 100%;
+      }
       body {
         margin: 0;
         padding: 0;
+        height: 100%;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
           "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
           "Helvetica Neue", sans-serif;
@@ -35,17 +39,17 @@
         background-color: rgb(1, 22, 39);
         color: rgb(214, 222, 235);
       }
-      /* 
-      code {
-        font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-          monospace;
-      } */
 
       #root {
+        height: 100%;
+      }
+
+      #message {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 100%;
       }
 
       footer {
@@ -62,7 +66,7 @@
     </style>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><div id="message"></div></div>
     <footer>
       <a href="https://github.com/pomber/github-history">GitHub History</a
       ><br />by <a href="https://twitter.com/pomber">@pomber</a>
