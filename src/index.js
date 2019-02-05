@@ -30,6 +30,7 @@ if (!repo) {
   // show loading
 
   root.innerHTML = `<p>Loading <strong>${repo}</strong> <strong>${path}</strong> history...</p>`;
+  document.title = `GitHub History - ${path.split("/").pop()}`;
 
   getHistory(repo, sha, path)
     .then(commits => {
