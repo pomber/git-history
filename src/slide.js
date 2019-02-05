@@ -9,31 +9,40 @@ export default function Slide({ time, lines }) {
       style={{
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
-        overflow: "hidden",
-        width: "calc(100% - 20px)",
-        maxWidth: "978px",
-        margin: "auto",
-        padding: "10px"
+        width: "100%",
+        overflow: "hidden"
       }}
     >
-      {lines.map((line, i) => (
-        <div
-          style={Object.assign(
-            { overflow: "hidden", height: "15px" },
-            styles[i]
-          )}
-          key={line.key}
-        >
-          {line.tokens.map((token, i) => {
-            const props = theme.styles.find(s => s.types.includes(token.type));
-            return (
-              <span {...props} key={i}>
-                {token.content}
-              </span>
-            );
-          })}
-        </div>
-      ))}
+      <code
+        style={{
+          display: "block",
+          width: "calc(100% - 20px)",
+          maxWidth: "900px",
+          margin: "auto",
+          padding: "10px"
+        }}
+      >
+        {lines.map((line, i) => (
+          <div
+            style={Object.assign(
+              { overflow: "hidden", height: "15px" },
+              styles[i]
+            )}
+            key={line.key}
+          >
+            {line.tokens.map((token, i) => {
+              const props = theme.styles.find(s =>
+                s.types.includes(token.type)
+              );
+              return (
+                <span {...props} key={i}>
+                  {token.content}
+                </span>
+              );
+            })}
+          </div>
+        ))}
+      </code>
     </pre>
   );
 }
