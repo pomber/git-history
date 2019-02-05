@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getSlides } from "./differ";
 import { useSpring } from "react-use";
 import Slide from "./slide";
+import "./comment-box.css";
 
 function CommitInfo({ commit, move, onClick }) {
   const message = commit.message.split("\n")[0].slice(0, 80);
+  const isActive = Math.abs(move) < 0.5;
   return (
     <div
       style={{
@@ -12,7 +14,7 @@ function CommitInfo({ commit, move, onClick }) {
         left: "50%",
         transform: `translateX(-50%) translateX(${250 * move}px)`,
         opacity: 1 / (1 + Math.min(0.8, Math.abs(move))),
-        overflow: "hidden"
+        zIndex: !isActive && 2
       }}
     >
       <div
@@ -21,7 +23,7 @@ function CommitInfo({ commit, move, onClick }) {
           alignItems: "center",
           justifyContent: "center",
           cursor: "pointer",
-          padding: "5px 0 10px"
+          padding: "5px 0 15px"
         }}
         onClick={onClick}
       >
@@ -40,10 +42,14 @@ function CommitInfo({ commit, move, onClick }) {
           </div>
         </div>
       </div>
-      {Math.abs(move) < 0.5 && (
-        <div title={commit.message} style={{ opacity: 1 - 2 * Math.abs(move) }}>
+      {isActive && (
+        <div
+          className="comment-box"
+          title={commit.message}
+          style={{ opacity: 1 - 2 * Math.abs(move) }}
+        >
           {message}
-          {message !== commit.message ? "..." : ""}
+          {message !== commit.message ? " ..." : ""}
         </div>
       )}
     </div>
@@ -56,7 +62,7 @@ function CommitList({ commits, currentIndex, selectCommit }) {
       style={{
         overflow: "hidden",
         width: "100%",
-        height: "80px",
+        height: "95px",
         position: "relative"
       }}
     >
