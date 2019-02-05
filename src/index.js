@@ -1,6 +1,3 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./app";
 import { getHistory } from "./github";
 
 function getParams() {
@@ -24,18 +21,18 @@ const [repo, sha, path] = getParams();
 
 const root = document.getElementById("root");
 const message = document.getElementById("message");
+
 if (!repo) {
   // show docs
   message.innerHTML = `<p>URL should be something like https://github-history.netlify.com/user/repo/commits/master/path/to/file.js</p>`;
 } else {
   // show loading
-
   message.innerHTML = `<p>Loading <strong>${repo}</strong> <strong>${path}</strong> history...</p>`;
   document.title = `GitHub History - ${path.split("/").pop()}`;
 
-  getHistory(repo, sha, path)
-    .then(commits => {
-      ReactDOM.render(<App commits={commits} />, root);
+  Promise.all([getHistory(repo, sha, path), import("./app")])
+    .then(([commits, app]) => {
+      app.render(commits, root);
     })
     .catch(error => {
       if (error.status === 403) {

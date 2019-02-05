@@ -4,6 +4,7 @@
   color: rgb(214, 222, 235, 0.8);
   padding: 6px;
   min-width: 500px;
+  white-space: nowrap;
 }
 .comment-box:after,
 .comment-box:before {
