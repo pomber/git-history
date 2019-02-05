@@ -29,7 +29,7 @@ if (!repo) {
 } else {
   // show loading
 
-  root.innerText = `Loading ${repo} ${path} history...`;
+  root.innerHTML = `Loading <strong>${repo}</strong> <strong>${path}</strong> history...`;
 
   getHistory(repo, sha, path)
     .then(commits => {
