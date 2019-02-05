@@ -13,7 +13,7 @@ function getParams() {
     ...paths
   ] = window.location.pathname.split("/");
 
-  if (action !== "commits") {
+  if (action !== "commits" && action !== "blob") {
     return [];
   }
 

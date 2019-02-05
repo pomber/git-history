@@ -21,6 +21,7 @@ export async function getHistory(repo, sha, path, top = 10) {
   const commitsJson = await commitsResponse.json();
   console.log(commitsJson);
   const commits = commitsJson
+
     .map(commit => ({
       sha: commit.sha,
       date: new Date(commit.commit.author.date),
@@ -33,10 +34,11 @@ export async function getHistory(repo, sha, path, top = 10) {
     }))
     .sort(function(a, b) {
       return a.date - b.date;
-    });
+    })
+    .slice(0, top);
 
   await Promise.all(
-    commits.slice(0, top).map(async commit => {
+    commits.map(async commit => {
       const info = await getContent(repo, commit.sha, path);
       commit.content = info.content;
       commit.fileUrl = info.url;
