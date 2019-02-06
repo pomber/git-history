@@ -21,7 +21,7 @@ const filenameRegex = [
   { lang: "csharp", regex: /\.cs$/i },
   { lang: "csp", regex: /\.csp$/i },
   { lang: "diff", regex: /\.diff$/i },
-  { lang: "dockerfile", regex: /dockerfile$/i },
+  { lang: "docker", regex: /dockerfile$/i },
   { lang: "fsharp", regex: /\.fsharp$/i },
   { lang: "go", regex: /\.go$/i },
   { lang: "handlebars", regex: /\.hbs$/i },

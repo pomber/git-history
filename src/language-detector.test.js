@@ -120,9 +120,15 @@ describe("Can detect language", () => {
     expect(getLanguage("my-file.diff")).toBe("diff");
   });
 
-  test("dockerfile", () => {
-    expect(getLanguage("my-file.dockerfile")).toBe("dockerfile");
-  });
+  describe("docker", () => {
+    test("long dockerfile", () => {
+      expect(getLanguage("my-file.dockerfile")).toBe("docker");
+    });
+
+    test("dockerfile", () => {
+      expect(getLanguage("Dockerfile")).toBe("docker");
+    })
+  })
 
   test("fsharp", () => {
     expect(getLanguage("my-file.fsharp")).toBe("fsharp");
