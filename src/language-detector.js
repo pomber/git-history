@@ -1,7 +1,7 @@
 const filenameRegex = [
   { lang: "js", regex: /\.js$/i },
   { lang: "jsx", regex: /\.jsx$/i },
-  { lang: "ts", regex: /\.ts$/i },
+  { lang: "typescript", regex: /\.ts$/i },
   { lang: "tsx", regex: /\.tsx$/i },
   { lang: "json", regex: /\.json$|.babelrc$/i },
   { lang: "html", regex: /\.html$|\.htm$|\.svg$/i },
