@@ -1,7 +1,5 @@
-import {
-  getHistory
-} from "./github";
-import getLanguage from "./language-detector";
+import { getHistory } from "./github";
+import { getLanguage, getLanguageDependencies } from "./language-detector";
 import './index.css';
 
 const [repo, sha, path] = getParams();
