@@ -1,5 +1,8 @@
-import { getHistory } from "./github";
+import {
+  getHistory
+} from "./github";
 import getLanguage from "./language-detector";
+import './index.css';
 
 const [repo, sha, path] = getParams();
 const lang = getLanguage(path);
@@ -8,17 +11,26 @@ const message = document.getElementById("message");
 
 if (!repo) {
   // show docs
-  message.innerHTML = `<p>URL should be something like https://github-history.netlify.com/user/repo/commits/master/path/to/file.js</p>`;
+
+  const indexTemplate = `
+    <p>URL should be something like https://github-history.netlify.com/user/repo/commits/master/path/to/file.js</p>
+    <form id="url-form">
+      <input type="text" placeholder="Enter your github file URL" id="url-input" />
+    </form>
+  `;
+
+  message.innerHTML = indexTemplate;
+  document.getElementById("url-form").addEventListener('submit', handleFormSubmit);
 } else {
   // show loading
   message.innerHTML = `<p>Loading <strong>${repo}</strong> <strong>${path}</strong> history...</p>`;
   document.title = `GitHub History - ${path.split("/").pop()}`;
 
   Promise.all([
-    getHistory(repo, sha, path),
-    import("./app"),
-    loadLanguage(lang)
-  ])
+      getHistory(repo, sha, path),
+      import("./app"),
+      loadLanguage(lang)
+    ])
     .then(([commits, app]) => {
       app.render(commits, root, lang);
     })
@@ -33,6 +45,18 @@ if (!repo) {
     });
 }
 
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const urlInput = document.getElementById("url-input");
+  window.location.href = getLocation(urlInput.value).pathname;
+}
+
+function getLocation(href) {
+  var fakeLink = document.createElement("a");
+  fakeLink.href = href;
+  return fakeLink;
+};
+
 function loadLanguage(lang) {
   if (["js", "css", "html"].includes(lang)) {
     return Promise.resolve();
@@ -43,8 +67,7 @@ function loadLanguage(lang) {
 }
 
 function getParams() {
-  const [
-    ,
+  const [,
     owner,
     reponame,
     action,
