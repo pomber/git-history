@@ -55,7 +55,15 @@ const filenameRegex = [
   { lang: "js", regex: /.*/i }
 ];
 
-const getLanguage = filename =>
-  filenameRegex.find(x => x.regex.test(filename)).lang;
+export function getLanguage(filename) {
+  return filenameRegex.find(x => x.regex.test(filename)).lang;
+}
 
-export default getLanguage;
+const dependencies = {
+  cpp: ["c"],
+  tsx: ["jsx"]
+};
+
+export function getLanguageDependencies(lang) {
+  return dependencies[lang];
+}
