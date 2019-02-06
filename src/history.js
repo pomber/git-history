@@ -63,8 +63,11 @@ function CommitList({ commits, currentIndex, selectCommit }) {
       style={{
         overflow: "hidden",
         width: "100%",
-        height: "95px",
-        position: "relative"
+        height: "100px",
+        position: "fixed",
+        top: 0,
+        background: "rgb(1, 22, 39)",
+        zIndex: 1
       }}
     >
       {commits.map((commit, commitIndex) => (
