@@ -25,6 +25,7 @@ const filenameRegex = [
   { lang: "fsharp", regex: /\.fsharp$/i },
   { lang: "go", regex: /\.go$/i },
   { lang: "handlebars", regex: /\.hbs$/i },
+  { lang: "haskell", regex: /\.hs$/i },
   { lang: "java", regex: /\.java$/i },
   { lang: "lua", regex: /\.lua$/i },
   { lang: "markdown", regex: /\.md$/i },
