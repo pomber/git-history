@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import History from "./history";
 
-function App({ commits }) {
-  return <History commits={commits} />;
+function App({ commits, language }) {
+  console.log(language);
+  return <History commits={commits} language={language} />;
 }
 
-export function render(commits, root) {
-  ReactDOM.render(<App commits={commits} />, root);
+export function render(commits, root, lang) {
+  ReactDOM.render(<App commits={commits} language={lang} />, root);
 }

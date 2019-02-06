@@ -31,7 +31,7 @@ function insert(array, index, elements) {
   return array.splice(index, 0, ...elements);
 }
 
-function slideDiff(lines, codes, slideIndex) {
+function slideDiff(lines, codes, slideIndex, language) {
   const prevLines = lines.filter(l => l.slides.includes(slideIndex - 1));
   const prevCode = codes[slideIndex - 1] || "";
   const currCode = codes[slideIndex];
@@ -54,21 +54,21 @@ function slideDiff(lines, codes, slideIndex) {
     }
   });
 
-  const tokenLines = tokenize(currCode);
+  const tokenLines = tokenize(currCode, language);
   const currLines = lines.filter(l => l.slides.includes(slideIndex));
   currLines.forEach((line, index) => (line.tokens = tokenLines[index]));
 }
 
-export function parseLines(codes) {
+export function parseLines(codes, language) {
   const lines = [];
   for (let slideIndex = 0; slideIndex < codes.length; slideIndex++) {
-    slideDiff(lines, codes, slideIndex);
+    slideDiff(lines, codes, slideIndex, language);
   }
   return lines;
 }
 
-export function getSlides(codes) {
-  const lines = parseLines(codes);
+export function getSlides(codes, language) {
+  const lines = parseLines(codes, language);
   // console.log("lines", lines);
   return codes.map((_, slideIndex) => {
     return lines
