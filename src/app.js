@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import History from "./history";
 
 function App({ commits, language }) {
-  console.log(language);
   return <History commits={commits} language={language} />;
 }
 

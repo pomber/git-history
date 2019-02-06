@@ -19,7 +19,7 @@ export async function getHistory(repo, sha, path, top = 10) {
     throw commitsResponse;
   }
   const commitsJson = await commitsResponse.json();
-  console.log(commitsJson);
+  // console.log(commitsJson);
   const commits = commitsJson
     .slice(0, top)
     .map(commit => ({
