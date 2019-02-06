@@ -61,7 +61,8 @@ export function getLanguage(filename) {
 
 const dependencies = {
   cpp: ["c"],
-  tsx: ["jsx"]
+  tsx: ["jsx"],
+  scala: ["java"]
 };
 
 export function getLanguageDependencies(lang) {
