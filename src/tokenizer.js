@@ -1,4 +1,5 @@
 import Prism from "prismjs";
+
 const newlineRe = /\r\n|\r|\n/;
 
 // Take a list of nested tokens

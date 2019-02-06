@@ -29,6 +29,7 @@ function CommitInfo({ commit, move, onClick }) {
       >
         <img
           src={commit.author.avatar}
+          alt={commit.author.login}
           height={40}
           width={40}
           style={{ borderRadius: "4px" }}
@@ -80,7 +81,7 @@ function CommitList({ commits, currentIndex, selectCommit }) {
 
 export default function History({ commits, language }) {
   const codes = commits.map(commit => commit.content);
-  const slideLines = getSlides(codes);
+  const slideLines = getSlides(codes, language);
   const [current, target, setTarget] = useSliderSpring(codes.length - 1);
   const index = Math.round(current);
 
