@@ -59,9 +59,18 @@ function loadLanguage(lang) {
   if (["js", "css", "html"].includes(lang)) {
     return Promise.resolve();
   }
-  return import("prismjs").then(() =>
-    import(`prismjs/components/prism-${lang}`)
-  );
+
+  const deps = getLanguageDependencies(lang);
+
+  let depPromise = import("prismjs");
+
+  if (deps) {
+    depPromise = depPromise.then(() =>
+      Promise.all(deps.map(dep => import(`prismjs/components/prism-${dep}`)))
+    );
+  }
+
+  return depPromise.then(() => import(`prismjs/components/prism-${lang}`));
 }
 
 function getParams() {

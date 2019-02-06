@@ -1,7 +1,7 @@
 const filenameRegex = [
   { lang: "js", regex: /\.js$/i },
   { lang: "jsx", regex: /\.jsx$/i },
-  { lang: "ts", regex: /\.ts$/i },
+  { lang: "typescript", regex: /\.ts$/i },
   { lang: "tsx", regex: /\.tsx$/i },
   { lang: "json", regex: /\.json$|.babelrc$/i },
   { lang: "html", regex: /\.html$|\.htm$|\.svg$/i },
@@ -21,10 +21,11 @@ const filenameRegex = [
   { lang: "csharp", regex: /\.cs$/i },
   { lang: "csp", regex: /\.csp$/i },
   { lang: "diff", regex: /\.diff$/i },
-  { lang: "dockerfile", regex: /dockerfile$/i },
+  { lang: "docker", regex: /dockerfile$/i },
   { lang: "fsharp", regex: /\.fsharp$/i },
   { lang: "go", regex: /\.go$/i },
   { lang: "handlebars", regex: /\.hbs$/i },
+  { lang: "haskell", regex: /\.hs$/i },
   { lang: "java", regex: /\.java$/i },
   { lang: "lua", regex: /\.lua$/i },
   { lang: "markdown", regex: /\.md$/i },
@@ -54,7 +55,16 @@ const filenameRegex = [
   { lang: "js", regex: /.*/i }
 ];
 
-const getLanguage = filename =>
-  filenameRegex.find(x => x.regex.test(filename)).lang;
+export function getLanguage(filename) {
+  return filenameRegex.find(x => x.regex.test(filename)).lang;
+}
 
-export default getLanguage;
+const dependencies = {
+  cpp: ["c"],
+  tsx: ["jsx"],
+  scala: ["java"]
+};
+
+export function getLanguageDependencies(lang) {
+  return dependencies[lang];
+}
