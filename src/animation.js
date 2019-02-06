@@ -46,14 +46,14 @@ function GrowHeight() {
 
 function SwitchLines({ filterExit, filterEnter }) {
   return (
-    <parallel>
-      <Stagger interval={0.2} filter={filterExit}>
+    <chain durations={[0.5, 0.5]}>
+      <Stagger interval={0} filter={filterExit}>
         <ShrinkHeight />
       </Stagger>
-      <Stagger interval={0.2} filter={filterEnter}>
+      <Stagger interval={0} filter={filterEnter}>
         <GrowHeight />
       </Stagger>
-    </parallel>
+    </chain>
   );
 }
 
