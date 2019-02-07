@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getSlides } from "./differ";
 import useSpring from "react-use/lib/useSpring";
-import Swipeable from "react-swipeable"
+import Swipeable from "react-swipeable";
 import Slide from "./slide";
 import "./comment-box.css";
 
@@ -110,10 +110,7 @@ export default function History({ commits, language }) {
         currentIndex={current}
         selectCommit={index => setTarget(index)}
       />
-      <Swipeable
-        onSwipedLeft={nextSlide}
-        onSwipedRight={prevSlide}
-      >
+      <Swipeable onSwipedLeft={nextSlide} onSwipedRight={prevSlide}>
         <Slide time={current - index} lines={slideLines[index]} />
       </Swipeable>
     </React.Fragment>
