@@ -1,3 +1,4 @@
+import { getLanguageDependencies } from "./language-detector";
 import netlify from "netlify-auth-providers";
 const TOKEN_KEY = "github-token";
 
@@ -24,7 +25,7 @@ async function getContent(repo, sha, path) {
   return { content, url: contentJson.html_url };
 }
 
-export async function getHistory(repo, sha, path, top = 10) {
+async function getCommits(repo, sha, path, top = 10) {
   const commitsResponse = await fetch(
     `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
     { headers: getHeaders() }
@@ -33,7 +34,7 @@ export async function getHistory(repo, sha, path, top = 10) {
     throw commitsResponse;
   }
   const commitsJson = await commitsResponse.json();
-  // console.log(commitsJson);
+
   const commits = commitsJson
     .slice(0, top)
     .map(commit => ({
@@ -63,6 +64,12 @@ export async function getHistory(repo, sha, path, top = 10) {
   return commits;
 }
 
+export function getHistory(repo, sha, path, lang) {
+  return Promise.all([getCommits(repo, sha, path), loadLanguage(lang)]).then(
+    ([commits]) => commits
+  );
+}
+
 export function auth() {
   return new Promise((resolve, reject) => {
     var authenticator = new netlify({
@@ -79,4 +86,22 @@ export function auth() {
       resolve(data);
     });
   });
+}
+
+function loadLanguage(lang) {
+  if (["js", "css", "html"].includes(lang)) {
+    return Promise.resolve();
+  }
+
+  const deps = getLanguageDependencies(lang);
+
+  let depPromise = import("prismjs");
+
+  if (deps) {
+    depPromise = depPromise.then(() =>
+      Promise.all(deps.map(dep => import(`prismjs/components/prism-${dep}`)))
+    );
+  }
+
+  return depPromise.then(() => import(`prismjs/components/prism-${lang}`));
 }

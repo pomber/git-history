@@ -1,5 +1,5 @@
 import { getHistory, auth, isLoggedIn } from "./github";
-import { getLanguage, getLanguageDependencies } from "./language-detector";
+import { getLanguage } from "./language-detector";
 
 const [repo, sha, path] = getParams();
 const lang = getLanguage(path);
@@ -14,15 +14,12 @@ if (!repo) {
   message.innerHTML = `<p>Loading <strong>${repo}</strong> <strong>${path}</strong> history...</p>`;
   document.title = `GitHub History - ${path.split("/").pop()}`;
 
-  Promise.all([
-    getHistory(repo, sha, path),
-    import("./app"),
-    loadLanguage(lang)
-  ])
+  Promise.all([getHistory(repo, sha, path, lang), import("./app")])
     .then(([commits, app]) => {
       if (!commits.length) {
         throw new Error("No commits for this file? Maybe the path is wrong");
       }
+      console.log(commits);
       app.render(commits, root, lang);
     })
     .catch(handleError);
@@ -64,24 +61,6 @@ function handleError(error) {
     console.error(error);
     message.innerHTML = `<p>Unexpected error. Check the console.</p>`;
   }
-}
-
-function loadLanguage(lang) {
-  if (["js", "css", "html"].includes(lang)) {
-    return Promise.resolve();
-  }
-
-  const deps = getLanguageDependencies(lang);
-
-  let depPromise = import("prismjs");
-
-  if (deps) {
-    depPromise = depPromise.then(() =>
-      Promise.all(deps.map(dep => import(`prismjs/components/prism-${dep}`)))
-    );
-  }
-
-  return depPromise.then(() => import(`prismjs/components/prism-${lang}`));
 }
 
 function getParams() {
