@@ -146,6 +146,10 @@ describe("Can detect language", () => {
     expect(getLanguage("my-file.java")).toBe("java");
   });
 
+  test("kotlin", () => {
+    expect(getLanguage("my-file.kt")).toBe("kotlin");
+  });
+
   test("lua", () => {
     expect(getLanguage("my-file.lua")).toBe("lua");
   });
