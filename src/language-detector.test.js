@@ -26,17 +26,20 @@ describe("Can detect language", () => {
     });
   });
 
-  describe("html", () => {
+  describe("markup", () => {
     test("html", () => {
-      expect(getLanguage("my-file.html")).toBe("html");
+      expect(getLanguage("my-file.html")).toBe("markup");
     });
 
     test("htm", () => {
-      expect(getLanguage("my-file.htm")).toBe("html");
+      expect(getLanguage("my-file.htm")).toBe("markup");
     });
 
     test("svg", () => {
-      expect(getLanguage("my-file.svg")).toBe("html");
+      expect(getLanguage("my-file.svg")).toBe("markup");
+    });
+    test("xml", () => {
+      expect(getLanguage("my-file.xml")).toBe("markup");
     });
   });
 
@@ -82,10 +85,6 @@ describe("Can detect language", () => {
     test("editorconfig", () => {
       expect(getLanguage("my-file.editorconfig")).toBe("ini");
     });
-  });
-
-  test("xml", () => {
-    expect(getLanguage("my-file.xml")).toBe("xml");
   });
 
   test("bat", () => {
