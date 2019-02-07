@@ -235,10 +235,6 @@ describe("Can detect language", () => {
     expect(getLanguage("my-file.swift")).toBe("swift");
   });
 
-  test("toml", () => {
-    expect(getLanguage("my-file.toml")).toBe("toml");
-  });
-
   test("vb", () => {
     expect(getLanguage("my-file.vb")).toBe("vb");
   });
