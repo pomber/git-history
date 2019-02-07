@@ -19,14 +19,14 @@ function flattenTokens(tokens) {
 }
 
 // Convert strings to tokens
-function tokenizeStrings(prismTokens) {
+function tokenizeStrings(prismTokens, parentType = "plain") {
   return prismTokens.map(pt =>
     typeof pt === "string"
-      ? { type: "plain", content: pt }
+      ? { type: parentType, content: pt }
       : {
           type: pt.type,
           content: Array.isArray(pt.content)
-            ? tokenizeStrings(pt.content)
+            ? tokenizeStrings(pt.content, pt.type)
             : pt.content
         }
   );

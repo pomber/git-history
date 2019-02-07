@@ -2,7 +2,7 @@ import React from "react";
 import animation from "./animation";
 import theme from "./nightOwl";
 
-const themeStylesByType = {};
+const themeStylesByType = Object.create(null);
 theme.styles.forEach(({ types, style }) => {
   types.forEach(type => {
     themeStylesByType[type] = Object.assign(
