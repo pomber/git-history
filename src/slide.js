@@ -2,6 +2,31 @@ import React from "react";
 import animation from "./animation";
 import theme from "./nightOwl";
 
+const themeStylesByType = {};
+theme.styles.forEach(({ types, style }) => {
+  types.forEach(type => {
+    themeStylesByType[type] = Object.assign(
+      themeStylesByType[type] || {},
+      style
+    );
+  });
+});
+
+function Line({ line, style }) {
+  return (
+    <div style={Object.assign({ overflow: "hidden", height: "15px" }, style)}>
+      {line.tokens.map((token, i) => {
+        const style = themeStylesByType[token.type] || {};
+        return (
+          <span style={style} key={i}>
+            {token.content}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Slide({ time, lines }) {
   const styles = animation((time + 1) / 2, lines);
   return (
@@ -24,24 +49,7 @@ export default function Slide({ time, lines }) {
         }}
       >
         {lines.map((line, i) => (
-          <div
-            style={Object.assign(
-              { overflow: "hidden", height: "15px" },
-              styles[i]
-            )}
-            key={line.key}
-          >
-            {line.tokens.map((token, i) => {
-              const props = theme.styles.find(s =>
-                s.types.includes(token.type)
-              );
-              return (
-                <span {...props} key={i}>
-                  {token.content}
-                </span>
-              );
-            })}
-          </div>
+          <Line line={line} style={styles[i]} key={line.key} />
         ))}
       </code>
     </pre>
