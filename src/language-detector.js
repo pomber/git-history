@@ -17,7 +17,7 @@ const filenameRegex = [
   { lang: "bat", regex: /\.bat$/i },
   { lang: "clojure", regex: /\.clj$/i },
   { lang: "coffeescript", regex: /\.coffee$/i },
-  { lang: "cpp", regex: /\.cpp$/i },
+  { lang: "cpp", regex: /\.cpp$|\.cc$/i },
   { lang: "csharp", regex: /\.cs$/i },
   { lang: "csp", regex: /\.csp$/i },
   { lang: "diff", regex: /\.diff$/i },

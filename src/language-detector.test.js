@@ -104,8 +104,14 @@ describe("Can detect language", () => {
     expect(getLanguage("my-file.clj")).toBe("clojure");
   });
 
-  test("cpp", () => {
-    expect(getLanguage("my-file.cpp")).toBe("cpp");
+  describe("cpp", () => {
+    test("cpp", () => {
+      expect(getLanguage("my-file.cpp")).toBe("cpp");
+    });
+
+    test("cc", () => {
+      expect(getLanguage("my-file.cc")).toBe("cpp");
+    });
   });
 
   test("csharp", () => {
@@ -127,8 +133,8 @@ describe("Can detect language", () => {
 
     test("dockerfile", () => {
       expect(getLanguage("Dockerfile")).toBe("docker");
-    })
-  })
+    });
+  });
 
   test("fsharp", () => {
     expect(getLanguage("my-file.fsharp")).toBe("fsharp");
