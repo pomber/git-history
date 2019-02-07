@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getSlides } from "./differ";
-import { useSpring } from "react-use";
+import useSpring from "react-use/lib/useSpring";
 import Slide from "./slide";
 import "./comment-box.css";
 
