@@ -1,49 +1,55 @@
 import React from "react";
 import animation from "./animation";
 import theme from "./nightOwl";
+import Swipeable from "react-swipeable"
 
-export default function Slide({ time, lines }) {
+export default function Slide({ time, lines, nextSlide, prevSlide }) {
   const styles = animation((time + 1) / 2, lines);
   return (
-    <pre
-      style={{
-        backgroundColor: theme.plain.backgroundColor,
-        color: theme.plain.color,
-        width: "100%",
-        overflow: "hidden",
-        marginTop: "100px"
-      }}
+    <Swipeable
+      onSwipedLeft={nextSlide}
+      onSwipedRight={prevSlide}
     >
-      <code
+      <pre
         style={{
-          display: "block",
-          width: "calc(100% - 20px)",
-          maxWidth: "900px",
-          margin: "auto",
-          padding: "10px"
+          backgroundColor: theme.plain.backgroundColor,
+          color: theme.plain.color,
+          width: "100%",
+          overflow: "hidden",
+          marginTop: "100px"
         }}
       >
-        {lines.map((line, i) => (
-          <div
-            style={Object.assign(
-              { overflow: "hidden", height: "15px" },
-              styles[i]
-            )}
-            key={line.key}
-          >
-            {line.tokens.map((token, i) => {
-              const props = theme.styles.find(s =>
-                s.types.includes(token.type)
-              );
-              return (
-                <span {...props} key={i}>
-                  {token.content}
-                </span>
-              );
-            })}
-          </div>
-        ))}
-      </code>
-    </pre>
+        <code
+          style={{
+            display: "block",
+            width: "calc(100% - 20px)",
+            maxWidth: "900px",
+            margin: "auto",
+            padding: "10px"
+          }}
+        >
+          {lines.map((line, i) => (
+            <div
+              style={Object.assign(
+                { overflow: "hidden", height: "15px" },
+                styles[i]
+              )}
+              key={line.key}
+            >
+              {line.tokens.map((token, i) => {
+                const props = theme.styles.find(s =>
+                  s.types.includes(token.type)
+                );
+                return (
+                  <span {...props} key={i}>
+                    {token.content}
+                  </span>
+                );
+              })}
+            </div>
+          ))}
+        </code>
+      </pre>
+    </Swipeable>
   );
 }
