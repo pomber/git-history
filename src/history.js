@@ -86,7 +86,11 @@ function CommitList({ commits, currentIndex, selectCommit }) {
 export default function History({ commits, language }) {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes, language);
-  const [current, target, setTarget] = useSliderSpring(codes.length - 1);
+  return <Slides slideLines={slideLines} commits={commits} />;
+}
+
+function Slides({ commits, slideLines }) {
+  const [current, target, setTarget] = useSliderSpring(commits.length - 1);
   const index = Math.round(current);
 
   const nextSlide = () =>
@@ -116,6 +120,7 @@ export default function History({ commits, language }) {
     </React.Fragment>
   );
 }
+
 function useSliderSpring(initial) {
   const [target, setTarget] = useState(initial);
   const tension = 0;
