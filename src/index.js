@@ -1,4 +1,4 @@
-import { getHistory } from "./github";
+import { getHistory, auth, isLoggedIn } from "./github";
 import { getLanguage, getLanguageDependencies } from "./language-detector";
 
 const [repo, sha, path] = getParams();
@@ -20,17 +20,50 @@ if (!repo) {
     loadLanguage(lang)
   ])
     .then(([commits, app]) => {
+      if (!commits.length) {
+        throw new Error("No commits for this file? Maybe the path is wrong");
+      }
       app.render(commits, root, lang);
     })
-    .catch(error => {
-      if (error.status === 403) {
-        message.innerHTML =
-          "<p>GitHub API rate limit exceeded for your IP (60 requests per hour).</p><p>I need to add authentication.</p>";
-      } else {
-        console.error(error);
-        message.innerHTML = `<p>Unexpected error. Check the console.</p>`;
-      }
-    });
+    .catch(handleError);
+}
+
+function handleError(error) {
+  const message = document.getElementById("message");
+  if (error.status === 403) {
+    message.innerHTML =
+      "<p>GitHub API rate limit exceeded for your IP (60 requests per hour).</p><p>Log in with GitHub for more</p>";
+    const button = document.createElement("button");
+    button.textContent = "Login";
+    button.onclick = () => {
+      auth()
+        .then(data => {
+          window.location.reload(false);
+        })
+        .catch(console.error);
+    };
+    message.appendChild(button);
+  } else if (error.status === 404) {
+    message.innerHTML = `<p>File not found</p>${
+      isLoggedIn() ? "" : "<p>Is it from a private repo? Log in with GitHub"
+    }`;
+
+    if (!isLoggedIn) {
+      const button = document.createElement("button");
+      button.textContent = "Login";
+      button.onclick = () => {
+        auth()
+          .then(data => {
+            window.location.reload(false);
+          })
+          .catch(console.error);
+      };
+      message.appendChild(button);
+    }
+  } else {
+    console.error(error);
+    message.innerHTML = `<p>Unexpected error. Check the console.</p>`;
+  }
 }
 
 function loadLanguage(lang) {
