@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "diff": "^4.0.1",
+    "js-base64": "^2.5.1",
     "netlify-auth-providers": "^1.0.0-alpha5",
     "prismjs": "^1.15.0",
     "react": "^16.8.1",
