@@ -48,7 +48,7 @@ const filenameRegex = [
   { lang: "solidity", regex: /\.solidity$/i },
   { lang: "st", regex: /\.st$/i },
   { lang: "swift", regex: /\.swift$/i },
-  { lang: "toml", regex: /\.toml$/i },
+  // { lang: "toml", regex: /\.toml$/i },
   { lang: "vb", regex: /\.vb$/i },
   { lang: "wasm", regex: /\.wasm$/i },
   // fallback
