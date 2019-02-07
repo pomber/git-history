@@ -109,7 +109,12 @@ export default function History({ commits, language }) {
         currentIndex={current}
         selectCommit={index => setTarget(index)}
       />
-      <Slide time={current - index} lines={slideLines[index]} />
+      <Slide
+        time={current - index}
+        lines={slideLines[index]}
+        nextSlide={nextSlide}
+        prevSlide={prevSlide}
+      />
     </React.Fragment>
   );
 }
