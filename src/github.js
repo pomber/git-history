@@ -1,5 +1,6 @@
-import { getLanguageDependencies } from "./language-detector";
 import netlify from "netlify-auth-providers";
+import { Base64 } from "js-base64";
+import { getLanguageDependencies } from "./language-detector";
 const TOKEN_KEY = "github-token";
 
 function getHeaders() {
@@ -21,7 +22,7 @@ async function getContent(repo, sha, path) {
     throw contentResponse;
   }
   const contentJson = await contentResponse.json();
-  const content = window.atob(contentJson.content);
+  const content = Base64.decode(contentJson.content);
   return { content, url: contentJson.html_url };
 }
 
