@@ -33,9 +33,7 @@ function Landing() {
   return (
     <Center>
       <p>Try something like: </p>
-      <a style={{ color: "rgb(173, 219, 103)" }} href={url}>
-        {url}
-      </a>
+      <a href={url}>{url}</a>
     </Center>
   );
 }
