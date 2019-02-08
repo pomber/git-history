@@ -36,7 +36,8 @@ export default function Slide({ time, lines }) {
         color: theme.plain.color,
         width: "100%",
         overflow: "hidden",
-        marginTop: "100px"
+        paddingTop: "100px",
+        margin: 0
       }}
     >
       <code
