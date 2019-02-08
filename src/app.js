@@ -6,11 +6,7 @@ export default function AppWrapper(props) {
   if (props.repo) {
     return <App {...props} />;
   } else {
-    return (
-      <Center>
-        <Landing />
-      </Center>
-    );
+    return <Landing />;
   }
 }
 
@@ -31,17 +27,22 @@ function Center({ children }) {
 }
 
 function Landing() {
+  const url = `${window.location.protocol}//${
+    window.location.host
+  }/babel/babel/blob/master/packages/babel-core/test/browserify.js`;
   return (
-    <p>
-      URL should be something like
-      https://github-history.netlify.com/user/repo/commits/master/path/to/file.js
-    </p>
+    <Center>
+      <p>Try something like: </p>
+      <a style={{ color: "rgb(173, 219, 103)" }} href={url}>
+        {url}
+      </a>
+    </Center>
   );
 }
 
 function App({ repo, sha, path, lang }) {
   const fileName = path.split("/").pop();
-  useDocumentTitle(`GitHub History - ${fileName}`);
+  useDocumentTitle(`Git History - ${fileName}`);
 
   const { commits, loading, error } = useCommitsFetcher({
     repo,
