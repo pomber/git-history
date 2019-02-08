@@ -7,6 +7,7 @@ const filenameRegex = [
   { lang: "yaml", regex: /\.yaml$|.yml$/i },
   { lang: "bash", regex: /\.sh$/i },
   { lang: "python", regex: /\.py$/i },
+  { lang: "dart", regex: /\.dart$/i },
   { lang: "sql", regex: /\.sql$/i },
   { lang: "css", regex: /\.css$/i },
   { lang: "less", regex: /\.less$/i },
