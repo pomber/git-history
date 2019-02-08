@@ -60,6 +60,10 @@ describe("Can detect language", () => {
   test("pyhton", () => {
     expect(getLanguage("my-file.py")).toBe("python");
   });
+  
+  test("dart", () => {
+    expect(getLanguage("my-file.dart")).toBe("dart");
+  });
 
   test("sql", () => {
     expect(getLanguage("my-file.sql")).toBe("sql");
