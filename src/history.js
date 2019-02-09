@@ -40,7 +40,10 @@ function CommitInfo({ commit, move, onClick }) {
             {commit.author.login}
           </div>
           <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
-            on <a href = {commit.commitUrl} target="_blank">{commit.date.toDateString()} </a> 
+            on{" "}
+            <a href={commit.commitUrl} target="_blank">
+              {commit.date.toDateString()}{" "}
+            </a>
           </div>
         </div>
       </div>
