@@ -8,6 +8,7 @@ const filenameRegex = [
   { lang: "bash", regex: /\.sh$/i },
   { lang: "python", regex: /\.py$/i },
   // { lang: "dart", regex: /\.dart$/i },
+  { lang: "pearl", regex: /\.pl$|.pm$/i },
   { lang: "sql", regex: /\.sql$/i },
   { lang: "css", regex: /\.css$/i },
   { lang: "less", regex: /\.less$/i },
