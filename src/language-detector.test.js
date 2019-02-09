@@ -64,6 +64,16 @@ describe("Can detect language", () => {
   test("dart", () => {
     expect(getLanguage("my-file.dart")).toBe("dart");
   });
+  
+  describe("perl", () => {
+    test("pl", () => {
+      expect(getLanguage("my-file.pl")).toBe("perl");
+  });
+
+    test("pm", () => {
+      expect(getLanguage("my-file.pm")).toBe("perl");
+  });
+});
 
   test("sql", () => {
     expect(getLanguage("my-file.sql")).toBe("sql");
