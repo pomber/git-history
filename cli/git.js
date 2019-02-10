@@ -1,24 +1,17 @@
 const execa = require("execa");
 
-// TODO remove
-const options = { cwd: ".." };
-
 async function getCommits(path) {
   const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad","message":"%f"},`;
-  const { stdout } = await execa(
-    "git",
-    [
-      "log",
-      "--follow",
-      "--reverse",
-      "--abbrev-commit",
-      `--pretty=format:${format}`,
-      "--date=iso",
-      "--",
-      path
-    ],
-    options
-  );
+  const { stdout } = await execa("git", [
+    "log",
+    "--follow",
+    "--reverse",
+    "--abbrev-commit",
+    `--pretty=format:${format}`,
+    "--date=iso",
+    "--",
+    path
+  ]);
   const json = `[${stdout.slice(0, -1)}]`;
   const result = JSON.parse(json).map(commit => ({
     ...commit,
@@ -28,11 +21,7 @@ async function getCommits(path) {
 }
 
 async function getContent(commit, path) {
-  const { stdout } = await execa(
-    "git",
-    ["show", `${commit.hash}:${path}`],
-    options
-  );
+  const { stdout } = await execa("git", ["show", `${commit.hash}:${path}`]);
   return stdout;
 }
 

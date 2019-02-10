@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const runServer = require("./server");
 const getCommits = require("./git");
 

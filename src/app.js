@@ -33,13 +33,17 @@ function CliApp({ data }) {
   useDocumentTitle(`Git History - ${fileName}`);
 
   commits = commits.map(commit => ({ ...commit, date: new Date(commit.date) }));
-  const lang = useLanguageLoader(path);
+  const [lang, loading, error] = useLanguageLoader(path);
 
-  if (!lang) {
-    return <Loading path={path} />;
-  } else {
-    return <History commits={commits} language={lang} />;
+  if (error) {
+    return <Error error={error} />;
   }
+
+  if (loading) {
+    return <Loading path={path} />;
+  }
+
+  return <History commits={commits} language={lang} />;
 }
 
 function GitHubApp({ repo, sha, path }) {
