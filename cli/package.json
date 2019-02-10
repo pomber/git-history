@@ -1,0 +1,22 @@
+{
+  "name": "githistory",
+  "version": "0.0.0",
+  "license": "MIT",
+  "bin": {
+    "githistory": "./cli.js",
+    "git-history": "./cli.js"
+  },
+  "dependencies": {
+    "execa": "^1.0.0",
+    "get-port": "^4.1.0",
+    "open": "^0.0.5",
+    "serve-handler": "^5.0.8"
+  },
+  "scripts": {
+    "build-site": "cd .. && yarn build && rm -fr cli/site/ && cp -r build/ cli/site/",
+    "build": "yarn build-site"
+  },
+  "devDependencies": {
+    "np": "^4.0.2"
+  }
+}
