@@ -46,18 +46,21 @@ function GitHubApp({ repo, sha, path }) {
   const fileName = path.split("/").pop();
   useDocumentTitle(`Git History - ${fileName}`);
 
-  const lang = useLanguageLoader(path);
-  const { commits, loading, error } = useCommitsFetcher({
+  const [lang, langLoading, langError] = useLanguageLoader(path);
+  const [commits, commitsLoading, commitsError] = useCommitsFetcher({
     repo,
     sha,
     path
   });
 
+  const loading = langLoading || commitsLoading;
+  const error = langError || commitsError;
+
   if (error) {
     return <Error error={error} />;
   }
 
-  if (!lang || loading) {
+  if (loading) {
     return <Loading repo={repo} path={path} />;
   }
 

@@ -57,6 +57,9 @@ export function Error({ error }) {
   }
 
   console.error(error);
+  console.error(
+    "Let us know of the error at https://github.com/pomber/git-history/issues"
+  );
   return (
     <Center>
       <p>Unexpected error. Check the console.</p>
@@ -89,29 +92,18 @@ function GitHubButton({ onClick }) {
   );
 }
 
-export function useLanguageLoader(path) {
-  const [loadedLang, setLang] = useState(false);
-
-  useEffect(() => {
-    const lang = getLanguage(path);
-    loadLanguage(lang).then(() => setLang(lang));
-  }, [path, setLang]);
-
-  return loadedLang;
-}
-
-export function useCommitsFetcher({ repo, sha, path }) {
+function useLoader(promiseFactory, deps) {
   const [state, setState] = useState({
-    commits: null,
+    data: null,
     loading: true,
     error: null
   });
 
   useEffect(() => {
-    getCommits(repo, sha, path)
-      .then(commits => {
+    promiseFactory()
+      .then(data => {
         setState({
-          commits,
+          data,
           loading: false,
           error: false
         });
@@ -122,9 +114,21 @@ export function useCommitsFetcher({ repo, sha, path }) {
           error
         });
       });
-  }, [repo, sha, path]);
+  }, deps);
 
-  return state;
+  return [state.data, state.loading, state.error];
+}
+
+export function useLanguageLoader(path) {
+  return useLoader(async () => {
+    const lang = getLanguage(path);
+    await loadLanguage(lang);
+    return lang;
+  }, [path]);
+}
+
+export function useCommitsFetcher({ repo, sha, path }) {
+  return useLoader(async () => getCommits(repo, sha, path), [repo, sha, path]);
 }
 
 export function useDocumentTitle(title) {
