@@ -8,7 +8,6 @@ import "./comment-box.css";
 function CommitInfo({ commit, move, onClick }) {
   const message = commit.message.split("\n")[0].slice(0, 80);
   const isActive = Math.abs(move) < 0.5;
-  var Activelink = isActive && commit.commitUrl ? commit.commitUrl : undefined;
   return (
     <div
       style={{
@@ -41,9 +40,13 @@ function CommitInfo({ commit, move, onClick }) {
             {commit.author.login}
           </div>
           <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
-            <a href={Activelink} target="_blank">
-              <div>{commit.date.toDateString()}</div>
-            </a>
+            {isActive && commit.commitUrl ? (
+              <a href={commit.commitUrl} target="_blank">
+                on {commit.date.toDateString()}
+              </a>
+            ) : (
+              `on ${commit.date.toDateString()}`
+            )}
           </div>
         </div>
       </div>
