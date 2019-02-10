@@ -1,8 +1,9 @@
 {
-  "name": "githistory",
+  "name": "git-file-history",
   "version": "0.0.1",
   "license": "MIT",
   "bin": {
+    "git-file-history": "./cli.js",
     "githistory": "./cli.js",
     "git-history": "./cli.js"
   },
