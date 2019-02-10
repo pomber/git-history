@@ -50,7 +50,7 @@ function Landing() {
         </p>
 
         <p>
-          You can also add a <strong>Open in Git History</strong> button to
+          You can also add an <strong>Open in Git History</strong> button to
           GitHub with the{" "}
           <a href="https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf">
             Chrome
