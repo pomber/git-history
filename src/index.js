@@ -1,27 +1,29 @@
 import { getLanguage } from "./language-detector";
-import App from "./app";
+import App from "./napp";
 import React from "react";
 import ReactDOM from "react-dom";
 
-const [repo, sha, path] = getParams();
-const lang = getLanguage(path);
 const root = document.getElementById("root");
+ReactDOM.render(<App />, root);
 
-ReactDOM.render(<App repo={repo} sha={sha} path={path} lang={lang} />, root);
+// const [repo, sha, path] = getParams();
+// const lang = getLanguage(path);
 
-function getParams() {
-  const [
-    ,
-    owner,
-    reponame,
-    action,
-    sha,
-    ...paths
-  ] = window.location.pathname.split("/");
+// ReactDOM.render(<App repo={repo} sha={sha} path={path} lang={lang} />, root);
 
-  if (action !== "commits" && action !== "blob") {
-    return [];
-  }
+// function getParams() {
+//   const [
+//     ,
+//     owner,
+//     reponame,
+//     action,
+//     sha,
+//     ...paths
+//   ] = window.location.pathname.split("/");
 
-  return [owner + "/" + reponame, sha, "/" + paths.join("/")];
-}
+//   if (action !== "commits" && action !== "blob") {
+//     return [];
+//   }
+
+//   return [owner + "/" + reponame, sha, "/" + paths.join("/")];
+// }

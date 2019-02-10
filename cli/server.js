@@ -19,10 +19,8 @@ const portPromise = getPort({ port: 3000 });
 
 module.exports = async function runServer(path, commitsPromise) {
   const server = http.createServer((request, response) => {
-    console.log(request.url);
     if (request.url === "/") {
       Promise.all([indexPromise, commitsPromise]).then(([index, commits]) => {
-        console.log(commits);
         const newIndex = index.replace(
           "<script>window._CLI=null</script>",
           `<script>window._CLI={commits:${JSON.stringify(
