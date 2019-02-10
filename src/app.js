@@ -3,8 +3,6 @@ import History from "./history";
 import { getHistory, auth, isLoggedIn } from "./github";
 import demo from "./demo.gif";
 
-console.log(demo);
-
 export default function AppWrapper(props) {
   if (props.repo) {
     return <App {...props} />;
