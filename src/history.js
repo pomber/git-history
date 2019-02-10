@@ -40,7 +40,13 @@ function CommitInfo({ commit, move, onClick }) {
             {commit.author.login}
           </div>
           <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
-            on {commit.date.toDateString()}
+            {isActive && commit.commitUrl ? (
+              <a href={commit.commitUrl} target="_blank">
+                on {commit.date.toDateString()}
+              </a>
+            ) : (
+              `on ${commit.date.toDateString()}`
+            )}
           </div>
         </div>
       </div>
