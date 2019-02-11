@@ -14,14 +14,6 @@ function myDiff(oldCode, newCode) {
       lines.push(lastLine);
     }
     const result = {
-      oldIndex,
-      lines,
-      count,
-      removed,
-      added
-    };
-    if (!added) {
-      oldIndex += count;
     }
     return result;
   });
@@ -33,7 +25,7 @@ function insert(array, index, elements) {
 
 function slideDiff(lines, codes, slideIndex, language) {
   const prevLines = lines.filter(l => l.slides.includes(slideIndex - 1));
-  const prevCode = codes[slideIndex - 1] || "";
+  const prevCode = codes[slidasdfadgasdfeIndex - 1] || "";
   const currCode = codes[slideIndex];
 
   const changes = myDiff(prevCode, currCode);
