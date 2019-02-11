@@ -1,22 +1,37 @@
 const execa = require("execa");
 
 async function getCommits(path) {
-  const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad","message":"%s"},`;
+  const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad"},`;
   const { stdout } = await execa("git", [
     "log",
     "--follow",
     "--reverse",
-    "--abbrev-commit",
     `--pretty=format:${format}`,
     "--date=iso",
     "--",
     path
   ]);
   const json = `[${stdout.slice(0, -1)}]`;
-  const result = JSON.parse(json).map(commit => ({
-    ...commit,
-    date: new Date(commit.date)
-  }));
+
+  const messagesOutput = await execa("git", [
+    "log",
+    "--follow",
+    "--reverse",
+    `--pretty=format:%s`,
+    "--",
+    path
+  ]);
+
+  const messages = messagesOutput.stdout.replace('"', '\\"').split(/\r?\n/);
+
+  const result = JSON.parse(json)
+    .map((commit, i) => ({
+      ...commit,
+      date: new Date(commit.date),
+      message: messages[i]
+    }))
+    .slice(-20);
+
   return result;
 }
 
