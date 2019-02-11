@@ -1,12 +1,28 @@
 {
   "name": "git-file-history",
-  "version": "0.0.1",
+  "description": "Quickly browse the history of a file from any git repository",
+  "version": "0.0.2",
+  "keywords": [
+    "cli",
+    "git",
+    "file",
+    "history",
+    "log",
+    "commits",
+    "change",
+    "animation",
+    "gui"
+  ],
   "license": "MIT",
   "bin": {
     "git-file-history": "./cli.js",
     "githistory": "./cli.js",
     "git-history": "./cli.js"
   },
+  "files": [
+    "site",
+    "*.js"
+  ],
   "dependencies": {
     "execa": "^1.0.0",
     "get-port": "^4.1.0",
@@ -15,7 +31,8 @@
   },
   "scripts": {
     "build-site": "cd .. && yarn build && rm -fr cli/site/ && cp -r build/ cli/site/",
-    "build": "yarn build-site"
+    "build": "yarn build-site",
+    "ls-package": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
   },
   "devDependencies": {
     "np": "^4.0.2"
