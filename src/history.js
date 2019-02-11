@@ -28,15 +28,13 @@ function CommitInfo({ commit, move, onClick }) {
         }}
         onClick={onClick}
       >
-        {commit.author.avatar && (
-          <img
-            src={commit.author.avatar}
-            alt={commit.author.login}
-            height={40}
-            width={40}
-            style={{ borderRadius: "4px" }}
-          />
-        )}
+        <img
+          src={commit.author.avatar}
+          alt={commit.author.login}
+          height={40}
+          width={40}
+          style={{ borderRadius: "4px" }}
+        />
         <div style={{ paddingLeft: "6px" }}>
           <div style={{ fontSize: "1.1rem", fontWeight: "500" }}>
             {commit.author.login}
@@ -66,9 +64,10 @@ function CommitInfo({ commit, move, onClick }) {
   );
 }
 
-function CommitList({ commits, currentIndex, selectCommit }) {
+function CommitList({ commits, currentIndex, selectCommit, mouseMoveDivEvent }) {
   return (
     <div
+      onMouseMove = {mouseMoveDivEvent}
       style={{
         overflow: "hidden",
         width: "100%",
@@ -99,8 +98,9 @@ export default function History({ commits, language }) {
 
 function Slides({ commits, slideLines }) {
   const [current, target, setTarget] = useSliderSpring(commits.length - 1);
+  const [mouseDown, setMouseDown] = useState(false)
+  const [counter, setCounter] = useState(0)
   const index = Math.round(current);
-
   const nextSlide = () =>
     setTarget(Math.min(Math.round(target + 0.51), slideLines.length - 1));
   const prevSlide = () => setTarget(Math.max(Math.round(target - 0.51), 0));
@@ -114,10 +114,32 @@ function Slides({ commits, slideLines }) {
         setTarget(current);
       }
     };
+    document.body.onmouseup = function(){
+      setMouseDown(false)
+    }
+    document.body.onmousedown = function(){
+      setMouseDown(true)
+    }
+    document.body.ondrag = function (){
+      setMouseDown(false)
+    }
   });
+  const mouseMoveDivEvent = function(e){
+    if(mouseDown){
+      // slow down the sliding speed otherwise the slider moves fast to the end
+      setCounter(counter<=4? counter +1 :0)
+      if(e.movementX > 0 && counter == 4){
+        nextSlide();
+      }else if(e.movementX < 0 && counter == 4){
+        prevSlide();
+
+      }
+    }
+  }
   return (
     <React.Fragment>
       <CommitList
+        mouseMoveDivEvent = {mouseMoveDivEvent}
         commits={commits}
         currentIndex={current}
         selectCommit={index => setTarget(index)}
