@@ -69,7 +69,7 @@ function CommitInfo({ commit, move, onClick }) {
 function CommitList({ commits, currentIndex, selectCommit, mouseWheelEvent }) {
   return (
     <div
-      onWheel = {mouseWheelEvent}
+      onWheel={mouseWheelEvent}
       style={{
         overflow: "hidden",
         width: "100%",
@@ -114,15 +114,14 @@ function Slides({ commits, slideLines }) {
         setTarget(current);
       }
     };
-
   });
-  const mouseWheelEvent = (e)=>{
-    e.deltaY > 0 ? nextSlide(): prevSlide()
-  }
+  const mouseWheelEvent = e => {
+    e.deltaY > 0 ? nextSlide() : prevSlide();
+  };
   return (
     <React.Fragment>
       <CommitList
-        mouseWheelEvent = {mouseWheelEvent}
+        mouseWheelEvent={mouseWheelEvent}
         commits={commits}
         currentIndex={current}
         selectCommit={index => setTarget(index)}
