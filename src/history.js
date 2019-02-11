@@ -69,8 +69,10 @@ function CommitInfo({ commit, move, onClick }) {
 function CommitList({ commits, currentIndex, selectCommit }) {
   const mouseWheelEvent = e => {
     const delta = currentIndex + (e.deltaX + e.deltaY) / -100;
-    selectCommit((delta<commits.length-1)&&(delta > 0)?delta:currentIndex)
-  }
+    selectCommit(
+      delta < commits.length - 1 && delta > 0 ? delta : currentIndex
+    );
+  };
   return (
     <div
       onWheel={mouseWheelEvent}
