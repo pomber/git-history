@@ -1,7 +1,7 @@
 const execa = require("execa");
 
 async function getCommits(path) {
-  const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad","message":"%f"},`;
+  const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad","message":"%s"},`;
   const { stdout } = await execa("git", [
     "log",
     "--follow",
