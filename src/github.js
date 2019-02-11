@@ -25,15 +25,42 @@ async function getContent(repo, sha, path) {
   return { content, url: contentJson.html_url };
 }
 
-export async function getCommits(repo, sha, path, top = 10) {
+async function splitBranchAndFilePath(repo, path) {
+  const branchesResponse = await fetch(
+    `https://api.github.com/repos/${repo}/branches`,
+    { headers: getHeaders() }
+  );
+
+  const branchesJson = await branchesResponse.json()
+  const branchNames = branchesJson.map(branch => branch.name).sort(function(a, b) {
+    // Sort by length so that the longest string is always tried first. 
+    // That way we won't remove any substrings by accident.
+    return b.length - a.length;
+  })
+
+  let branchName = "master";
+  let filePath = path
+  branchNames.forEach(branch => {
+    if(path.startsWith("/" + branch)) {
+      branchName = branch
+      filePath = path.replace("/" + branch + "/", "")
+    }
+  })
+  return {branchName, filePath}
+}
+
+export async function getCommits(repo, path, top = 10) {
+  const {branchName, filePath} = await splitBranchAndFilePath(repo, path)
+  
   const commitsResponse = await fetch(
-    `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
+    `https://api.github.com/repos/${repo}/commits?sha=${branchName}&path=${filePath}`,
     { headers: getHeaders() }
   );
   if (!commitsResponse.ok) {
     throw commitsResponse;
   }
   const commitsJson = await commitsResponse.json();
+
 
   const commits = commitsJson
     .slice(0, top)
@@ -55,7 +82,7 @@ export async function getCommits(repo, sha, path, top = 10) {
 
   await Promise.all(
     commits.map(async commit => {
-      const info = await getContent(repo, commit.sha, path);
+      const info = await getContent(repo, commit.sha, filePath);
       commit.content = info.content;
       commit.fileUrl = info.url;
     })
