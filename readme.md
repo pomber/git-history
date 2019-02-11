@@ -17,6 +17,22 @@ You can also add an `Open in Git History` button to GitHub with the [Chrome](htt
 
 > Follow [@pomber](https://twitter.com/pomber) for updates
 
+## [CLI](https://github.com/pomber/git-history/tree/master/cli)
+There's also a command line version of Git History that works with any local git repo:
+
+> You need [node](https://nodejs.org/en/) to run this
+
+```bash
+$ npx git-file-history path/to/file.ext
+```
+
+or
+
+```bash
+$ npm install -g git-file-history
+$ git-file-history path/to/file.ext
+```
+
 ## License
 
 MIT
