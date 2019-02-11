@@ -66,10 +66,10 @@ function CommitInfo({ commit, move, onClick }) {
   );
 }
 
-function CommitList({ commits, currentIndex, selectCommit, mouseMoveDivEvent }) {
+function CommitList({ commits, currentIndex, selectCommit, mouseWheelEvent }) {
   return (
     <div
-      onMouseMove = {mouseMoveDivEvent}
+      onWheel = {mouseWheelEvent}
       style={{
         overflow: "hidden",
         width: "100%",
@@ -100,8 +100,6 @@ export default function History({ commits, language }) {
 
 function Slides({ commits, slideLines }) {
   const [current, target, setTarget] = useSliderSpring(commits.length - 1);
-  const [mouseDown, setMouseDown] = useState(false)
-  const [counter, setCounter] = useState(0)
   const index = Math.round(current);
   const nextSlide = () =>
     setTarget(Math.min(Math.round(target + 0.51), slideLines.length - 1));
@@ -116,32 +114,15 @@ function Slides({ commits, slideLines }) {
         setTarget(current);
       }
     };
-    document.body.onmouseup = function(){
-      setMouseDown(false)
-    }
-    document.body.onmousedown = function(){
-      setMouseDown(true)
-    }
-    document.body.ondrag = function (){
-      setMouseDown(false)
-    }
-  });
-  const mouseMoveDivEvent = function(e){
-    if(mouseDown){
-      // slow down the sliding speed otherwise the slider moves fast to the end
-      setCounter(counter<=4? counter +1 :0)
-      if(e.movementX > 0 && counter == 4){
-        nextSlide();
-      }else if(e.movementX < 0 && counter == 4){
-        prevSlide();
 
-      }
-    }
+  });
+  const mouseWheelEvent = (e)=>{
+    e.deltaY > 0 ? nextSlide(): prevSlide()
   }
   return (
     <React.Fragment>
       <CommitList
-        mouseMoveDivEvent = {mouseMoveDivEvent}
+        mouseWheelEvent = {mouseWheelEvent}
         commits={commits}
         currentIndex={current}
         selectCommit={index => setTarget(index)}
@@ -158,6 +139,5 @@ function useSliderSpring(initial) {
   const tension = 0;
   const friction = 10;
   const value = useSpring(target, tension, friction);
-
   return [Math.round(value * 100) / 100, target, setTarget];
 }
