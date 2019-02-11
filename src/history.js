@@ -28,13 +28,15 @@ function CommitInfo({ commit, move, onClick }) {
         }}
         onClick={onClick}
       >
-        <img
-          src={commit.author.avatar}
-          alt={commit.author.login}
-          height={40}
-          width={40}
-          style={{ borderRadius: "4px" }}
-        />
+        {commit.author.avatar && (
+          <img
+            src={commit.author.avatar}
+            alt={commit.author.login}
+            height={40}
+            width={40}
+            style={{ borderRadius: "4px" }}
+          />
+        )}
         <div style={{ paddingLeft: "6px" }}>
           <div style={{ fontSize: "1.1rem", fontWeight: "500" }}>
             {commit.author.login}
