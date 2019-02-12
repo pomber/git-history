@@ -67,8 +67,15 @@ function CommitInfo({ commit, move, onClick }) {
 }
 
 function CommitList({ commits, currentIndex, selectCommit }) {
+  const mouseWheelEvent = e => {
+    const delta = currentIndex + (e.deltaX + e.deltaY) / -100;
+    selectCommit(
+      delta < commits.length - 1 && delta > 0 ? delta : currentIndex
+    );
+  };
   return (
     <div
+      onWheel={mouseWheelEvent}
       style={{
         overflow: "hidden",
         width: "100%",
@@ -100,7 +107,6 @@ export default function History({ commits, language }) {
 function Slides({ commits, slideLines }) {
   const [current, target, setTarget] = useSliderSpring(commits.length - 1);
   const index = Math.round(current);
-
   const nextSlide = () =>
     setTarget(Math.min(Math.round(target + 0.51), slideLines.length - 1));
   const prevSlide = () => setTarget(Math.max(Math.round(target - 0.51), 0));
@@ -115,6 +121,7 @@ function Slides({ commits, slideLines }) {
       }
     };
   });
+
   return (
     <React.Fragment>
       <CommitList
@@ -134,6 +141,5 @@ function useSliderSpring(initial) {
   const tension = 0;
   const friction = 10;
   const value = useSpring(target, tension, friction);
-
   return [Math.round(value * 100) / 100, target, setTarget];
 }
