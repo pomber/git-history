@@ -68,10 +68,7 @@ function CommitInfo({ commit, move, onClick }) {
 
 function CommitList({ commits, currentIndex, selectCommit }) {
   const mouseWheelEvent = e => {
-    const delta = currentIndex + (e.deltaX + e.deltaY) / -100;
-    selectCommit(
-      delta < commits.length - 1 && delta > 0 ? delta : currentIndex
-    );
+    selectCommit(currentIndex + (e.deltaX + e.deltaY) / 100);
   };
   return (
     <div
@@ -106,10 +103,12 @@ export default function History({ commits, language }) {
 
 function Slides({ commits, slideLines }) {
   const [current, target, setTarget] = useSliderSpring(commits.length - 1);
+  const setClampedTarget = newTarget =>
+    setTarget(Math.min(commits.length - 0.75, Math.max(-0.25, newTarget)));
+
   const index = Math.round(current);
-  const nextSlide = () =>
-    setTarget(Math.min(Math.round(target + 0.51), slideLines.length - 1));
-  const prevSlide = () => setTarget(Math.max(Math.round(target - 0.51), 0));
+  const nextSlide = () => setClampedTarget(Math.round(target + 0.51));
+  const prevSlide = () => setClampedTarget(Math.round(target - 0.51));
   useEffect(() => {
     document.body.onkeydown = function(e) {
       if (e.keyCode === 39) {
@@ -117,7 +116,7 @@ function Slides({ commits, slideLines }) {
       } else if (e.keyCode === 37) {
         prevSlide();
       } else if (e.keyCode === 32) {
-        setTarget(current);
+        setClampedTarget(current);
       }
     };
   });
@@ -127,7 +126,7 @@ function Slides({ commits, slideLines }) {
       <CommitList
         commits={commits}
         currentIndex={current}
-        selectCommit={index => setTarget(index)}
+        selectCommit={index => setClampedTarget(index)}
       />
       <Swipeable onSwipedLeft={nextSlide} onSwipedRight={prevSlide}>
         <Slide time={current - index} lines={slideLines[index]} />
