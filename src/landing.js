@@ -1,5 +1,6 @@
 import React from "react";
 import demo from "./demo.gif";
+import { Center } from "./app-helpers";
 
 export default function Landing() {
   const url = `${window.location.protocol}//${
@@ -20,7 +21,11 @@ export default function Landing() {
       <h1>Git History</h1>
       <div>
         <div>
-          Quickly browse the history of any GitHub file:
+          Quickly browse the history of any GitHub file (GitLab and Bitbucket{" "}
+          <a href="https://github.com/pomber/git-history/issues/14">
+            comming soon
+          </a>
+          ):
           <ol>
             <li>
               Replace <strong>github.com</strong> with{" "}
@@ -30,7 +35,6 @@ export default function Landing() {
           </ol>
           <a href={url}>Try it</a>
         </div>
-
         <p>
           You can also add an <strong>Open in Git History</strong> button to
           GitHub with the{" "}
@@ -43,6 +47,36 @@ export default function Landing() {
           </a>{" "}
           extensions.
         </p>
+        <h2>CLI</h2>
+        For local git repos use the{" "}
+        <a href="https://github.com/pomber/git-history/tree/master/cli">CLI</a>.
+        <h2>Sponsors</h2>
+        <p>
+          No sponsors yet.{" "}
+          <a href="https://opencollective.com/git-history/donate">
+            Become a sponsor
+          </a>{" "}
+          to help us ship more features!
+        </p>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: "20px"
+          }}
+        >
+          <a
+            href="https://opencollective.com/git-history/donate"
+            target="_blank"
+          >
+            <img
+              src="https://opencollective.com/git-history/donate/button.png?color=white"
+              width="300"
+            />
+          </a>
+        </div>
       </div>
     </div>
   );

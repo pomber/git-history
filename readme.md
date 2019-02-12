@@ -6,7 +6,8 @@
 
 # [Git History](https://githistory.xyz)
 
-Quickly browse the history of any GitHub file:
+Quickly browse the history of any GitHub ([GitLab and Bitbucket
+comming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 1. Replace `github.com` with `github.githistory.xyz` in any file url
 2. There's no step two
@@ -33,6 +34,10 @@ or
 $ npm install -g git-file-history
 $ git-file-history path/to/file.ext
 ```
+
+## Sponsors
+
+No sponsors yet. [Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
 
 ## Credits
 
