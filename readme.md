@@ -39,6 +39,15 @@ $ git-file-history path/to/file.ext
 
 No sponsors yet. [Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
 
+<div align="center">
+<a href="https://opencollective.com/git-history/donate">
+<img
+  src="https://opencollective.com/git-history/donate/button.png?color=blue"
+  width="300"
+/>
+</a>
+</div>
+
 ## Credits
 
 Based on these amazing projects:
