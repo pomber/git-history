@@ -34,6 +34,14 @@ $ npm install -g git-file-history
 $ git-file-history path/to/file.ext
 ```
 
+## Credits
+
+Based on these amazing projects:
+
+- [Prism](https://github.com/PrismJS/prism) by [Lea Verou](https://twitter.com/leaverou)
+- [jsdiff](https://github.com/kpdecker/jsdiff) by [Kevin Decker](https://twitter.com/kpdecker)
+- [Night Owl](https://github.com/sdras/night-owl-vscode-theme) by [Sarah Drasner](https://twitter.com/sarah_edo)
+
 ## License
 
 MIT
