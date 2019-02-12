@@ -13,7 +13,7 @@ Quickly browse the history of any GitHub file:
 
 [Try it](https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js)
 
-You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/es/firefox/addon/github-history/) extensions.
+You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
 > Follow [@pomber](https://twitter.com/pomber) for updates
 
