@@ -12,7 +12,7 @@ import {
 
 const cli = window._CLI;
 
-export default (App = () => {
+export const App = () => {
   if (cli) {
     return <CliApp data={cli} />;
   }
@@ -24,7 +24,7 @@ export default (App = () => {
   } else {
     return <GitHubApp repo={repo} sha={sha} path={path} />;
   }
-});
+};
 
 const CliApp = ({ data }) => {
   let { commits, path } = data;
