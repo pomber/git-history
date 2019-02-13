@@ -4,15 +4,14 @@ COPY . /git-history
 
 WORKDIR /git-history
 
-RUN npm install -g yarn \
-    && yarn install \
+RUN yarn install \
     && yarn build
 
 FROM nginx:1.14.2-alpine
 
 LABEL maintainer="mritd <mritd1234@gmail.com>"
 
-RUN apk upgrade --update \
+RUN apk upgrade \
     && rm -rf /etc/nginx/conf.d/default.conf \
         /usr/share/nginx/html \
         /var/cache/apk/*
