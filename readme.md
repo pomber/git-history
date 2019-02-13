@@ -1,13 +1,12 @@
 <div align="center">
-<a href="https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js">
-<img alt="demo" src="https://user-images.githubusercontent.com/1911623/52460615-f3899d80-2b49-11e9-8c21-06af4097a527.gif" />
-</a>
+    <a href="https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js">
+        <img alt="demo" src="https://user-images.githubusercontent.com/1911623/52460615-f3899d80-2b49-11e9-8c21-06af4097a527.gif" />
+    </a>
 </div>
 
 # [Git History](https://githistory.xyz)
 
-Quickly browse the history of any GitHub ([GitLab and Bitbucket
-coming soon](https://github.com/pomber/git-history/issues/14)) file:
+Quickly browse the history of any GitHub ([GitLab and Bitbucket coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 1. Replace `github.com` with `github.githistory.xyz` in any file url
 2. There's no step two
@@ -25,14 +24,14 @@ There's also a command line version of Git History that works with any local git
 > You need [node](https://nodejs.org/en/) to run this
 
 ```bash
-$ npx git-file-history path/to/file.ext
+npx git-file-history path/to/file.ext
 ```
 
 or
 
 ```bash
-$ npm install -g git-file-history
-$ git-file-history path/to/file.ext
+npm install -g git-file-history
+git-file-history path/to/file.ext
 ```
 
 ## Sponsors
@@ -40,12 +39,9 @@ $ git-file-history path/to/file.ext
 No sponsors yet. [Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
 
 <div align="center">
-<a href="https://opencollective.com/git-history/donate">
-<img
-  src="https://opencollective.com/git-history/donate/button.png?color=blue"
-  width="300"
-/>
-</a>
+    <a href="https://opencollective.com/git-history/donate">
+        <img src="https://opencollective.com/git-history/donate/button.png?color=blue" width="300"/>
+    </a>
 </div>
 
 ## Credits

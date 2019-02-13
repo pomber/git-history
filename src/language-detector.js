@@ -55,9 +55,9 @@ const filenameRegex = [
   { lang: "js", regex: /.*/i }
 ];
 
-export function getLanguage(filename) {
+export const getLanguage = filename => {
   return filenameRegex.find(x => x.regex.test(filename)).lang;
-}
+};
 
 const dependencies = {
   cpp: ["c"],
@@ -65,11 +65,11 @@ const dependencies = {
   scala: ["java"]
 };
 
-export function getLanguageDependencies(lang) {
+export const getLanguageDependencies = lang => {
   return dependencies[lang];
-}
+};
 
-export function loadLanguage(lang) {
+export const loadLanguage = lang => {
   if (["js", "css", "html"].includes(lang)) {
     return Promise.resolve();
   }
@@ -85,4 +85,4 @@ export function loadLanguage(lang) {
   }
 
   return depPromise.then(() => import(`prismjs/components/prism-${lang}`));
-}
+};

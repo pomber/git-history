@@ -2,6 +2,11 @@
   "name": "githistory-web",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Rodrigo Pombo",
+    "email": "pombopombopombo@gmail.com"
+  },
   "dependencies": {
     "diff": "^4.0.1",
     "js-base64": "^2.5.1",

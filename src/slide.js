@@ -12,22 +12,20 @@ theme.styles.forEach(({ types, style }) => {
   });
 });
 
-function Line({ line, style }) {
-  return (
-    <div style={Object.assign({ overflow: "hidden", height: "15px" }, style)}>
-      {line.tokens.map((token, i) => {
-        const style = themeStylesByType[token.type] || {};
-        return (
-          <span style={style} key={i}>
-            {token.content}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
+const Line = ({ line, style }) => (
+  <div style={Object.assign({ overflow: "hidden", height: "15px" }, style)}>
+    {line.tokens.map((token, i) => {
+      const style = themeStylesByType[token.type] || {};
+      return (
+        <span style={style} key={i}>
+          {token.content}
+        </span>
+      );
+    })}
+  </div>
+);
 
-export default function Slide({ time, lines }) {
+export const Slide = ({ time, lines }) => {
   const styles = animation((time + 1) / 2, lines);
   return (
     <pre
@@ -55,4 +53,4 @@ export default function Slide({ time, lines }) {
       </code>
     </pre>
   );
-}
+};

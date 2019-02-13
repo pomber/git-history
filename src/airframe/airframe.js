@@ -1,6 +1,6 @@
 import easing from "./easing";
 /* eslint-disable */
-function mergeResults(results) {
+const mergeResults = results => {
   const firstResult = results[0];
   if (results.length < 2) {
     return firstResult;
@@ -13,7 +13,7 @@ function mergeResults(results) {
   } else {
     return Object.assign({}, ...results);
   }
-}
+};
 
 const airframe = {
   parallel: ({ children: fns }) => {
@@ -52,7 +52,7 @@ const airframe = {
     Object.keys(from).forEach(key => {
       const value = from[key] + (to[key] - from[key]) * ease(t);
       if (key === "x") {
-        style["transform"] = `translateX(${value}px)`;
+        style.transform = `translateX(${value}px)`;
       } else {
         style[key] = value;
       }
@@ -89,7 +89,7 @@ export const Stagger = props => (t, targets) => {
   });
 };
 
-export function createAnimation(type, props, ...children) {
+export const createAnimation = (type, props, ...children) => {
   const allProps = Object.assign({ children }, props);
   if (typeof type === "string") {
     if (window.LOG === "verbose") {
@@ -116,4 +116,4 @@ export function createAnimation(type, props, ...children) {
       return type(allProps);
     }
   }
-}
+};

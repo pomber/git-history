@@ -2,7 +2,7 @@ import React from "react";
 import demo from "./demo.gif";
 import { Center } from "./app-helpers";
 
-export default function Landing() {
+export const Landing = () => {
   const url = `${window.location.protocol}//${
     window.location.host
   }/babel/babel/blob/master/packages/babel-core/test/browserify.js`;
@@ -80,4 +80,4 @@ export default function Landing() {
       </div>
     </div>
   );
-}
+};

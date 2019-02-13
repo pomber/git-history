@@ -6,7 +6,7 @@ const newlineRe = /\r\n|\r|\n/;
 // (token.content may contain an array of tokens)
 // and flatten it so content is always a string
 // and type the type of the leaf
-function flattenTokens(tokens) {
+const flattenTokens = tokens => {
   const flatList = [];
   tokens.forEach(token => {
     if (Array.isArray(token.content)) {
@@ -16,10 +16,10 @@ function flattenTokens(tokens) {
     }
   });
   return flatList;
-}
+};
 
 // Convert strings to tokens
-function tokenizeStrings(prismTokens, parentType = "plain") {
+const tokenizeStrings = (prismTokens, parentType = "plain") => {
   return prismTokens.map(pt =>
     typeof pt === "string"
       ? { type: parentType, content: pt }
@@ -30,9 +30,9 @@ function tokenizeStrings(prismTokens, parentType = "plain") {
             : pt.content
         }
   );
-}
+};
 
-export default function tokenize(code, language = "javascript") {
+export const tokenize = (code, language = "javascript") => {
   const prismTokens = Prism.tokenize(code, Prism.languages[language]);
   const nestedTokens = tokenizeStrings(prismTokens);
   const tokens = flattenTokens(nestedTokens);
@@ -55,4 +55,4 @@ export default function tokenize(code, language = "javascript") {
     });
   });
   return lines;
-}
+};

@@ -2,16 +2,16 @@ import netlify from "netlify-auth-providers";
 import { Base64 } from "js-base64";
 const TOKEN_KEY = "github-token";
 
-function getHeaders() {
+const getHeaders = () => {
   const token = window.localStorage.getItem(TOKEN_KEY);
   return token ? { Authorization: `bearer ${token}` } : {};
-}
+};
 
-export function isLoggedIn() {
+export const isLoggedIn = () => {
   return !!window.localStorage.getItem(TOKEN_KEY);
-}
+};
 
-async function getContent(repo, sha, path) {
+const getContent = async (repo, sha, path) => {
   const contentResponse = await fetch(
     `https://api.github.com/repos/${repo}/contents${path}?ref=${sha}`,
     { headers: getHeaders() }
@@ -23,9 +23,9 @@ async function getContent(repo, sha, path) {
   const contentJson = await contentResponse.json();
   const content = Base64.decode(contentJson.content);
   return { content, url: contentJson.html_url };
-}
+};
 
-export async function getCommits(repo, sha, path, top = 10) {
+export const getCommits = async (repo, sha, path, top = 10) => {
   const commitsResponse = await fetch(
     `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
     { headers: getHeaders() }
@@ -49,9 +49,7 @@ export async function getCommits(repo, sha, path, top = 10) {
       commitUrl: commit.html_url,
       message: commit.commit.message
     }))
-    .sort(function(a, b) {
-      return a.date - b.date;
-    });
+    .sort((a, b) => a.date - b.date);
 
   await Promise.all(
     commits.map(async commit => {
@@ -62,22 +60,22 @@ export async function getCommits(repo, sha, path, top = 10) {
   );
 
   return commits;
-}
+};
 
-export function auth() {
+export const auth = () => {
   return new Promise((resolve, reject) => {
     var authenticator = new netlify({
       site_id: "ccf3a0e2-ac06-4f37-9b17-df1dd41fb1a6"
     });
-    authenticator.authenticate({ provider: "github", scope: "repo" }, function(
-      err,
-      data
-    ) {
-      if (err) {
-        reject(err);
+    authenticator.authenticate(
+      { provider: "github", scope: "repo" },
+      (err, data) => {
+        if (err) {
+          reject(err);
+        }
+        window.localStorage.setItem(TOKEN_KEY, data.token);
+        resolve(data);
       }
-      window.localStorage.setItem(TOKEN_KEY, data.token);
-      resolve(data);
-    });
+    );
   });
-}
+};

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { getSlides } from "./differ";
 import useSpring from "react-use/lib/useSpring";
 import Swipeable from "react-swipeable";
-import Slide from "./slide";
+import { Slide } from "./slide";
 import "./comment-box.css";
 
-function CommitInfo({ commit, move, onClick }) {
+const CommitInfo = ({ commit, move, onClick }) => {
   const message = commit.message.split("\n")[0].slice(0, 80);
   const isActive = Math.abs(move) < 0.5;
   return (
@@ -64,9 +64,9 @@ function CommitInfo({ commit, move, onClick }) {
       )}
     </div>
   );
-}
+};
 
-function CommitList({ commits, currentIndex, selectCommit }) {
+const CommitList = ({ commits, currentIndex, selectCommit }) => {
   const mouseWheelEvent = e => {
     selectCommit(currentIndex + (e.deltaX + e.deltaY) / 100);
   };
@@ -93,15 +93,15 @@ function CommitList({ commits, currentIndex, selectCommit }) {
       ))}
     </div>
   );
-}
+};
 
-export default function History({ commits, language }) {
+export const History = ({ commits, language }) => {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes, language);
   return <Slides slideLines={slideLines} commits={commits} />;
-}
+};
 
-function Slides({ commits, slideLines }) {
+const Slides = ({ commits, slideLines }) => {
   const [current, target, setTarget] = useSliderSpring(commits.length - 1);
   const setClampedTarget = newTarget =>
     setTarget(Math.min(commits.length - 0.75, Math.max(-0.25, newTarget)));
@@ -110,7 +110,7 @@ function Slides({ commits, slideLines }) {
   const nextSlide = () => setClampedTarget(Math.round(target + 0.51));
   const prevSlide = () => setClampedTarget(Math.round(target - 0.51));
   useEffect(() => {
-    document.body.onkeydown = function(e) {
+    document.body.onkeydown = e => {
       if (e.keyCode === 39) {
         nextSlide();
       } else if (e.keyCode === 37) {
@@ -133,12 +133,12 @@ function Slides({ commits, slideLines }) {
       </Swipeable>
     </React.Fragment>
   );
-}
+};
 
-function useSliderSpring(initial) {
+const useSliderSpring = initial => {
   const [target, setTarget] = useState(initial);
   const tension = 0;
   const friction = 10;
   const value = useSpring(target, tension, friction);
   return [Math.round(value * 100) / 100, target, setTarget];
-}
+};

@@ -1,8 +1,8 @@
 import * as diff from "diff";
-import tokenize from "./tokenizer";
+import { tokenize } from "./tokenizer";
 const newlineRe = /\r\n|\r|\n/;
 
-function myDiff(oldCode, newCode) {
+const myDiff = (oldCode, newCode) => {
   const changes = diff.diffLines(oldCode || "", newCode);
 
   let oldIndex = -1;
@@ -25,13 +25,13 @@ function myDiff(oldCode, newCode) {
     }
     return result;
   });
-}
+};
 
-function insert(array, index, elements) {
+const insert = (array, index, elements) => {
   return array.splice(index, 0, ...elements);
-}
+};
 
-function slideDiff(lines, codes, slideIndex, language) {
+const slideDiff = (lines, codes, slideIndex, language) => {
   const prevLines = lines.filter(l => l.slides.includes(slideIndex - 1));
   const prevCode = codes[slideIndex - 1] || "";
   const currCode = codes[slideIndex];
@@ -57,17 +57,17 @@ function slideDiff(lines, codes, slideIndex, language) {
   const tokenLines = tokenize(currCode, language);
   const currLines = lines.filter(l => l.slides.includes(slideIndex));
   currLines.forEach((line, index) => (line.tokens = tokenLines[index]));
-}
+};
 
-export function parseLines(codes, language) {
+export const parseLines = (codes, language) => {
   const lines = [];
   for (let slideIndex = 0; slideIndex < codes.length; slideIndex++) {
     slideDiff(lines, codes, slideIndex, language);
   }
   return lines;
-}
+};
 
-export function getSlides(codes, language) {
+export const getSlides = (codes, language) => {
   const lines = parseLines(codes, language);
   // console.log("lines", lines);
   return codes.map((_, slideIndex) => {
@@ -82,4 +82,4 @@ export function getSlides(codes, language) {
       }))
       .filter(line => line.middle || line.left || line.right);
   });
-}
+};

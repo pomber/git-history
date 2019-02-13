@@ -17,15 +17,9 @@ const SlideToLeft = () => (
   />
 );
 
-function ShrinkHeight() {
-  return (
-    <tween
-      from={{ height: 15 }}
-      to={{ height: 0 }}
-      ease={easing.easeInOutQuad}
-    />
-  );
-}
+const ShrinkHeight = () => (
+  <tween from={{ height: 15 }} to={{ height: 0 }} ease={easing.easeInOutQuad} />
+);
 
 const SlideFromRight = () => (
   <tween
@@ -34,35 +28,27 @@ const SlideFromRight = () => (
     ease={easing.easeOutQuad}
   />
 );
-function GrowHeight() {
-  return (
-    <tween
-      from={{ height: 0 }}
-      to={{ height: 15 }}
-      ease={easing.easeInOutQuad}
-    />
-  );
-}
+const GrowHeight = () => (
+  <tween from={{ height: 0 }} to={{ height: 15 }} ease={easing.easeInOutQuad} />
+);
 
-function SwitchLines({ filterExit, filterEnter }) {
-  return (
-    <parallel>
-      <Stagger interval={0.2} filter={filterExit}>
-        <chain durations={[0.35, 0.3, 0.35]}>
-          <SlideToLeft />
-          <ShrinkHeight />
-        </chain>
-      </Stagger>
-      <Stagger interval={0.2} filter={filterEnter}>
-        <chain durations={[0.35, 0.3, 0.35]}>
-          <delay />
-          <GrowHeight />
-          <SlideFromRight />
-        </chain>
-      </Stagger>
-    </parallel>
-  );
-}
+const SwitchLines = ({ filterExit, filterEnter }) => (
+  <parallel>
+    <Stagger interval={0.2} filter={filterExit}>
+      <chain durations={[0.35, 0.3, 0.35]}>
+        <SlideToLeft />
+        <ShrinkHeight />
+      </chain>
+    </Stagger>
+    <Stagger interval={0.2} filter={filterEnter}>
+      <chain durations={[0.35, 0.3, 0.35]}>
+        <delay />
+        <GrowHeight />
+        <SlideFromRight />
+      </chain>
+    </Stagger>
+  </parallel>
+);
 
 export default (
   <chain durations={[0.5, 0.5]}>

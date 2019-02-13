@@ -1,6 +1,6 @@
 import React from "react";
-import History from "./history";
-import Landing from "./landing";
+import { History } from "./history";
+import { Landing } from "./landing";
 import {
   getUrlParams,
   useLanguageLoader,
@@ -12,7 +12,7 @@ import {
 
 const cli = window._CLI;
 
-export default function App() {
+export default (App = () => {
   if (cli) {
     return <CliApp data={cli} />;
   }
@@ -24,9 +24,9 @@ export default function App() {
   } else {
     return <GitHubApp repo={repo} sha={sha} path={path} />;
   }
-}
+});
 
-function CliApp({ data }) {
+const CliApp = ({ data }) => {
   let { commits, path } = data;
 
   const fileName = path.split("/").pop();
@@ -44,9 +44,9 @@ function CliApp({ data }) {
   }
 
   return <History commits={commits} language={lang} />;
-}
+};
 
-function GitHubApp({ repo, sha, path }) {
+const GitHubApp = ({ repo, sha, path }) => {
   const fileName = path.split("/").pop();
   useDocumentTitle(`Git History - ${fileName}`);
 
@@ -73,4 +73,4 @@ function GitHubApp({ repo, sha, path }) {
   }
 
   return <History commits={commits} language={lang} />;
-}
+};
