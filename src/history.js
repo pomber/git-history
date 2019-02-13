@@ -68,6 +68,7 @@ function CommitInfo({ commit, move, onClick }) {
 
 function CommitList({ commits, currentIndex, selectCommit }) {
   const mouseWheelEvent = e => {
+    e.preventDefault();
     selectCommit(currentIndex + (e.deltaX + e.deltaY) / 100);
   };
   return (
