@@ -61,6 +61,28 @@ describe("Can detect language", () => {
     expect(getLanguage("my-file.py")).toBe("python");
   });
 
+  test("dart", () => {
+    expect(getLanguage("my-file.dart")).toBe("dart");
+  });
+
+  describe("perl", () => {
+    test("pl", () => {
+      expect(getLanguage("my-file.pl")).toBe("perl");
+    });
+
+    test("pm", () => {
+      expect(getLanguage("my-file.pm")).toBe("perl");
+    });
+  });
+
+  test("assembly", () => {
+    expect(getLanguage("my-file.asm")).toBe("assembly");
+  });
+
+  test("groovy", () => {
+    expect(getLanguage("my-file.groovy")).toBe("groovy");
+  });
+
   test("sql", () => {
     expect(getLanguage("my-file.sql")).toBe("sql");
   });
