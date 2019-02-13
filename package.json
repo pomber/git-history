@@ -1,6 +1,7 @@
 {
   "name": "githistory-web",
   "version": "0.1.0",
+  "repository": "pomber/git-history",
   "private": true,
   "dependencies": {
     "diff": "^4.0.1",
