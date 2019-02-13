@@ -7,7 +7,7 @@
 # [Git History](https://githistory.xyz)
 
 Quickly browse the history of any GitHub ([GitLab and Bitbucket
-comming soon](https://github.com/pomber/git-history/issues/14)) file:
+coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 1. Replace `github.com` with `github.githistory.xyz` in any file url
 2. There's no step two
