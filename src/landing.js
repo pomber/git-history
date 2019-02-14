@@ -23,7 +23,7 @@ export default function Landing() {
         <div>
           Quickly browse the history of any GitHub file (GitLab and Bitbucket{" "}
           <a href="https://github.com/pomber/git-history/issues/14">
-            comming soon
+            coming soon
           </a>
           ):
           <ol>

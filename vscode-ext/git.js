@@ -1,26 +1,35 @@
 const execa = require("execa");
+const pather = require("path");
 
 async function getCommits(path) {
   const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad"},`;
-  const { stdout } = await execa("git", [
-    "log",
-    // "--follow",
-    "--reverse",
-    `--pretty=format:${format}`,
-    "--date=iso",
-    "--",
-    path
-  ]);
+  const { stdout } = await execa(
+    "git",
+    [
+      "log",
+      // "--follow",
+      "--reverse",
+      `--pretty=format:${format}`,
+      "--date=iso",
+      "--",
+      pather.basename(path)
+    ],
+    { cwd: pather.dirname(path) }
+  );
   const json = `[${stdout.slice(0, -1)}]`;
 
-  const messagesOutput = await execa("git", [
-    "log",
-    // "--follow",
-    "--reverse",
-    `--pretty=format:%s`,
-    "--",
-    path
-  ]);
+  const messagesOutput = await execa(
+    "git",
+    [
+      "log",
+      // "--follow",
+      "--reverse",
+      `--pretty=format:%s`,
+      "--",
+      pather.basename(path)
+    ],
+    { cwd: pather.dirname(path) }
+  );
 
   const messages = messagesOutput.stdout.replace('"', '\\"').split(/\r?\n/);
 
@@ -36,7 +45,11 @@ async function getCommits(path) {
 }
 
 async function getContent(commit, path) {
-  const { stdout } = await execa("git", ["show", `${commit.hash}:${path}`]);
+  const { stdout } = await execa(
+    "git",
+    ["show", `${commit.hash}:./${pather.basename(path)}`],
+    { cwd: pather.dirname(path) }
+  );
   return stdout;
 }
 
