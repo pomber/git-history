@@ -20,14 +20,13 @@ function activate(context) {
 
       const currentPath = getCurrentPath();
       if (!currentPath) {
-        //TODO show message
-        console.log("no path");
+        vscode.window.showInformationMessage("No active file");
         return;
       }
 
       const panel = vscode.window.createWebviewPanel(
         "gfh",
-        "Git History",
+        `${path.basename(currentPath)} (Git History)`,
         vscode.ViewColumn.One,
         {
           enableScripts: true,
