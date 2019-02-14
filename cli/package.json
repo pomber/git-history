@@ -1,7 +1,7 @@
 {
   "name": "git-file-history",
   "description": "Quickly browse the history of a file from any git repository",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": "pomber/git-history",
   "keywords": [
     "cli",
