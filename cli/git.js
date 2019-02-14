@@ -4,7 +4,7 @@ async function getCommits(path) {
   const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad"},`;
   const { stdout } = await execa("git", [
     "log",
-    "--follow",
+    // "--follow",
     "--reverse",
     `--pretty=format:${format}`,
     "--date=iso",
@@ -15,7 +15,7 @@ async function getCommits(path) {
 
   const messagesOutput = await execa("git", [
     "log",
-    "--follow",
+    // "--follow",
     "--reverse",
     `--pretty=format:%s`,
     "--",
