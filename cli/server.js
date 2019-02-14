@@ -27,9 +27,9 @@ module.exports = async function runServer(path, commitsPromise) {
       Promise.all([indexPromise, commitsPromise]).then(([index, commits]) => {
         const newIndex = index.replace(
           "<script>window._CLI=null</script>",
-          `<script>window._CLI={commits:${JSON.stringify(
+          `<script>/*<!--*/window._CLI={commits:${JSON.stringify(
             commits
-          )},path:'${path}'}</script>`
+          )},path:'${path}'}/*-->*/</script>`
         );
         var headers = { "Content-Type": "text/html" };
         response.writeHead(200, headers);

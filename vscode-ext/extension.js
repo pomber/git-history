@@ -1,6 +1,7 @@
 const vscode = require("vscode");
 const path = require("path");
 const fs = require("fs");
+const getCommits = require("./git");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -17,13 +18,20 @@ function activate(context) {
     function() {
       // The code you place here will be executed every time your command is executed
 
+      const currentPath = getCurrentPath();
+      if (!currentPath) {
+        //TODO show message
+        console.log("no path");
+        return;
+      }
+
       const panel = vscode.window.createWebviewPanel(
         "gfh",
         "Git History",
         vscode.ViewColumn.One,
         {
           enableScripts: true,
-          retainContextWhenHidden: false,
+          retainContextWhenHidden: true,
           localResourceRoots: [
             vscode.Uri.file(path.join(context.extensionPath, "site"))
           ]
@@ -36,26 +44,39 @@ function activate(context) {
 
       const index = fs.readFileSync(indexFile.path, "utf-8");
 
-      const staticSrc = vscode.Uri.file(
-        path.join(context.extensionPath, "site", "static")
-      ).with({ scheme: "vscode-resource" });
+      getCommits(currentPath)
+        .then(commits => {
+          const newIndex = index
+            .replace(
+              "<script>window._CLI=null</script>",
+              `<script>/*<!--*/window._CLI={commits:${JSON.stringify(
+                commits
+              )},path:'${currentPath}'}/*-->*/</script>`
+            )
+            .replace(
+              "<head>",
+              `<head><base href="${vscode.Uri.file(
+                path.join(context.extensionPath, "site")
+              ).with({
+                scheme: "vscode-resource"
+              })}/"/>`
+            );
 
-      try {
-        panel.webview.html = index.replace(
-          "<head>",
-          `<head><base href="${vscode.Uri.file(
-            path.join(context.extensionPath, "site")
-          ).with({
-            scheme: "vscode-resource"
-          })}/"/>`
-        );
-      } catch (e) {
-        console.error(e);
-      }
+          panel.webview.html = newIndex;
+        })
+        .catch(console.error);
     }
   );
 
   context.subscriptions.push(disposable);
+}
+
+function getCurrentPath() {
+  return (
+    vscode.window.activeTextEditor &&
+    vscode.window.activeTextEditor.document &&
+    vscode.window.activeTextEditor.document.fileName
+  );
 }
 
 exports.activate = activate;

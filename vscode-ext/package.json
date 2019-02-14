@@ -34,5 +34,8 @@
     "eslint": "^5.13.0",
     "typescript": "^3.3.1",
     "vscode": "^1.1.28"
+  },
+  "dependencies": {
+    "execa": "^1.0.0"
   }
 }
