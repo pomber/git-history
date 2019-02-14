@@ -2,7 +2,7 @@
   "name": "git-file-history",
   "displayName": "Git File History",
   "description": "Modern, fast and intuitive tool for browsing the history and files in any git repository",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "pomber/git-history",
   "publisher": "pomber",
   "license": "MIT",
