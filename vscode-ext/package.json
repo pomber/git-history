@@ -3,12 +3,28 @@
   "displayName": "Git File History",
   "description": "Modern, fast and intuitive tool for browsing the history and files in any git repository",
   "version": "0.0.1",
+  "repository": "pomber/git-history",
+  "publisher": "pomber",
+  "license": "MIT",
+  "keywords": [
+    "git",
+    "history",
+    "log",
+    "file",
+    "commit",
+    "show"
+  ],
   "engines": {
-    "vscode": "1.30.2"
+    "vscode": "^1.30.2"
   },
   "categories": [
     "Other"
   ],
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#011627",
+    "theme": "dark"
+  },
   "activationEvents": [
     "onCommand:extension.git-file-history"
   ],
@@ -25,7 +41,8 @@
     "build-site": "cd .. && cross-env PUBLIC_URL=. yarn build && rm -fr vscode-ext/site/ && cp -r build/ vscode-ext/site/",
     "build": " yarn build-site",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "node ./node_modules/vscode/bin/test"
+    "test": "node ./node_modules/vscode/bin/test",
+    "vscode:prepublish": "yarn build"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.42",
