@@ -1,26 +1,26 @@
 const execa = require("execa");
 
-async function getCommits(path) {
+async function getCommits(path, options = {}) {
   const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad"},`;
-  const { stdout } = await execa("git", [
+  const { stdout } = await execa("git", filterEmptyOption([
     "log",
-    // "--follow",
+    options.follow ? "--follow" : null,
     "--reverse",
     `--pretty=format:${format}`,
     "--date=iso",
     "--",
     path
-  ]);
+  ]));
   const json = `[${stdout.slice(0, -1)}]`;
 
-  const messagesOutput = await execa("git", [
+  const messagesOutput = await execa("git", filterEmptyOption([
     "log",
-    // "--follow",
+    options.follow ? "--follow" : null,
     "--reverse",
     `--pretty=format:%s`,
     "--",
     path
-  ]);
+  ]));
 
   const messages = messagesOutput.stdout.replace('"', '\\"').split(/\r?\n/);
 
@@ -40,8 +40,14 @@ async function getContent(commit, path) {
   return stdout;
 }
 
-module.exports = async function(path) {
-  const commits = await getCommits(path);
+function filterEmptyOption(options) {
+  return options.filter(option => {
+    return option;
+  });
+}
+
+module.exports = async function(path, options = {}) {
+  const commits = await getCommits(path, options);
   await Promise.all(
     commits.map(async commit => {
       commit.content = await getContent(commit, path);
