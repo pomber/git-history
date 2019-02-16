@@ -17,8 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "format": "prettier --write '**/*.{js,jsx,md,json,html,css,yml}' --ignore-path .gitignore",
-    "test-prettier": "prettier --check '**/*.{js,jsx,md,json,html,css,yml}' --ignore-path .gitignore",
+    "format": "prettier --write \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
+    "test-prettier": "prettier --check \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
     "test-cra": "react-scripts test",
     "test": "run-s test-prettier test-cra",
     "eject": "react-scripts eject"
