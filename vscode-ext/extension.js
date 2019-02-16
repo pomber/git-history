@@ -17,53 +17,58 @@ function activate(context) {
     "extension.git-file-history",
     function() {
       // The code you place here will be executed every time your command is executed
-
-      const currentPath = getCurrentPath();
-      if (!currentPath) {
-        vscode.window.showInformationMessage("No active file");
-        return;
-      }
-
-      const panel = vscode.window.createWebviewPanel(
-        "gfh",
-        `${path.basename(currentPath)} (Git History)`,
-        vscode.ViewColumn.One,
-        {
-          enableScripts: true,
-          retainContextWhenHidden: true,
-          localResourceRoots: [
-            vscode.Uri.file(path.join(context.extensionPath, "site"))
-          ]
+      try {
+        const currentPath = getCurrentPath();
+        if (!currentPath) {
+          vscode.window.showInformationMessage("No active file");
+          return;
         }
-      );
 
-      const indexFile = vscode.Uri.file(
-        path.join(context.extensionPath, "site", "index.html")
-      );
+        const panel = vscode.window.createWebviewPanel(
+          "gfh",
+          `${path.basename(currentPath)} (Git History)`,
+          vscode.ViewColumn.One,
+          {
+            enableScripts: true,
+            retainContextWhenHidden: true,
+            localResourceRoots: [
+              vscode.Uri.file(path.join(context.extensionPath, "site"))
+            ]
+          }
+        );
+        const indexPath = path.join(
+          context.extensionPath,
+          "site",
+          "index.html"
+        );
 
-      const index = fs.readFileSync(indexFile.path, "utf-8");
+        const index = fs.readFileSync(indexPath, "utf-8");
 
-      getCommits(currentPath)
-        .then(commits => {
-          const newIndex = index
-            .replace(
-              "<script>window._CLI=null</script>",
-              `<script>/*<!--*/window._CLI={commits:${JSON.stringify(
-                commits
-              )},path:'${currentPath}'}/*-->*/</script>`
-            )
-            .replace(
-              "<head>",
-              `<head><base href="${vscode.Uri.file(
-                path.join(context.extensionPath, "site")
-              ).with({
-                scheme: "vscode-resource"
-              })}/"/>`
-            );
+        getCommits(currentPath)
+          .then(commits => {
+            const newIndex = index
+              .replace(
+                "<script>window._CLI=null</script>",
+                `<script>/*<!--*/window._CLI={commits:${JSON.stringify(
+                  commits
+                )},path:'${currentPath}'}/*-->*/</script>`
+              )
+              .replace(
+                "<head>",
+                `<head><base href="${vscode.Uri.file(
+                  path.join(context.extensionPath, "site")
+                ).with({
+                  scheme: "vscode-resource"
+                })}/"/>`
+              );
 
-          panel.webview.html = newIndex;
-        })
-        .catch(console.error);
+            panel.webview.html = newIndex;
+          })
+          .catch(console.error);
+      } catch (e) {
+        console.error(e);
+        throw e;
+      }
     }
   );
 
