@@ -17,12 +17,12 @@ export default function App() {
     return <CliApp data={cli} />;
   }
 
-  const [repo, sha, path] = getUrlParams();
+  const [repo, path] = getUrlParams();
 
   if (!repo) {
     return <Landing />;
   } else {
-    return <GitHubApp repo={repo} sha={sha} path={path} />;
+    return <GitHubApp repo={repo} path={path} />;
   }
 }
 
