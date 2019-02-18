@@ -127,17 +127,6 @@ export function useLanguageLoader(path) {
   }, [path]);
 }
 
-export function useCliCommitsFetcher({ path }) {
-  return useLoader(() => {
-    return fetch(`/api/commits?path=${encodeURIComponent(path)}`)
-      .then(r => r.json())
-      .then(commits => {
-        commits.forEach(c => (c.date = new Date(c.date)));
-        return commits;
-      });
-  }, [path]);
-}
-
 export function useCommitsFetcher({ repo, sha, path }) {
   return useLoader(async () => getCommits(repo, sha, path), [repo, sha, path]);
 }

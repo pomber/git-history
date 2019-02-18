@@ -38,7 +38,7 @@
     ]
   },
   "scripts": {
-    "build-site": "cd .. && cross-env PUBLIC_URL=. yarn build && rm -fr vscode-ext/site/ && cp -r build/ vscode-ext/site/",
+    "build-site": "cd .. && cross-env PUBLIC_URL=. REACT_APP_GIT_PROVIDER=vscode yarn build && rm -fr vscode-ext/site/ && cp -r build/ vscode-ext/site/",
     "build": " yarn build-site",
     "postinstall": "node ./node_modules/vscode/bin/install",
     "test": "node ./node_modules/vscode/bin/test",
