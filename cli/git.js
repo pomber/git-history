@@ -1,4 +1,5 @@
 const execa = require("execa");
+const pather = require("path");
 
 async function getCommits(path) {
   const format = `{"hash":"%h","author":{"login":"%aN"},"date":"%ad"},`;
@@ -36,7 +37,11 @@ async function getCommits(path) {
 }
 
 async function getContent(commit, path) {
-  const { stdout } = await execa("git", ["show", `${commit.hash}:${path}`]);
+  const { stdout } = await execa(
+    "git",
+    ["show", `${commit.hash}:./${pather.basename(path)}`],
+    { cwd: pather.dirname(path) }
+  );
   return stdout;
 }
 
