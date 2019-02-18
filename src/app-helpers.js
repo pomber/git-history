@@ -92,7 +92,7 @@ function GitHubButton({ onClick }) {
   );
 }
 
-function useLoader(promiseFactory, deps) {
+export function useLoader(promiseFactory, deps) {
   const [state, setState] = useState({
     data: null,
     loading: true,
