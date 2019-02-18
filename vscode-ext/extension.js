@@ -63,10 +63,9 @@ function activate(context) {
           message => {
             switch (message.command) {
               case "commits":
-                const path = message.params.path;
-                getCommits(path)
+                const { path, last = 15, before = null } = message.params.path;
+                getCommits(path, last, before)
                   .then(commits => {
-                    console.log(path, commits);
                     panel.webview.postMessage(commits);
                   })
                   .catch(console.error);
