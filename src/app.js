@@ -7,14 +7,16 @@ import {
   useCommitsFetcher,
   useDocumentTitle,
   Loading,
-  Error
+  Error,
+  useCliCommitsFetcher
 } from "./app-helpers";
 
 const cli = window._CLI;
 
 export default function App() {
   if (cli) {
-    return <CliApp data={cli} />;
+    const path = new URLSearchParams(window.location.search).get("path");
+    return <CliApp path={path} />;
   }
 
   const [repo, sha, path] = getUrlParams();
@@ -26,14 +28,17 @@ export default function App() {
   }
 }
 
-function CliApp({ data }) {
-  let { commits, path } = data;
-
+function CliApp({ path }) {
   const fileName = path.split("/").pop();
   useDocumentTitle(`Git History - ${fileName}`);
 
-  commits = commits.map(commit => ({ ...commit, date: new Date(commit.date) }));
-  const [lang, loading, error] = useLanguageLoader(path);
+  const [commits, commitsLoading, commitsError] = useCliCommitsFetcher({
+    path
+  });
+  const [lang, langLoading, langError] = useLanguageLoader(path);
+
+  const loading = langLoading || commitsLoading;
+  const error = langError || commitsError;
 
   if (error) {
     return <Error error={error} />;
@@ -41,6 +46,10 @@ function CliApp({ data }) {
 
   if (loading) {
     return <Loading path={path} />;
+  }
+
+  if (!commits.length) {
+    return <Error error={{ status: 404 }} />;
   }
 
   return <History commits={commits} language={lang} />;

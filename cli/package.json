@@ -27,15 +27,20 @@
   "dependencies": {
     "execa": "^1.0.0",
     "get-port": "^4.1.0",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "open": "^0.0.5",
     "serve-handler": "^5.0.8"
   },
   "scripts": {
+    "replace-provider": "replace-in-file \"<script>window._CLI=null</script>\" \"<script>window._CLI=true</script>\" site/index.html",
     "build-site": "cd .. && yarn build && rm -fr cli/site/ && cp -r build/ cli/site/",
-    "build": "yarn build-site",
+    "build": "yarn build-site && yarn replace-provider",
     "ls-package": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
   },
   "devDependencies": {
-    "np": "^4.0.2"
+    "np": "^4.0.2",
+    "replace-in-file": "^3.4.3"
   }
 }

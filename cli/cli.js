@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
-const runServer = require("./server");
-const getCommits = require("./git");
+const runServer = require("./new-server");
 const fs = require("fs");
 
-const path = process.argv[2];
+let path = process.argv[2] || ".";
 
-if (!path || path === "--help") {
+if (path === "--help") {
   console.log(`Usage:
 
   githistory some/file.ext
@@ -19,6 +18,4 @@ if (!fs.existsSync(path)) {
   process.exit();
 }
 
-const commitsPromise = getCommits(path);
-
-runServer(path, commitsPromise);
+runServer(path);
