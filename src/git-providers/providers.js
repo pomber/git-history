@@ -1,4 +1,5 @@
 import cliProvider from "./cli-provider";
+import githubProvider from "./github-provider";
 
 export default function getGitProvider() {
   switch (process.env.REACT_APP_GIT_PROVIDER) {
@@ -7,6 +8,6 @@ export default function getGitProvider() {
     case "vscode":
       return null;
     default:
-      return null;
+      return githubProvider;
   }
 }

@@ -7,7 +7,7 @@ function getHeaders() {
   return token ? { Authorization: `bearer ${token}` } : {};
 }
 
-export function isLoggedIn() {
+function isLoggedIn() {
   return !!window.localStorage.getItem(TOKEN_KEY);
 }
 
@@ -25,7 +25,35 @@ async function getContent(repo, sha, path) {
   return { content, url: contentJson.html_url };
 }
 
-export async function getCommits(repo, sha, path, top = 10) {
+function getUrlParams() {
+  const [
+    ,
+    owner,
+    reponame,
+    action,
+    sha,
+    ...paths
+  ] = window.location.pathname.split("/");
+
+  if (action !== "commits" && action !== "blob") {
+    return [];
+  }
+
+  return [owner + "/" + reponame, sha, "/" + paths.join("/")];
+}
+
+function getPath() {
+  const [, , path] = getUrlParams();
+  return path;
+}
+
+function showLanding() {
+  const [repo, ,] = getUrlParams();
+  return !repo;
+}
+
+async function getCommits(last = 10) {
+  const [repo, sha, path] = getUrlParams();
   const commitsResponse = await fetch(
     `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
     { headers: getHeaders() }
@@ -36,7 +64,7 @@ export async function getCommits(repo, sha, path, top = 10) {
   const commitsJson = await commitsResponse.json();
 
   const commits = commitsJson
-    .slice(0, top)
+    .slice(0, last)
     .map(commit => ({
       sha: commit.sha,
       date: new Date(commit.commit.author.date),
@@ -64,20 +92,29 @@ export async function getCommits(repo, sha, path, top = 10) {
   return commits;
 }
 
-export function auth() {
-  return new Promise((resolve, reject) => {
-    var authenticator = new netlify({
-      site_id: "ccf3a0e2-ac06-4f37-9b17-df1dd41fb1a6"
-    });
-    authenticator.authenticate({ provider: "github", scope: "repo" }, function(
-      err,
-      data
-    ) {
-      if (err) {
-        reject(err);
-      }
-      window.localStorage.setItem(TOKEN_KEY, data.token);
-      resolve(data);
-    });
+function logIn() {
+  // return new Promise((resolve, reject) => {
+  var authenticator = new netlify({
+    site_id: "ccf3a0e2-ac06-4f37-9b17-df1dd41fb1a6"
   });
+  authenticator.authenticate({ provider: "github", scope: "repo" }, function(
+    err,
+    data
+  ) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    window.localStorage.setItem(TOKEN_KEY, data.token);
+    window.location.reload(false);
+  });
+  // });
 }
+
+export default {
+  showLanding,
+  getPath,
+  getCommits,
+  logIn,
+  isLoggedIn
+};

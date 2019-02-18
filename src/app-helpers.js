@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getLanguage, loadLanguage } from "./language-detector";
-import { auth, isLoggedIn, getCommits } from "./github";
 
 export function Center({ children }) {
   return (
@@ -29,7 +28,7 @@ export function Loading({ repo, path }) {
   );
 }
 
-export function Error({ error }) {
+export function Error({ error, gitProvider }) {
   if (error.status === 403) {
     return (
       <Center>
@@ -37,7 +36,7 @@ export function Error({ error }) {
           GitHub API rate limit exceeded for your IP (60 requests per hour).
         </p>
         <p>Sign in with GitHub for more:</p>
-        <GitHubButton onClick={login} />
+        <GitHubButton onClick={gitProvider.logIn} />
       </Center>
     );
   }
@@ -46,10 +45,10 @@ export function Error({ error }) {
     return (
       <Center>
         <p>File not found.</p>
-        {!isLoggedIn() && (
+        {gitProvider.isLoggedIn && !gitProvider.isLoggedIn() && (
           <React.Fragment>
             <p>Is it from a private repo? Sign in with GitHub:</p>
-            <GitHubButton onClick={login} />
+            <GitHubButton onClick={gitProvider.login} />
           </React.Fragment>
         )}
       </Center>
@@ -127,37 +126,8 @@ export function useLanguageLoader(path) {
   }, [path]);
 }
 
-export function useCommitsFetcher({ repo, sha, path }) {
-  return useLoader(async () => getCommits(repo, sha, path), [repo, sha, path]);
-}
-
 export function useDocumentTitle(title) {
   useEffect(() => {
     document.title = title;
   }, [title]);
-}
-
-export function getUrlParams() {
-  const [
-    ,
-    owner,
-    reponame,
-    action,
-    sha,
-    ...paths
-  ] = window.location.pathname.split("/");
-
-  if (action !== "commits" && action !== "blob") {
-    return [];
-  }
-
-  return [owner + "/" + reponame, sha, "/" + paths.join("/")];
-}
-
-function login() {
-  auth()
-    .then(data => {
-      window.location.reload(false);
-    })
-    .catch(console.error);
 }

@@ -8,7 +8,7 @@ import {
   Error,
   useLoader
 } from "./app-helpers";
-import getGitProvider from "./providers/providers";
+import getGitProvider from "./git-providers/providers";
 
 export default function App() {
   const gitProvider = getGitProvider();
@@ -36,7 +36,7 @@ function InnerApp({ gitProvider }) {
   const error = langError || commitsError;
 
   if (error) {
-    return <Error error={error} />;
+    return <Error error={error} gitProvider={gitProvider} />;
   }
 
   if (loading) {
@@ -44,7 +44,7 @@ function InnerApp({ gitProvider }) {
   }
 
   if (!commits.length) {
-    return <Error error={{ status: 404 }} />;
+    return <Error error={{ status: 404 }} gitProvider={gitProvider} />;
   }
 
   return <History commits={commits} language={lang} />;
