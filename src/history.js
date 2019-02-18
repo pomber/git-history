@@ -99,7 +99,12 @@ function CommitList({ commits, currentIndex, selectCommit }) {
 export default function History({ commits, language }) {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes, language);
-  return <Slides slideLines={slideLines} commits={commits} />;
+
+  const cronologicalSlideLines = slideLines.reverse();
+  const cornologicalCommits = commits.reverse();
+  return (
+    <Slides slideLines={cronologicalSlideLines} commits={cornologicalCommits} />
+  );
 }
 
 function Slides({ commits, slideLines }) {

@@ -63,23 +63,18 @@ async function getCommits(last = 10) {
   }
   const commitsJson = await commitsResponse.json();
 
-  const commits = commitsJson
-    .slice(0, last)
-    .map(commit => ({
-      sha: commit.sha,
-      date: new Date(commit.commit.author.date),
-      author: {
-        login: commit.author ? commit.author.login : commit.commit.author.name,
-        avatar: commit.author
-          ? commit.author.avatar_url
-          : "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      },
-      commitUrl: commit.html_url,
-      message: commit.commit.message
-    }))
-    .sort(function(a, b) {
-      return a.date - b.date;
-    });
+  const commits = commitsJson.slice(0, last).map(commit => ({
+    sha: commit.sha,
+    date: new Date(commit.commit.author.date),
+    author: {
+      login: commit.author ? commit.author.login : commit.commit.author.name,
+      avatar: commit.author
+        ? commit.author.avatar_url
+        : "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+    },
+    commitUrl: commit.html_url,
+    message: commit.commit.message
+  }));
 
   await Promise.all(
     commits.map(async commit => {
