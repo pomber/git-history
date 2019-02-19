@@ -31,14 +31,14 @@ function InnerApp({ gitProvider }) {
   );
   const [lang, langLoading, langError] = useLanguageLoader(path);
 
-  const loading = langLoading || commitsLoading;
+  const loading = langLoading || (!commits && commitsLoading);
   const error = langError || commitsError;
 
   if (error) {
     return <Error error={error} gitProvider={gitProvider} />;
   }
 
-  if (!commits && loading) {
+  if (loading) {
     return <Loading path={path} />;
   }
 
