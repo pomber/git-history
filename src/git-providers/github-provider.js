@@ -52,35 +52,44 @@ function showLanding() {
   return !repo;
 }
 
-async function getCommits(last = 10) {
-  const [repo, sha, path] = getUrlParams();
-  const commitsResponse = await fetch(
-    `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
-    { headers: getHeaders() }
-  );
-  if (!commitsResponse.ok) {
-    throw commitsResponse;
-  }
-  const commitsJson = await commitsResponse.json();
+const cache = {};
 
-  const commits = commitsJson.slice(0, last).map(commit => ({
-    sha: commit.sha,
-    date: new Date(commit.commit.author.date),
-    author: {
-      login: commit.author ? commit.author.login : commit.commit.author.name,
-      avatar: commit.author
-        ? commit.author.avatar_url
-        : "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-    },
-    commitUrl: commit.html_url,
-    message: commit.commit.message
-  }));
+async function getCommits(path, last) {
+  const [repo, sha] = getUrlParams();
+
+  if (!cache[path]) {
+    const commitsResponse = await fetch(
+      `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
+      { headers: getHeaders() }
+    );
+    if (!commitsResponse.ok) {
+      throw commitsResponse;
+    }
+    const commitsJson = await commitsResponse.json();
+
+    cache[path] = commitsJson.map(commit => ({
+      sha: commit.sha,
+      date: new Date(commit.commit.author.date),
+      author: {
+        login: commit.author ? commit.author.login : commit.commit.author.name,
+        avatar: commit.author
+          ? commit.author.avatar_url
+          : "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+      },
+      commitUrl: commit.html_url,
+      message: commit.commit.message
+    }));
+  }
+
+  const commits = cache[path].slice(0, last);
 
   await Promise.all(
     commits.map(async commit => {
-      const info = await getContent(repo, commit.sha, path);
-      commit.content = info.content;
-      commit.fileUrl = info.url;
+      if (!commit.content) {
+        const info = await getContent(repo, commit.sha, path);
+        commit.content = info.content;
+        commit.fileUrl = info.url;
+      }
     })
   );
 
