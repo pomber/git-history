@@ -100,14 +100,8 @@ export default function History({ commits, language, loadMore }) {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes, language);
 
-  const cronologicalSlideLines = slideLines;
-  const cornologicalCommits = commits;
   return (
-    <Slides
-      slideLines={cronologicalSlideLines}
-      commits={cornologicalCommits}
-      loadMore={loadMore}
-    />
+    <Slides slideLines={slideLines} commits={commits} loadMore={loadMore} />
   );
 }
 

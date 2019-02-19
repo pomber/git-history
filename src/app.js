@@ -5,8 +5,7 @@ import {
   useLanguageLoader,
   useDocumentTitle,
   Loading,
-  Error,
-  useLoader
+  Error
 } from "./app-helpers";
 import getGitProvider from "./git-providers/providers";
 
@@ -62,19 +61,16 @@ function useCommitsLoader(gitProvider, path) {
   const loadMore = () => {
     setState(old => {
       const shouldFetchMore = !old.loading && !old.noMore;
-      console.log(shouldFetchMore);
       return shouldFetchMore
         ? { ...old, last: old.last + 10, loading: true }
         : old;
     });
   };
 
-  console.log(state.loading, state.last);
   useEffect(() => {
     gitProvider
       .getCommits(path, state.last)
       .then(data => {
-        console.log("loaded", data.length, state.last);
         setState(old => ({
           data,
           loading: false,

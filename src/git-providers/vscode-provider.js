@@ -8,9 +8,7 @@ function showLanding() {
   return false;
 }
 
-function getCommits() {
-  const path = getPath();
-
+function getCommits(path, last) {
   return new Promise((resolve, reject) => {
     window.addEventListener(
       "message",
@@ -25,7 +23,8 @@ function getCommits() {
     vscode.postMessage({
       command: "commits",
       params: {
-        path
+        path,
+        last
       }
     });
   });
