@@ -41,7 +41,7 @@ function getUrlParams() {
     return [];
   }
 
-  return [owner + "/" + reponame, sha, "/" + paths.join("/")];
+  return [owner + "/" + reponame, sha, paths.join("/")];
 }
 
 function getPath() {
@@ -62,7 +62,7 @@ async function getCommits(path, last) {
   if (!cache[path]) {
     const commitsResponse = await fetch(
       `https://gitlab.com/api/v4/projects/${encodeURIComponent(
-        "6509971" //TODO fix
+        repo
       )}/repository/commits?path=${encodeURIComponent(path)}&ref_name=${sha}`,
       { headers: getHeaders() }
     );
@@ -99,7 +99,6 @@ async function getCommits(path, last) {
 }
 
 function logIn() {
-  console.log("login");
   // return new Promise((resolve, reject) => {
   var authenticator = new netlify({
     site_id: "ccf3a0e2-ac06-4f37-9b17-df1dd41fb1a6"
