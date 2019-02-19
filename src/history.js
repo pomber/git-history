@@ -69,7 +69,7 @@ function CommitInfo({ commit, move, onClick }) {
 function CommitList({ commits, currentIndex, selectCommit }) {
   const mouseWheelEvent = e => {
     e.preventDefault();
-    selectCommit(currentIndex + (e.deltaX + e.deltaY) / 100);
+    selectCommit(currentIndex - (e.deltaX + e.deltaY) / 100);
   };
   return (
     <div
@@ -87,7 +87,7 @@ function CommitList({ commits, currentIndex, selectCommit }) {
       {commits.map((commit, commitIndex) => (
         <CommitInfo
           commit={commit}
-          move={commitIndex - currentIndex}
+          move={currentIndex - commitIndex}
           key={commitIndex}
           onClick={() => selectCommit(commitIndex)}
         />
@@ -96,25 +96,32 @@ function CommitList({ commits, currentIndex, selectCommit }) {
   );
 }
 
-export default function History({ commits, language }) {
+export default function History({ commits, language, loadMore }) {
   const codes = commits.map(commit => commit.content);
   const slideLines = getSlides(codes, language);
 
-  const cronologicalSlideLines = slideLines.reverse();
-  const cornologicalCommits = commits.reverse();
+  const cronologicalSlideLines = slideLines;
+  const cornologicalCommits = commits;
   return (
-    <Slides slideLines={cronologicalSlideLines} commits={cornologicalCommits} />
+    <Slides
+      slideLines={cronologicalSlideLines}
+      commits={cornologicalCommits}
+      loadMore={loadMore}
+    />
   );
 }
 
-function Slides({ commits, slideLines }) {
-  const [current, target, setTarget] = useSliderSpring(commits.length - 1);
-  const setClampedTarget = newTarget =>
+function Slides({ commits, slideLines, loadMore }) {
+  const [current, target, setTarget] = useSliderSpring(0);
+  const setClampedTarget = newTarget => {
     setTarget(Math.min(commits.length - 0.75, Math.max(-0.25, newTarget)));
-
+    if (newTarget >= commits.length - 5) {
+      loadMore();
+    }
+  };
   const index = Math.round(current);
-  const nextSlide = () => setClampedTarget(Math.round(target + 0.51));
-  const prevSlide = () => setClampedTarget(Math.round(target - 0.51));
+  const nextSlide = () => setClampedTarget(Math.round(target - 0.51));
+  const prevSlide = () => setClampedTarget(Math.round(target + 0.51));
   useEffect(() => {
     document.body.onkeydown = function(e) {
       if (e.keyCode === 39) {
@@ -135,7 +142,7 @@ function Slides({ commits, slideLines }) {
         selectCommit={index => setClampedTarget(index)}
       />
       <Swipeable onSwipedLeft={nextSlide} onSwipedRight={prevSlide}>
-        <Slide time={current - index} lines={slideLines[index]} />
+        <Slide time={index - current} lines={slideLines[index]} />
       </Swipeable>
     </React.Fragment>
   );

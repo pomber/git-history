@@ -6,11 +6,23 @@ function showLanding() {
   return false;
 }
 
-async function getCommits() {
-  const path = getPath();
-  const response = await fetch(`/api/commits?path=${encodeURIComponent(path)}`);
+const cache = {
+  path: null,
+  commits: null,
+  promise: null
+};
+
+async function getCommits(path, last) {
+  // if (path !== cache.path) {
+  //   cache = {};
+  // }
+
+  const response = await fetch(
+    `/api/commits?path=${encodeURIComponent(path)}&last=${last}`
+  );
   const commits = await response.json();
   commits.forEach(c => (c.date = new Date(c.date)));
+
   return commits;
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import History from "./history";
 import Landing from "./landing";
 import {
@@ -26,9 +26,9 @@ function InnerApp({ gitProvider }) {
 
   useDocumentTitle(`Git History - ${fileName}`);
 
-  const [commits, commitsLoading, commitsError] = useLoader(
-    gitProvider.getCommits,
-    []
+  const [commits, commitsLoading, commitsError, loadMore] = useCommitsLoader(
+    gitProvider,
+    path
   );
   const [lang, langLoading, langError] = useLanguageLoader(path);
 
@@ -39,7 +39,7 @@ function InnerApp({ gitProvider }) {
     return <Error error={error} gitProvider={gitProvider} />;
   }
 
-  if (loading) {
+  if (!commits && loading) {
     return <Loading path={path} />;
   }
 
@@ -47,5 +47,49 @@ function InnerApp({ gitProvider }) {
     return <Error error={{ status: 404 }} gitProvider={gitProvider} />;
   }
 
-  return <History commits={commits} language={lang} />;
+  return <History commits={commits} language={lang} loadMore={loadMore} />;
+}
+
+function useCommitsLoader(gitProvider, path) {
+  const [state, setState] = useState({
+    data: null,
+    loading: true,
+    error: null,
+    last: 10,
+    noMore: false
+  });
+
+  const loadMore = () => {
+    setState(old => {
+      const shouldFetchMore = !old.loading && !old.noMore;
+      console.log(shouldFetchMore);
+      return shouldFetchMore
+        ? { ...old, last: old.last + 10, loading: true }
+        : old;
+    });
+  };
+
+  console.log(state.loading, state.last);
+  useEffect(() => {
+    gitProvider
+      .getCommits(path, state.last)
+      .then(data => {
+        console.log("loaded", data.length, state.last);
+        setState(old => ({
+          data,
+          loading: false,
+          error: false,
+          last: old.last,
+          noMore: data.length < old.last
+        }));
+      })
+      .catch(error => {
+        setState({
+          loading: false,
+          error
+        });
+      });
+  }, [path, state.last]);
+
+  return [state.data, state.loading, state.error, loadMore];
 }
