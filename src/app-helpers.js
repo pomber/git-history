@@ -48,7 +48,7 @@ export function Error({ error, gitProvider }) {
         {gitProvider.isLoggedIn && !gitProvider.isLoggedIn() && (
           <React.Fragment>
             <p>Is it from a private repo? Sign in with GitHub:</p>
-            <GitHubButton onClick={gitProvider.login} />
+            <GitHubButton onClick={gitProvider.logIn} />
           </React.Fragment>
         )}
       </Center>
