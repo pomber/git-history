@@ -1,76 +1,91 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import History from "./history";
 import Landing from "./landing";
 import {
-  getUrlParams,
   useLanguageLoader,
-  useCommitsFetcher,
   useDocumentTitle,
   Loading,
   Error
 } from "./app-helpers";
-
-const cli = window._CLI;
+import getGitProvider from "./git-providers/providers";
 
 export default function App() {
-  if (cli) {
-    return <CliApp data={cli} />;
-  }
+  const gitProvider = getGitProvider();
 
-  const [repo, sha, path] = getUrlParams();
-
-  if (!repo) {
+  if (gitProvider.showLanding()) {
     return <Landing />;
   } else {
-    return <GitHubApp repo={repo} sha={sha} path={path} />;
+    return <InnerApp gitProvider={gitProvider} />;
   }
 }
 
-function CliApp({ data }) {
-  let { commits, path } = data;
-
+function InnerApp({ gitProvider }) {
+  const path = gitProvider.getPath();
   const fileName = path.split("/").pop();
+
   useDocumentTitle(`Git History - ${fileName}`);
 
-  commits = commits.map(commit => ({ ...commit, date: new Date(commit.date) }));
-  const [lang, loading, error] = useLanguageLoader(path);
-
-  if (error) {
-    return <Error error={error} />;
-  }
-
-  if (loading) {
-    return <Loading path={path} />;
-  }
-
-  return <History commits={commits} language={lang} />;
-}
-
-function GitHubApp({ repo, sha, path }) {
-  const fileName = path.split("/").pop();
-  useDocumentTitle(`Git History - ${fileName}`);
-
-  const [lang, langLoading, langError] = useLanguageLoader(path);
-  const [commits, commitsLoading, commitsError] = useCommitsFetcher({
-    repo,
-    sha,
+  const [commits, commitsLoading, commitsError, loadMore] = useCommitsLoader(
+    gitProvider,
     path
-  });
+  );
+  const [lang, langLoading, langError] = useLanguageLoader(path);
 
   const loading = langLoading || commitsLoading;
   const error = langError || commitsError;
 
   if (error) {
-    return <Error error={error} />;
+    return <Error error={error} gitProvider={gitProvider} />;
   }
 
-  if (loading) {
-    return <Loading repo={repo} path={path} />;
+  if (!commits && loading) {
+    return <Loading path={path} />;
   }
 
   if (!commits.length) {
-    return <Error error={{ status: 404 }} />;
+    return <Error error={{ status: 404 }} gitProvider={gitProvider} />;
   }
 
-  return <History commits={commits} language={lang} />;
+  return <History commits={commits} language={lang} loadMore={loadMore} />;
+}
+
+function useCommitsLoader(gitProvider, path) {
+  const [state, setState] = useState({
+    data: null,
+    loading: true,
+    error: null,
+    last: 10,
+    noMore: false
+  });
+
+  const loadMore = () => {
+    setState(old => {
+      const shouldFetchMore = !old.loading && !old.noMore;
+      return shouldFetchMore
+        ? { ...old, last: old.last + 10, loading: true }
+        : old;
+    });
+  };
+
+  useEffect(() => {
+    gitProvider
+      .getCommits(path, state.last)
+      .then(data => {
+        setState(old => ({
+          data,
+          loading: false,
+          error: false,
+          last: old.last,
+          noMore: data.length < old.last
+        }));
+      })
+      .catch(error => {
+        setState({
+          loading: false,
+          error
+        });
+      });
+  }, [path, state.last]);
+
+  return [state.data, state.loading, state.error, loadMore];
 }

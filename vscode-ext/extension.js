@@ -43,28 +43,37 @@ function activate(context) {
         );
 
         const index = fs.readFileSync(indexPath, "utf-8");
+        const newIndex = index
+          .replace(
+            "<body>",
+            `<body><script>/*<!--*/window.vscode=acquireVsCodeApi();window._PATH='${currentPath}'/*-->*/</script>`
+          )
+          .replace(
+            "<head>",
+            `<head><base href="${vscode.Uri.file(
+              path.join(context.extensionPath, "site")
+            ).with({
+              scheme: "vscode-resource"
+            })}/"/>`
+          );
 
-        getCommits(currentPath)
-          .then(commits => {
-            const newIndex = index
-              .replace(
-                "<script>window._CLI=null</script>",
-                `<script>/*<!--*/window._CLI={commits:${JSON.stringify(
-                  commits
-                )},path:'${currentPath}'}/*-->*/</script>`
-              )
-              .replace(
-                "<head>",
-                `<head><base href="${vscode.Uri.file(
-                  path.join(context.extensionPath, "site")
-                ).with({
-                  scheme: "vscode-resource"
-                })}/"/>`
-              );
+        panel.webview.html = newIndex;
 
-            panel.webview.html = newIndex;
-          })
-          .catch(console.error);
+        panel.webview.onDidReceiveMessage(
+          message => {
+            switch (message.command) {
+              case "commits":
+                const { path, last = 15, before = null } = message.params;
+                getCommits(path, last, before)
+                  .then(commits => {
+                    panel.webview.postMessage(commits);
+                  })
+                  .catch(console.error);
+            }
+          },
+          undefined,
+          context.subscriptions
+        );
       } catch (e) {
         console.error(e);
         throw e;

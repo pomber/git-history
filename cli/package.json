@@ -27,15 +27,18 @@
   "dependencies": {
     "execa": "^1.0.0",
     "get-port": "^4.1.0",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
     "open": "^0.0.5",
     "serve-handler": "^5.0.8"
   },
   "scripts": {
-    "build-site": "cd .. && yarn build && rm -fr cli/site/ && cp -r build/ cli/site/",
+    "build-site": "cd .. && cross-env REACT_APP_GIT_PROVIDER=cli yarn build && rm -fr cli/site/ && cp -r build/ cli/site/",
     "build": "yarn build-site",
     "ls-package": "npm pack && tar -xvzf *.tgz && rm -rf package *.tgz"
   },
   "devDependencies": {
-    "np": "^4.0.2"
+    "cross-env": "^5.2.0"
   }
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import demo from "./demo.gif";
-import { Center } from "./app-helpers";
 
 export default function Landing() {
   const url = `${window.location.protocol}//${
@@ -74,6 +73,7 @@ export default function Landing() {
             <img
               src="https://opencollective.com/git-history/donate/button.png?color=white"
               width="300"
+              alt="donate"
             />
           </a>
         </div>

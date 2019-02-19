@@ -68,6 +68,7 @@ export function parseLines(codes, language) {
 }
 
 export function getSlides(codes, language) {
+  // codes are in reverse cronological order
   const lines = parseLines(codes, language);
   // console.log("lines", lines);
   return codes.map((_, slideIndex) => {
@@ -75,9 +76,9 @@ export function getSlides(codes, language) {
       .map((line, lineIndex) => ({
         content: line.content,
         tokens: line.tokens,
-        left: line.slides.includes(slideIndex - 1),
+        left: line.slides.includes(slideIndex + 1),
         middle: line.slides.includes(slideIndex),
-        right: line.slides.includes(slideIndex + 1),
+        right: line.slides.includes(slideIndex - 1),
         key: lineIndex
       }))
       .filter(line => line.middle || line.left || line.right);
