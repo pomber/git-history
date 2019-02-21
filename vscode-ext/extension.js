@@ -46,7 +46,9 @@ function activate(context) {
         const newIndex = index
           .replace(
             "<body>",
-            `<body><script>/*<!--*/window.vscode=acquireVsCodeApi();window._PATH='${currentPath}'/*-->*/</script>`
+            `<body><script>/*<!--*/window.vscode=acquireVsCodeApi();window._PATH=${JSON.stringify(
+              currentPath
+            )}/*-->*/</script>`
           )
           .replace(
             "<head>",
