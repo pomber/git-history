@@ -11,21 +11,21 @@ function isLoggedIn() {
   return !!window.localStorage.getItem(TOKEN_KEY);
 }
 
-// async function getContent(repo, sha, path) {
-//   const contentResponse = await fetch(
-//     `https://gitlab.com/api/v4/projects/${encodeURIComponent(
-//       repo
-//     )}/repository/commits?path=${encodeURIComponent(path)}&ref_name=${sha}`,
-//     { headers: getHeaders() }
-//   );
+async function getContent(repo, sha, path) {
+  const contentResponse = await fetch(
+    `https://gitlab.com/api/v4/projects/${encodeURIComponent(
+      repo
+    )}/repository/files/${encodeURIComponent(path)}?ref=${sha}`,
+    { headers: getHeaders() }
+  );
 
-//   if (!contentResponse.ok) {
-//     throw contentResponse;
-//   }
-//   const contentJson = await contentResponse.json();
-//   const content = Base64.decode(contentJson.content);
-//   return { content, url: contentJson.html_url };
-// }
+  if (!contentResponse.ok) {
+    throw contentResponse;
+  }
+  const contentJson = await contentResponse.json();
+  const content = Base64.decode(contentJson.content);
+  return { content };
+}
 
 function getUrlParams() {
   const [
@@ -78,22 +78,20 @@ async function getCommits(path, last) {
         login: commit.author_name
       },
       // commitUrl: commit.html_url,
-      message: commit.title,
-      content: "foo"
+      message: commit.title
     }));
   }
 
   const commits = cache[path].slice(0, last);
 
-  // await Promise.all(
-  //   commits.map(async commit => {
-  //     if (!commit.content) {
-  //       const info = await getContent(repo, commit.sha, path);
-  //       commit.content = info.content;
-  //       commit.fileUrl = info.url;
-  //     }
-  //   })
-  // );
+  await Promise.all(
+    commits.map(async commit => {
+      if (!commit.content) {
+        const info = await getContent(repo, commit.sha, path);
+        commit.content = info.content;
+      }
+    })
+  );
 
   return commits;
 }
