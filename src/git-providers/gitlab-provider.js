@@ -4,7 +4,7 @@ const TOKEN_KEY = "gitlab-token";
 
 function getHeaders() {
   const token = window.localStorage.getItem(TOKEN_KEY);
-  return token ? { "PRIVATE-TOKEN": `${token}` } : {};
+  return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
 function isLoggedIn() {
