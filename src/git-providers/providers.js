@@ -2,6 +2,7 @@ import cliProvider from "./cli-provider";
 import githubProvider from "./github-provider";
 import vscodeProvider from "./vscode-provider";
 import gitlabProvider from "./gitlab-provider";
+import bitbucketProvider from "./bitbucket-provider";
 
 export default function getGitProvider() {
   switch (process.env.REACT_APP_GIT_PROVIDER) {
@@ -14,6 +15,7 @@ export default function getGitProvider() {
       if (cloud === "gitlab") {
         return gitlabProvider;
       }
+      return bitbucketProvider;
       return githubProvider;
     }
   }
