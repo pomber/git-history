@@ -1,5 +1,6 @@
 import netlify from "netlify-auth-providers";
 import { Base64 } from "js-base64";
+import React from "react";
 const TOKEN_KEY = "gitlab-token";
 
 function getHeaders() {
@@ -115,10 +116,22 @@ function logIn() {
   // });
 }
 
+function LogInButton() {
+  return (
+    <button
+      onClick={logIn}
+      style={{ fontWeight: 600, padding: "0.5em 0.7em", cursor: "pointer" }}
+    >
+      <div>Sign in with GitLab</div>
+    </button>
+  );
+}
+
 export default {
   showLanding,
   getPath,
   getCommits,
   logIn,
-  isLoggedIn
+  isLoggedIn,
+  LogInButton
 };
