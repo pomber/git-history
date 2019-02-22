@@ -18,6 +18,9 @@ async function getContent(repo, sha, path) {
     { headers: getHeaders() }
   );
 
+  if (contentResponse.status === 404) {
+    return { content: "" };
+  }
   if (!contentResponse.ok) {
     throw contentResponse;
   }
