@@ -31,6 +31,7 @@ export function Loading({ repo, path }) {
 export function Error({ error, gitProvider }) {
   const { LogInButton } = gitProvider;
   if (error.status === 403) {
+    // FIX bitbucket uses 403 for private repos
     return (
       <Center>
         <p>
