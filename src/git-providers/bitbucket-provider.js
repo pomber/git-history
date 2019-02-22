@@ -14,17 +14,20 @@ function isLoggedIn() {
 
 async function getContent(repo, sha, path) {
   const contentResponse = await fetch(
-    `https://gitlab.com/api/v4/projects/${encodeURIComponent(
-      repo
-    )}/repository/files/${encodeURIComponent(path)}?ref=${sha}`,
+    `https://api.bitbucket.org/2.0/repositories/${repo}/src/${sha}/${path}`,
     { headers: getHeaders() }
   );
+
+  if (contentResponse.status === 404) {
+    return { content: "" };
+  }
 
   if (!contentResponse.ok) {
     throw contentResponse;
   }
-  const contentJson = await contentResponse.json();
-  const content = Base64.decode(contentJson.content);
+
+  const content = await contentResponse.text();
+  // const content = Base64.decode(contentJson.content);
   return { content };
 }
 
@@ -83,21 +86,20 @@ async function getCommits(path, last) {
         avatar: commit.author.user && commit.author.user.links.avatar.href
       },
       commitUrl: commit.links.html.href,
-      message: commit.message,
-      content: "foo"
+      message: commit.message
     }));
   }
 
   const commits = cache[path].slice(0, last);
 
-  // await Promise.all(
-  //   commits.map(async commit => {
-  //     if (!commit.content) {
-  //       const info = await getContent(repo, commit.sha, path);
-  //       commit.content = info.content;
-  //     }
-  //   })
-  // );
+  await Promise.all(
+    commits.map(async commit => {
+      if (!commit.content) {
+        const info = await getContent(repo, commit.sha, path);
+        commit.content = info.content;
+      }
+    })
+  );
 
   return commits;
 }
@@ -107,10 +109,7 @@ function logIn() {
   var authenticator = new netlify({
     site_id: "ccf3a0e2-ac06-4f37-9b17-df1dd41fb1a6"
   });
-  authenticator.authenticate({ provider: "gitlab", scope: "api" }, function(
-    err,
-    data
-  ) {
+  authenticator.authenticate({ provider: "bitbucket" }, function(err, data) {
     if (err) {
       console.error(err);
       return;
@@ -127,7 +126,7 @@ function LogInButton() {
       onClick={logIn}
       style={{ fontWeight: 600, padding: "0.5em 0.7em", cursor: "pointer" }}
     >
-      <div>Sign in with GitLab</div>
+      <div>Sign in with Bitbucket</div>
     </button>
   );
 }

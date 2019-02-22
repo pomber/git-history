@@ -14,8 +14,9 @@ export default function getGitProvider() {
       const [cloud] = window.location.host.split(".");
       if (cloud === "gitlab") {
         return gitlabProvider;
+      } else if (cloud === "bitbucket") {
+        return bitbucketProvider;
       }
-      return bitbucketProvider;
       return githubProvider;
     }
   }
