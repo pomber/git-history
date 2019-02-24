@@ -53,7 +53,7 @@ function useHeight(ref) {
   let [height, setHeight] = React.useState(null);
 
   function handleResize() {
-    setHeight(ref.current.offsetHeight);
+    setHeight(ref.current.getClientHeight());
   }
 
   React.useEffect(() => {
@@ -72,6 +72,7 @@ function Slide({ lines, styles }) {
 
   let ref = React.useRef(null);
   let height = useHeight(ref);
+
   return (
     <pre
       style={{
@@ -86,6 +87,7 @@ function Slide({ lines, styles }) {
     >
       <Scrollbars
         autoHide
+        ref={ref}
         onScroll={e => setTop(e.target.scrollTop)}
         renderThumbVertical={({ style, ...props }) => (
           <div
@@ -104,7 +106,6 @@ function Slide({ lines, styles }) {
             height: "100%",
             boxSizing: "border-box"
           }}
-          ref={ref}
         >
           <Lines height={height} top={top} lines={lines} styles={styles} />
         </code>
