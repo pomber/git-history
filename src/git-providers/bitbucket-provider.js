@@ -1,5 +1,4 @@
 import netlify from "netlify-auth-providers";
-import { Base64 } from "js-base64";
 import React from "react";
 const TOKEN_KEY = "bitbucket-token";
 
@@ -27,23 +26,18 @@ async function getContent(repo, sha, path) {
   }
 
   const content = await contentResponse.text();
-  // const content = Base64.decode(contentJson.content);
+
   return { content };
 }
 
 function getUrlParams() {
-  const [
-    ,
-    owner,
-    reponame,
-    action,
-    sha,
-    ...paths
-  ] = window.location.pathname.split("/");
+  const [, owner, reponame, , sha, ...paths] = window.location.pathname.split(
+    "/"
+  );
 
-  // if (action !== "commits" && action !== "blob") {
-  //   return [];
-  // }
+  if (!sha) {
+    return [];
+  }
 
   return [owner + "/" + reponame, sha, paths.join("/")];
 }
