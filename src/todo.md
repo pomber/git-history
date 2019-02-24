@@ -1,0 +1,2 @@
+- move diffing to web worker
+- make diffing incremental

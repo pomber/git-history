@@ -1,6 +1,8 @@
 import React from "react";
 import animation from "./animation";
 import theme from "./nightOwl";
+import useChildren from "./useVirtualChildren";
+import { Scrollbars } from "react-custom-scrollbars";
 
 const themeStylesByType = Object.create(null);
 theme.styles.forEach(({ types, style }) => {
@@ -27,32 +29,101 @@ function Line({ line, style }) {
   );
 }
 
-export default function Slide({ time, lines }) {
-  const styles = animation((time + 1) / 2, lines);
+function getLineHeight(line, i, { styles }) {
+  return styles[i].height != null ? styles[i].height : 15;
+}
+
+function getLine(line, i, { styles }) {
+  return <Line line={line} style={styles[i]} key={line.key} />;
+}
+
+function Lines({ height, top, lines, styles }) {
+  const children = useChildren({
+    height,
+    top,
+    items: lines,
+    getRow: getLine,
+    getRowHeight: getLineHeight,
+    data: { styles }
+  });
+  return children;
+}
+
+function useHeight(ref) {
+  let [height, setHeight] = React.useState(null);
+
+  function handleResize() {
+    setHeight(ref.current.offsetHeight);
+  }
+
+  React.useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [ref.current]);
+
+  return height;
+}
+
+function Slide({ lines, styles }) {
+  const [top, setTop] = React.useState(0);
+
+  let ref = React.useRef(null);
+  let height = useHeight(ref);
   return (
-    <pre
+    <div
       style={{
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
         width: "100%",
-        overflow: "hidden",
         paddingTop: "100px",
-        margin: 0
+        margin: 0,
+        height: "100%",
+        boxSizing: "border-box"
       }}
     >
-      <code
+      <pre
         style={{
-          display: "block",
-          width: "calc(100% - 20px)",
-          maxWidth: "900px",
-          margin: "auto",
-          padding: "10px"
+          width: "100%",
+          overflowY: "auto",
+          overflowX: "hidden",
+          margin: 0,
+          height: "100%"
         }}
       >
-        {lines.map((line, i) => (
-          <Line line={line} style={styles[i]} key={line.key} />
-        ))}
-      </code>
-    </pre>
+        <Scrollbars
+          autoHide
+          onScroll={e => setTop(e.target.scrollTop)}
+          renderThumbVertical={({ style, ...props }) => (
+            <div
+              style={{ ...style, backgroundColor: "rgb(173, 219, 103, 0.3)" }}
+              {...props}
+            />
+          )}
+        >
+          <code
+            style={{
+              display: "block",
+              width: "calc(100% - 20px)",
+              maxWidth: "900px",
+              margin: "auto",
+              padding: "10px",
+              height: "100%",
+              boxSizing: "border-box"
+            }}
+            ref={ref}
+          >
+            <Lines height={height} top={top} lines={lines} styles={styles} />
+          </code>
+        </Scrollbars>
+      </pre>
+    </div>
   );
+}
+
+export default function SlideWrapper({ time, lines }) {
+  const styles = animation((time + 1) / 2, lines);
+  return <Slide styles={styles} lines={lines} />;
 }

@@ -135,7 +135,11 @@ function Slides({ commits, slideLines, loadMore }) {
         currentIndex={current}
         selectCommit={index => setClampedTarget(index)}
       />
-      <Swipeable onSwipedLeft={nextSlide} onSwipedRight={prevSlide}>
+      <Swipeable
+        onSwipedLeft={nextSlide}
+        onSwipedRight={prevSlide}
+        style={{ height: "100%" }}
+      >
         <Slide time={index - current} lines={slideLines[index]} />
       </Swipeable>
     </React.Fragment>
