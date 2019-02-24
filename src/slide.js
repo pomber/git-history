@@ -13,9 +13,17 @@ theme.styles.forEach(({ types, style }) => {
   });
 });
 
-function Line({ line, style }) {
+function getLineHeight(line, i, { styles }) {
+  return styles[i].height != null ? styles[i].height : 15;
+}
+
+function getLine(line, i, { styles }) {
+  const style = styles[i];
   return (
-    <div style={Object.assign({ overflow: "hidden", height: "15px" }, style)}>
+    <div
+      style={Object.assign({ overflow: "hidden", height: "15px" }, style)}
+      key={line.key}
+    >
       {line.tokens.map((token, i) => {
         const style = themeStylesByType[token.type] || {};
         return (
@@ -26,14 +34,6 @@ function Line({ line, style }) {
       })}
     </div>
   );
-}
-
-function getLineHeight(line, i, { styles }) {
-  return styles[i].height != null ? styles[i].height : 15;
-}
-
-function getLine(line, i, { styles }) {
-  return <Line line={line} style={styles[i]} key={line.key} />;
 }
 
 function Slide({ lines, styles }) {

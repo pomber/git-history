@@ -29,7 +29,7 @@ export default function Scroller({
   return (
     <div
       style={{ height: "100%", overflowY: "auto" }}
-      class="scroller"
+      className="scroller"
       ref={ref}
       onScroll={e => setTop(e.target.scrollTop)}
       children={children}
