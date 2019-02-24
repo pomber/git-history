@@ -3,9 +3,14 @@ import React from "react";
 import useChildren from "./use-virtual-children";
 import { Scrollbars } from "react-custom-scrollbars";
 
-export default function Scroller({ items, getRow, getRowHeight, data }) {
-  const [top, setTop] = React.useState(0);
-
+export default function Scroller({
+  items,
+  getRow,
+  getRowHeight,
+  data,
+  top,
+  setTop
+}) {
   const ref = React.useRef(null);
   const height = useHeight(ref);
 
@@ -17,6 +22,10 @@ export default function Scroller({ items, getRow, getRowHeight, data }) {
     getRowHeight,
     data
   });
+
+  React.useLayoutEffect(() => {
+    ref.current.scrollTop(top);
+  }, [top]);
 
   return (
     <Scrollbars
