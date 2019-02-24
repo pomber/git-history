@@ -88,7 +88,7 @@ function Slide({ lines, styles }) {
       <Scrollbars
         autoHide
         ref={ref}
-        onScroll={e => setTop(e.target.scrollTop)}
+        onScrollFrame={({ scrollTop }) => setTop(scrollTop)}
         renderThumbVertical={({ style, ...props }) => (
           <div
             style={{ ...style, backgroundColor: "rgb(173, 219, 103, 0.3)" }}
