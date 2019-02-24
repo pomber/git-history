@@ -73,53 +73,43 @@ function Slide({ lines, styles }) {
   let ref = React.useRef(null);
   let height = useHeight(ref);
   return (
-    <div
+    <pre
       style={{
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
-        width: "100%",
         paddingTop: "100px",
         margin: 0,
         height: "100%",
+        width: "100%",
         boxSizing: "border-box"
       }}
     >
-      <pre
-        style={{
-          width: "100%",
-          overflowY: "auto",
-          overflowX: "hidden",
-          margin: 0,
-          height: "100%"
-        }}
+      <Scrollbars
+        autoHide
+        onScroll={e => setTop(e.target.scrollTop)}
+        renderThumbVertical={({ style, ...props }) => (
+          <div
+            style={{ ...style, backgroundColor: "rgb(173, 219, 103, 0.3)" }}
+            {...props}
+          />
+        )}
       >
-        <Scrollbars
-          autoHide
-          onScroll={e => setTop(e.target.scrollTop)}
-          renderThumbVertical={({ style, ...props }) => (
-            <div
-              style={{ ...style, backgroundColor: "rgb(173, 219, 103, 0.3)" }}
-              {...props}
-            />
-          )}
+        <code
+          style={{
+            display: "block",
+            width: "calc(100% - 20px)",
+            maxWidth: "900px",
+            margin: "auto",
+            padding: "10px",
+            height: "100%",
+            boxSizing: "border-box"
+          }}
+          ref={ref}
         >
-          <code
-            style={{
-              display: "block",
-              width: "calc(100% - 20px)",
-              maxWidth: "900px",
-              margin: "auto",
-              padding: "10px",
-              height: "100%",
-              boxSizing: "border-box"
-            }}
-            ref={ref}
-          >
-            <Lines height={height} top={top} lines={lines} styles={styles} />
-          </code>
-        </Scrollbars>
-      </pre>
-    </div>
+          <Lines height={height} top={top} lines={lines} styles={styles} />
+        </code>
+      </Scrollbars>
+    </pre>
   );
 }
 
