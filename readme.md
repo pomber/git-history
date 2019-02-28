@@ -14,6 +14,11 @@ coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 [Try it](https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js)
 
+> If you like this project consider [backing my open source work on Patreon!](https://patreon.com/pomber)  
+> And follow [@pomber](https://twitter.com/pomber) on twitter for updates.
+
+## Browser Extensions
+
 You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
 Or you can use this bookmarklet([?](https://en.wikipedia.org/wiki/Bookmarklet)):
@@ -30,8 +35,6 @@ javascript: (function() {
   }
 })();
 ```
-
-> Follow [@pomber](https://twitter.com/pomber) for updates
 
 ## [CLI](https://github.com/pomber/git-history/tree/master/cli)
 
@@ -52,7 +55,7 @@ $ git-file-history path/to/file.ext
 
 ## Sponsors
 
-No sponsors yet. [Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
+[Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
 
 <div align="center">
 <a href="https://opencollective.com/git-history/donate">
