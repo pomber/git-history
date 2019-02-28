@@ -16,6 +16,21 @@ coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
+Or you can use this bookmarklet([?](https://en.wikipedia.org/wiki/Bookmarklet)):
+
+```javascript
+javascript: (function() {
+  var url = window.location.href;
+  var regEx = /^(https?\:\/\/)(www\.)?(github|gitlab|bitbucket)\.(com|org)\/(.*)$/i;
+  if (regEx.test(url)) {
+    url = url.replace(regEx, "$1$3.githistory.xyz/$5");
+    window.open(url, "_blank");
+  } else {
+    alert("Not a Git File URL");
+  }
+})();
+```
+
 > Follow [@pomber](https://twitter.com/pomber) for updates
 
 ## [CLI](https://github.com/pomber/git-history/tree/master/cli)
