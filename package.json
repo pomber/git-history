@@ -4,7 +4,7 @@
   "repository": "pomber/git-history",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^3.4.1",
+    "@craco/craco": "^3.5.0",
     "diff": "^4.0.1",
     "js-base64": "^2.5.1",
     "netlify-auth-providers": "^1.0.0-alpha5",
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "react-scripts build",
+    "build": "craco build",
     "format": "prettier --write \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
     "test-prettier": "prettier --check \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
     "test-cra": "react-scripts test",

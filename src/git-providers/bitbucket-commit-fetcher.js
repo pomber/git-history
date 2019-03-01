@@ -60,7 +60,7 @@ async function getContent(repo, sha, path, token) {
   if (!contentResponse.ok) {
     throw {
       status: contentResponse.status,
-      body: contentJson
+      body: await contentResponse.json()
     };
   }
 

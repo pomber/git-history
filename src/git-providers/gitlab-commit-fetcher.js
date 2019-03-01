@@ -57,6 +57,8 @@ async function getContent(repo, sha, path, token) {
     return { content: "" };
   }
 
+  const contentJson = await contentResponse.json();
+
   if (!contentResponse.ok) {
     throw {
       status: contentResponse.status,
@@ -64,7 +66,6 @@ async function getContent(repo, sha, path, token) {
     };
   }
 
-  const contentJson = await contentResponse.json();
   const content = Base64.decode(contentJson.content);
   return { content };
 }
