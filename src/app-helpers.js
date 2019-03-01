@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { getLanguage, loadLanguage } from "./language-detector";
+import React, { useEffect } from "react";
 
 export function Center({ children }) {
   return (
@@ -66,41 +65,6 @@ export function Error({ error, gitProvider }) {
       <p>Unexpected error. Check the console.</p>
     </Center>
   );
-}
-
-export function useLoader(promiseFactory, deps) {
-  const [state, setState] = useState({
-    data: null,
-    loading: true,
-    error: null
-  });
-
-  useEffect(() => {
-    promiseFactory()
-      .then(data => {
-        setState({
-          data,
-          loading: false,
-          error: false
-        });
-      })
-      .catch(error => {
-        setState({
-          loading: false,
-          error
-        });
-      });
-  }, deps);
-
-  return [state.data, state.loading, state.error];
-}
-
-export function useLanguageLoader(path) {
-  return useLoader(async () => {
-    const lang = getLanguage(path);
-    await loadLanguage(lang);
-    return lang;
-  }, [path]);
 }
 
 export function useDocumentTitle(title) {

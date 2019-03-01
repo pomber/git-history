@@ -1,9 +1,9 @@
-import * as diff from "diff";
+import { diffLines } from "diff";
 import tokenize from "./tokenizer";
 const newlineRe = /\r\n|\r|\n/;
 
 function myDiff(oldCode, newCode) {
-  const changes = diff.diffLines(oldCode || "", newCode);
+  const changes = diffLines(oldCode || "", newCode);
 
   let oldIndex = -1;
   return changes.map(({ value, count, removed, added }) => {

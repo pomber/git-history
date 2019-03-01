@@ -69,6 +69,7 @@ export default function Landing() {
           <a
             href="https://opencollective.com/git-history/donate"
             target="_blank"
+            rel="noopener noreferrer"
           >
             <img
               src="https://opencollective.com/git-history/donate/button.png?color=white"

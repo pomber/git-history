@@ -3,21 +3,18 @@ import githubProvider from "./github-provider";
 import vscodeProvider from "./vscode-provider";
 import gitlabProvider from "./gitlab-provider";
 import bitbucketProvider from "./bitbucket-provider";
+import { SOURCE, getSource } from "./sources";
 
-export default function getGitProvider() {
-  switch (process.env.REACT_APP_GIT_PROVIDER) {
-    case "cli":
-      return cliProvider;
-    case "vscode":
-      return vscodeProvider;
-    default: {
-      const [cloud] = window.location.host.split(".");
-      if (cloud === "gitlab") {
-        return gitlabProvider;
-      } else if (cloud === "bitbucket") {
-        return bitbucketProvider;
-      }
-      return githubProvider;
-    }
-  }
+const providers = {
+  [SOURCE.CLI]: cliProvider,
+  [SOURCE.VSCODE]: vscodeProvider,
+  [SOURCE.GITLAB]: gitlabProvider,
+  [SOURCE.GITHUB]: githubProvider,
+  [SOURCE.BITBUCKET]: bitbucketProvider
+};
+
+export default function getGitProvider(source) {
+  source = source || getSource();
+  const provider = providers[source];
+  return provider;
 }

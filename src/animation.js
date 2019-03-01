@@ -1,7 +1,6 @@
+/* eslint-disable */
 import { createAnimation, Stagger } from "./airframe/airframe";
 import easing from "./airframe/easing";
-
-/* eslint-disable */
 
 const dx = 250;
 
