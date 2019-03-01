@@ -10,7 +10,7 @@ export default function Scroller({
   top,
   setTop
 }) {
-  const ref = React.useRef(null);
+  const ref = React.useRef();
   const height = useHeight(ref);
 
   const children = useChildren({

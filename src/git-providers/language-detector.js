@@ -17,7 +17,7 @@ const filenameRegex = [
   { lang: "scss", regex: /\.scss$/i },
   { lang: "ini", regex: /\.ini$|.editorconfig$/i },
   { lang: "markup", regex: /\.xml$|\.html$|\.htm$|\.svg$|\.mathml$/i },
-  { lang: "bat", regex: /\.bat$/i },
+  { lang: "batch", regex: /\.bat$/i },
   { lang: "clojure", regex: /\.clj$/i },
   { lang: "coffeescript", regex: /\.coffee$/i },
   { lang: "cpp", regex: /\.cpp$|\.cc$/i },

@@ -110,7 +110,7 @@ describe("Can detect language", () => {
   });
 
   test("bat", () => {
-    expect(getLanguage("my-file.bat")).toBe("bat");
+    expect(getLanguage("my-file.bat")).toBe("batch");
   });
 
   test("clojure", () => {
