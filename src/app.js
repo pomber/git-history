@@ -79,7 +79,7 @@ function useVersionsLoader(gitProvider) {
         setState(old => ({
           ...old,
           loading: false,
-          error: error.message
+          error: error.message || error
         }));
       });
   }, [state.last]);
