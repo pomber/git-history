@@ -14,5 +14,6 @@ export function getSource() {
   if ([SOURCE.GITLAB, SOURCE.GITHUB, SOURCE.BITBUCKET].includes(cloud)) {
     return cloud;
   }
-  return SOURCE.BITBUCKET;
+  const source = new URLSearchParams(window.location.search).get("source");
+  return source || SOURCE.GITHUB;
 }
