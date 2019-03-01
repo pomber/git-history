@@ -1,3 +1,6 @@
+import { getLanguage, loadLanguage } from "./language-detector";
+import { getSlides } from "./differ";
+
 const vscode = window.vscode;
 
 function getPath() {
@@ -30,8 +33,21 @@ function getCommits(path, last) {
   });
 }
 
+async function getVersions(last) {
+  const path = getPath();
+  const lang = getLanguage(path);
+  const langPromise = loadLanguage(lang);
+
+  const commits = await getCommits(path, last);
+  await langPromise;
+
+  const codes = commits.map(commit => commit.content);
+  const slides = getSlides(codes, lang);
+  return commits.map((commit, i) => ({ commit, lines: slides[i] }));
+}
+
 export default {
   showLanding,
   getPath,
-  getCommits
+  getVersions
 };

@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import History from "./history";
 import Landing from "./landing";
-import {
-  useLanguageLoader,
-  useDocumentTitle,
-  Loading,
-  Error
-} from "./app-helpers";
+import { useDocumentTitle, Loading, Error } from "./app-helpers";
 import getGitProvider from "./git-providers/providers";
 
 export default function App() {
@@ -25,31 +20,32 @@ function InnerApp({ gitProvider }) {
 
   useDocumentTitle(`Git History - ${fileName}`);
 
-  const [commits, commitsLoading, commitsError, loadMore] = useCommitsLoader(
+  const [versions, loading, error, loadMore] = useVersionsLoader(
     gitProvider,
     path
   );
-  const [lang, langLoading, langError] = useLanguageLoader(path);
-
-  const loading = langLoading || (!commits && commitsLoading);
-  const error = langError || commitsError;
 
   if (error) {
     return <Error error={error} gitProvider={gitProvider} />;
   }
 
-  if (loading) {
+  if (!versions && loading) {
     return <Loading path={path} />;
   }
 
-  if (!commits.length) {
+  if (!versions.length) {
     return <Error error={{ status: 404 }} gitProvider={gitProvider} />;
   }
 
-  return <History commits={commits} language={lang} loadMore={loadMore} />;
+  const commits = versions.map(v => v.commit);
+  const slideLines = versions.map(v => v.lines);
+
+  return (
+    <History commits={commits} slideLines={slideLines} loadMore={loadMore} />
+  );
 }
 
-function useCommitsLoader(gitProvider, path) {
+function useVersionsLoader(gitProvider) {
   const [state, setState] = useState({
     data: null,
     loading: true,
@@ -69,7 +65,7 @@ function useCommitsLoader(gitProvider, path) {
 
   useEffect(() => {
     gitProvider
-      .getCommits(path, state.last)
+      .getVersions(state.last)
       .then(data => {
         setState(old => ({
           data,
@@ -80,12 +76,13 @@ function useCommitsLoader(gitProvider, path) {
         }));
       })
       .catch(error => {
-        setState({
+        setState(old => ({
+          ...old,
           loading: false,
-          error
-        });
+          error: error.message || error
+        }));
       });
-  }, [path, state.last]);
+  }, [state.last]);
 
   return [state.data, state.loading, state.error, loadMore];
 }

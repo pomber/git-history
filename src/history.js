@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { getSlides } from "./differ";
 import useSpring from "react-use/lib/useSpring";
 import Swipeable from "react-swipeable";
 import Slide from "./slide";
@@ -43,7 +42,11 @@ function CommitInfo({ commit, move, onClick }) {
           </div>
           <div style={{ fontSize: "0.85rem", opacity: "0.9" }}>
             {isActive && commit.commitUrl ? (
-              <a href={commit.commitUrl} target="_blank">
+              <a
+                href={commit.commitUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 on {commit.date.toDateString()}
               </a>
             ) : (
@@ -96,10 +99,7 @@ function CommitList({ commits, currentIndex, selectCommit }) {
   );
 }
 
-export default function History({ commits, language, loadMore }) {
-  const codes = commits.map(commit => commit.content);
-  const slideLines = getSlides(codes, language);
-
+export default function History({ commits, slideLines, loadMore }) {
   return (
     <Slides slideLines={slideLines} commits={commits} loadMore={loadMore} />
   );
@@ -135,7 +135,11 @@ function Slides({ commits, slideLines, loadMore }) {
         currentIndex={current}
         selectCommit={index => setClampedTarget(index)}
       />
-      <Swipeable onSwipedLeft={nextSlide} onSwipedRight={prevSlide}>
+      <Swipeable
+        onSwipedLeft={nextSlide}
+        onSwipedRight={prevSlide}
+        style={{ height: "100%" }}
+      >
         <Slide time={index - current} lines={slideLines[index]} />
       </Swipeable>
     </React.Fragment>

@@ -1,6 +1,7 @@
 import React from "react";
 import animation from "./animation";
 import theme from "./nightOwl";
+import Scroller from "./scroller";
 
 const themeStylesByType = Object.create(null);
 theme.styles.forEach(({ types, style }) => {
@@ -12,9 +13,17 @@ theme.styles.forEach(({ types, style }) => {
   });
 });
 
-function Line({ line, style }) {
+function getLineHeight(line, i, { styles }) {
+  return styles[i].height != null ? styles[i].height : 15;
+}
+
+function getLine(line, i, { styles }) {
+  const style = styles[i];
   return (
-    <div style={Object.assign({ overflow: "hidden", height: "15px" }, style)}>
+    <div
+      style={Object.assign({ overflow: "hidden", height: "15px" }, style)}
+      key={line.key}
+    >
       {line.tokens.map((token, i) => {
         const style = themeStylesByType[token.type] || {};
         return (
@@ -27,17 +36,18 @@ function Line({ line, style }) {
   );
 }
 
-export default function Slide({ time, lines }) {
-  const styles = animation((time + 1) / 2, lines);
+function Slide({ lines, styles }) {
+  const [top, setTop] = React.useState(0);
   return (
     <pre
       style={{
         backgroundColor: theme.plain.backgroundColor,
         color: theme.plain.color,
-        width: "100%",
-        overflow: "hidden",
         paddingTop: "100px",
-        margin: 0
+        margin: 0,
+        height: "100%",
+        width: "100%",
+        boxSizing: "border-box"
       }}
     >
       <code
@@ -46,13 +56,26 @@ export default function Slide({ time, lines }) {
           width: "calc(100% - 20px)",
           maxWidth: "900px",
           margin: "auto",
-          padding: "10px"
+          padding: "10px",
+          height: "100%",
+          boxSizing: "border-box"
         }}
       >
-        {lines.map((line, i) => (
-          <Line line={line} style={styles[i]} key={line.key} />
-        ))}
+        <Scroller
+          items={lines}
+          getRow={getLine}
+          getRowHeight={getLineHeight}
+          data={{ styles }}
+          top={top}
+          setTop={setTop}
+        />
       </code>
     </pre>
   );
+}
+
+export default function SlideWrapper({ time, lines }) {
+  const styles = animation((time + 1) / 2, lines);
+
+  return <Slide lines={lines} styles={styles} />;
 }

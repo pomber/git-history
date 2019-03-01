@@ -1,4 +1,6 @@
-import Prism from "prismjs";
+// https://github.com/PrismJS/prism/issues/1303#issuecomment-375353987
+global.Prism = { disableWorkerMessageHandler: true };
+const Prism = require("prismjs");
 
 const newlineRe = /\r\n|\r|\n/;
 

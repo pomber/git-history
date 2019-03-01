@@ -1,34 +1,13 @@
 import netlify from "netlify-auth-providers";
-import { Base64 } from "js-base64";
 import React from "react";
-const TOKEN_KEY = "gitlab-token";
 
-function getHeaders() {
-  const token = window.localStorage.getItem(TOKEN_KEY);
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
+import versioner from "./versioner";
+import { SOURCE } from "./sources";
+
+const TOKEN_KEY = "gitlab-token";
 
 function isLoggedIn() {
   return !!window.localStorage.getItem(TOKEN_KEY);
-}
-
-async function getContent(repo, sha, path) {
-  const contentResponse = await fetch(
-    `https://gitlab.com/api/v4/projects/${encodeURIComponent(
-      repo
-    )}/repository/files/${encodeURIComponent(path)}?ref=${sha}`,
-    { headers: getHeaders() }
-  );
-
-  if (contentResponse.status === 404) {
-    return { content: "" };
-  }
-  if (!contentResponse.ok) {
-    throw contentResponse;
-  }
-  const contentJson = await contentResponse.json();
-  const content = Base64.decode(contentJson.content);
-  return { content };
 }
 
 function getUrlParams() {
@@ -56,48 +35,6 @@ function getPath() {
 function showLanding() {
   const [repo, ,] = getUrlParams();
   return !repo;
-}
-
-const cache = {};
-
-async function getCommits(path, last) {
-  const [repo, sha] = getUrlParams();
-
-  if (!cache[path]) {
-    const commitsResponse = await fetch(
-      `https://gitlab.com/api/v4/projects/${encodeURIComponent(
-        repo
-      )}/repository/commits?path=${encodeURIComponent(path)}&ref_name=${sha}`,
-      { headers: getHeaders() }
-    );
-    if (!commitsResponse.ok) {
-      throw commitsResponse;
-    }
-    const commitsJson = await commitsResponse.json();
-
-    cache[path] = commitsJson.map(commit => ({
-      sha: commit.id,
-      date: new Date(commit.authored_date),
-      author: {
-        login: commit.author_name
-      },
-      // commitUrl: commit.html_url,
-      message: commit.title
-    }));
-  }
-
-  const commits = cache[path].slice(0, last);
-
-  await Promise.all(
-    commits.map(async commit => {
-      if (!commit.content) {
-        const info = await getContent(repo, commit.sha, path);
-        commit.content = info.content;
-      }
-    })
-  );
-
-  return commits;
 }
 
 function logIn() {
@@ -130,10 +67,21 @@ function LogInButton() {
   );
 }
 
+function getParams() {
+  const [repo, sha, path] = getUrlParams();
+  const token = window.localStorage.getItem(TOKEN_KEY);
+  return { repo, sha, path, token };
+}
+
+async function getVersions(last) {
+  const params = { ...getParams(), last };
+  return await versioner.getVersions(SOURCE.GITLAB, params);
+}
+
 export default {
   showLanding,
   getPath,
-  getCommits,
+  getVersions,
   logIn,
   isLoggedIn,
   LogInButton

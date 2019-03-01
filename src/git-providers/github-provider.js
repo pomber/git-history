@@ -1,32 +1,12 @@
 import netlify from "netlify-auth-providers";
 import React from "react";
-import { Base64 } from "js-base64";
-const TOKEN_KEY = "github-token";
+import versioner from "./versioner";
+import { SOURCE } from "./sources";
 
-function getHeaders() {
-  const token = window.localStorage.getItem(TOKEN_KEY);
-  return token ? { Authorization: `bearer ${token}` } : {};
-}
+const TOKEN_KEY = "github-token";
 
 function isLoggedIn() {
   return !!window.localStorage.getItem(TOKEN_KEY);
-}
-
-async function getContent(repo, sha, path) {
-  const contentResponse = await fetch(
-    `https://api.github.com/repos/${repo}/contents${path}?ref=${sha}`,
-    { headers: getHeaders() }
-  );
-
-  if (contentResponse.status === 404) {
-    return { content: "" };
-  }
-  if (!contentResponse.ok) {
-    throw contentResponse;
-  }
-  const contentJson = await contentResponse.json();
-  const content = Base64.decode(contentJson.content);
-  return { content, url: contentJson.html_url };
 }
 
 function getUrlParams() {
@@ -54,50 +34,6 @@ function getPath() {
 function showLanding() {
   const [repo, ,] = getUrlParams();
   return !repo;
-}
-
-const cache = {};
-
-async function getCommits(path, last) {
-  const [repo, sha] = getUrlParams();
-
-  if (!cache[path]) {
-    const commitsResponse = await fetch(
-      `https://api.github.com/repos/${repo}/commits?sha=${sha}&path=${path}`,
-      { headers: getHeaders() }
-    );
-    if (!commitsResponse.ok) {
-      throw commitsResponse;
-    }
-    const commitsJson = await commitsResponse.json();
-
-    cache[path] = commitsJson.map(commit => ({
-      sha: commit.sha,
-      date: new Date(commit.commit.author.date),
-      author: {
-        login: commit.author ? commit.author.login : commit.commit.author.name,
-        avatar: commit.author
-          ? commit.author.avatar_url
-          : "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-      },
-      commitUrl: commit.html_url,
-      message: commit.commit.message
-    }));
-  }
-
-  const commits = cache[path].slice(0, last);
-
-  await Promise.all(
-    commits.map(async commit => {
-      if (!commit.content) {
-        const info = await getContent(repo, commit.sha, path);
-        commit.content = info.content;
-        commit.fileUrl = info.url;
-      }
-    })
-  );
-
-  return commits;
 }
 
 function logIn() {
@@ -143,10 +79,22 @@ function LogInButton() {
   );
 }
 
+function getParams() {
+  const [repo, sha, path] = getUrlParams();
+  const token = window.localStorage.getItem(TOKEN_KEY);
+  return { repo, sha, path, token };
+}
+
+async function getVersions(last) {
+  const params = { ...getParams(), last };
+  return await versioner.getVersions(SOURCE.GITHUB, params);
+}
+
 export default {
   showLanding,
   getPath,
-  getCommits,
+  getParams,
+  getVersions,
   logIn,
   isLoggedIn,
   LogInButton
