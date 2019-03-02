@@ -5,6 +5,8 @@
 </div>
 
 # [Git History](https://githistory.xyz)
+[![Backers on Open Collective](https://opencollective.com/git-history/backers/badge.svg)](#backers)
+[![Sponsors on Open Collective](https://opencollective.com/git-history/sponsors/badge.svg)](#sponsors) 
 
 Quickly browse the history of any GitHub ([GitLab and Bitbucket
 coming soon](https://github.com/pomber/git-history/issues/14)) file:
@@ -53,19 +55,6 @@ $ npm install -g git-file-history
 $ git-file-history path/to/file.ext
 ```
 
-## Sponsors
-
-[Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
-
-<div align="center">
-<a href="https://opencollective.com/git-history/donate">
-<img
-  src="https://opencollective.com/git-history/donate/button.png?color=blue"
-  width="300"
-/>
-</a>
-</div>
-
 ## Credits
 
 Based on these amazing projects:
@@ -73,6 +62,25 @@ Based on these amazing projects:
 - [Prism](https://github.com/PrismJS/prism) by [Lea Verou](https://twitter.com/leaverou)
 - [jsdiff](https://github.com/kpdecker/jsdiff) by [Kevin Decker](https://twitter.com/kpdecker)
 - [Night Owl](https://github.com/sdras/night-owl-vscode-theme) by [Sarah Drasner](https://twitter.com/sarah_edo)
+
+### Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<img src="https://opencollective.com/git-history/contributors.svg?width=890&button=false" />
+
+### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/git-history#backer)]
+
+<a href="https://opencollective.com/git-history#backers" target="_blank"><img src="https://opencollective.com/git-history/backers.svg?width=890"></a>
+
+### Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-history#sponsor)]
+
+<a href="https://opencollective.com/git-history/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-history/sponsor/0/avatar.svg"></a>
+
+
 
 ## License
 
