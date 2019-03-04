@@ -6,7 +6,8 @@ export default function useSpring({
   target = 0,
   current = null,
   tension = 0,
-  friction = 10
+  friction = 10,
+  round = x => x
 }) {
   const [spring, setSpring] = useState(null);
   const [value, setValue] = useState(target);
@@ -15,7 +16,7 @@ export default function useSpring({
     const listener = {
       onSpringUpdate: spring => {
         const value = spring.getCurrentValue();
-        setValue(value);
+        setValue(round(value));
       }
     };
 

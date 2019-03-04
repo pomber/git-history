@@ -1,28 +1,43 @@
 import React from "react";
-
 import { storiesOf } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import { linkTo } from "@storybook/addon-links";
-
 import Scroller from "./scroller";
 
-const items = Array(100)
+const snapAreas = [
+  { start: 1, end: 5 },
+  { start: 15, end: 26 },
+  { start: 50, end: 100 },
+  { start: 300, end: 302 }
+];
+
+const items = Array(500)
   .fill(0)
-  .map((_, i) => ({ content: `Row ${i}` }));
+  .map((_, i) => {
+    const a = snapAreas.find(a => a.start <= i && i <= a.end);
+    return {
+      content: `Row ${i}${a ? ` - Area [${a.start}, ${a.end}]` : ""}`,
+      key: i,
+      height: 22
+    };
+  });
 
 function getRow(item) {
-  return <div>{item.content}</div>;
+  return (
+    <div key={item.key} style={{ height: item.height }}>
+      {item.content}
+    </div>
+  );
 }
 
-function getRowHeight(line) {
-  return 15;
+function getRowHeight(item) {
+  return item.height;
 }
 
 function BasicScroller() {
-  const [top, setTop] = React.useState(0);
+  const [top, setTop] = React.useState(40);
   return (
     <Scroller
       items={items}
+      snapAreas={snapAreas}
       getRow={getRow}
       getRowHeight={getRowHeight}
       top={top}
@@ -31,7 +46,7 @@ function BasicScroller() {
   );
 }
 
-storiesOf("Welcome", module).add("to Storybook", () => (
+storiesOf("Scroller", module).add("test", () => (
   <div
     style={{
       display: "flex",
@@ -45,11 +60,3 @@ storiesOf("Welcome", module).add("to Storybook", () => (
     </div>
   </div>
 ));
-
-// storiesOf("Button", module)
-//   .add("with text", () => (
-//     <Button onClick={action("clicked")}>Hello Button</Button>
-//   ))
-//   .add("with some emoji", () => (
-//     <Button onClick={action("clicked")}>😀 😎 👍 💯</Button>
-//   ));

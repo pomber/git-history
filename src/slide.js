@@ -36,8 +36,7 @@ function getLine(line, i, { styles }) {
   );
 }
 
-function Slide({ lines, styles }) {
-  const [top, setTop] = React.useState(0);
+function Slide({ lines, styles, changes }) {
   return (
     <pre
       style={{
@@ -66,16 +65,46 @@ function Slide({ lines, styles }) {
           getRow={getLine}
           getRowHeight={getLineHeight}
           data={{ styles }}
-          top={top}
-          setTop={setTop}
+          snapAreas={changes}
         />
       </code>
     </pre>
   );
 }
 
+let lastLines = null;
+let lastChanges = null;
+function getChanges(lines) {
+  if (lastLines === lines) {
+    return lastChanges;
+  }
+
+  const changes = [];
+  let currentChange = null;
+  let i = 0;
+  const isNewLine = i => !lines[i].left && lines[i].middle;
+  while (i < lines.length) {
+    if (isNewLine(i)) {
+      if (!currentChange) {
+        currentChange = { start: i };
+      }
+    } else {
+      if (currentChange) {
+        currentChange.end = i - 1;
+        changes.push(currentChange);
+        currentChange = null;
+      }
+    }
+    i++;
+  }
+
+  lastLines = lines;
+  console.log("changes", changes);
+  return changes;
+}
+
 export default function SlideWrapper({ time, lines }) {
   const styles = animation((time + 1) / 2, lines);
-
-  return <Slide lines={lines} styles={styles} />;
+  const changes = React.useMemo(() => getChanges(lines), [lines]);
+  return <Slide lines={lines} styles={styles} changes={changes} />;
 }

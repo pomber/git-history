@@ -146,6 +146,7 @@ function Slides({ commits, slideLines, loadMore }) {
   );
 }
 
+// TODO use ./useSpring
 function useSliderSpring(initial) {
   const [target, setTarget] = useState(initial);
   const tension = 0;
