@@ -43,23 +43,18 @@ function GrowHeight() {
   );
 }
 
+// ..
+
 function SwitchLines({ filterExit, filterEnter }) {
   return (
-    <parallel>
-      <Stagger interval={0.2} filter={filterExit}>
-        <chain durations={[0.35, 0.3, 0.35]}>
-          <SlideToLeft />
-          <ShrinkHeight />
-        </chain>
+    <chain durations={[0.5, 0.5]}>
+      <Stagger interval={0} filter={filterExit}>
+        <ShrinkHeight />
       </Stagger>
-      <Stagger interval={0.2} filter={filterEnter}>
-        <chain durations={[0.35, 0.3, 0.35]}>
-          <delay />
-          <GrowHeight />
-          <SlideFromRight />
-        </chain>
+      <Stagger interval={0} filter={filterEnter}>
+        <GrowHeight />
       </Stagger>
-    </parallel>
+    </chain>
   );
 }
 
