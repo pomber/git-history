@@ -1,0 +1,9 @@
+ports:
+  - port: 3000
+    onOpen: ignore
+tasks:
+  - command: >
+      while ! timeout 1 bash -c "echo > /dev/tcp/localhost/3000" 2>/dev/null ; do sleep 1; done &&
+      gp preview $(gp url 3000)babel/babel/blob/master/packages/babel-core/test/browserify.js
+  - init: yarn
+    command: yarn start

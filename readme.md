@@ -79,3 +79,16 @@ Based on these amazing projects:
 MIT
 
 This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with GitHub, or any of its subsidiaries or its affiliates.
+
+## Contributing
+
+Fork and run
+
+```
+  yarn
+  yarn start
+```
+
+Or start coding and contributing using Gitpod, a free online dev environment for GitHub.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/pomber/github-history)
