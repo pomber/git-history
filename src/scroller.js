@@ -2,7 +2,7 @@ import React from "react";
 import useChildren from "./use-virtual-children";
 import "./scroller.css";
 import useSpring from "./use-spring";
-import { nextIndex, prevIndex, getScrollTop } from "./utils";
+import { nextIndex, prevIndex, closestIndex, getScrollTop } from "./utils";
 
 const initialState = {
   snap: false,
@@ -28,15 +28,13 @@ export default function Scroller({
           return prevState;
         }
 
-        const { changeIndex } = action;
+        const { changeIndex, recalculate } = action;
 
         // TODO memo
         const heights = items.map((item, i) => getRowHeight(item, i, data));
 
         let newIndex;
-        if (prevState.snap) {
-          newIndex = changeIndex(snapAreas, prevState.areaIndex);
-        } else {
+        if (!prevState.snap || recalculate) {
           //todo memo
           const oldIndex = getAreaIndex(
             prevState.currentTop,
@@ -47,6 +45,8 @@ export default function Scroller({
 
           console.log(snapAreas, prevState.currentTop);
           newIndex = changeIndex(snapAreas, oldIndex);
+        } else {
+          newIndex = changeIndex(snapAreas, prevState.areaIndex);
         }
 
         if (newIndex === prevState.areaIndex && prevState.snap) {
@@ -59,9 +59,14 @@ export default function Scroller({
         const targetTop = getScrollTop(
           snapAreas[newIndex],
           contentHeight,
-          height
+          height,
+          heights
         );
 
+        console.log(
+          `${snapAreas[newIndex].start} - ${snapAreas[newIndex].end}`,
+          targetTop
+        );
         return {
           ...prevState,
           areaIndex: newIndex,
@@ -118,6 +123,14 @@ export default function Scroller({
       }
     });
   }, []);
+
+  React.useLayoutEffect(() => {
+    dispatch({
+      type: "change-area",
+      recalculate: true,
+      changeIndex: closestIndex
+    });
+  }, [snapAreas]);
 
   React.useLayoutEffect(() => {
     if (snap) {

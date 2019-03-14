@@ -6,10 +6,14 @@ export function prevIndex(list, currentIndex) {
   return Math.max(0, Math.ceil(currentIndex - 1));
 }
 
-export function getScrollTop(area, contentHeight, containerHeight) {
-  // todo remove 15
-  const start = area.start * 15;
-  const end = area.end * 15;
+export function closestIndex(list, currentIndex) {
+  return Math.min(Math.max(0, Math.round(currentIndex)), list.length - 1);
+}
+
+export function getScrollTop(area, contentHeight, containerHeight, heights) {
+  const start = heights.slice(0, area.start).reduce((a, b) => a + b);
+  const end =
+    start + heights.slice(area.start, area.end + 1).reduce((a, b) => a + b);
   const middle = (end + start) / 2;
   const halfContainer = containerHeight / 2;
   const bestTop =
