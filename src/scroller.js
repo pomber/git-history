@@ -74,7 +74,7 @@ export default function Scroller({
         if (newTop === prevState.currentTop && !prevState.snap) {
           return prevState;
         }
-        console.log("manual scroll", newTop);
+        // console.log("manual scroll", newTop);
         return {
           ...prevState,
           snap: false,
