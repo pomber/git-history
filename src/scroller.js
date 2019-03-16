@@ -37,7 +37,7 @@ export default function Scroller({
         if (!prevState.snap || recalculate) {
           //todo memo
           const oldIndex = getAreaIndex(
-            prevState.currentTop,
+            prevState.targetTop,
             snapAreas,
             heights,
             height
