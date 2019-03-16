@@ -11,9 +11,9 @@ export function closestIndex(list, currentIndex) {
 }
 
 export function getScrollTop(area, contentHeight, containerHeight, heights) {
-  const start = heights.slice(0, area.start).reduce((a, b) => a + b);
+  const start = heights.slice(0, area.start).reduce((a, b) => a + b, 0);
   const end =
-    start + heights.slice(area.start, area.end + 1).reduce((a, b) => a + b);
+    start + heights.slice(area.start, area.end + 1).reduce((a, b) => a + b, 0);
   const middle = (end + start) / 2;
   const halfContainer = containerHeight / 2;
   const bestTop =
