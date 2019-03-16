@@ -29,12 +29,13 @@ export default function Scroller({
         }
 
         const { changeIndex, recalculate } = action;
+        const movingFromUnknownIndex = !prevState.snap || recalculate;
 
         // TODO memo
         const heights = items.map((item, i) => getRowHeight(item, i, data));
 
         let newIndex;
-        if (!prevState.snap || recalculate) {
+        if (movingFromUnknownIndex) {
           //todo memo
           const oldIndex = getAreaIndex(
             prevState.targetTop,
@@ -43,13 +44,12 @@ export default function Scroller({
             height
           );
 
-          console.log(snapAreas, prevState.currentTop);
           newIndex = changeIndex(snapAreas, oldIndex);
         } else {
           newIndex = changeIndex(snapAreas, prevState.areaIndex);
         }
 
-        if (newIndex === prevState.areaIndex && prevState.snap) {
+        if (newIndex === prevState.areaIndex && !movingFromUnknownIndex) {
           return prevState;
         }
 
@@ -63,10 +63,6 @@ export default function Scroller({
           heights
         );
 
-        console.log(
-          `${snapAreas[newIndex].start} - ${snapAreas[newIndex].end}`,
-          targetTop
-        );
         return {
           ...prevState,
           areaIndex: newIndex,
@@ -170,15 +166,17 @@ function getAreaIndex(scrollTop, areas, heights, containerHeight) {
   const middleRow = i;
 
   const areaCenters = areas.map(a => (a.start + a.end) / 2);
+  areaCenters.unshift(0);
   for (let a = 0; a < areas.length; a++) {
-    if (middleRow < areaCenters[a]) {
-      return a - 0.5;
-    } else if (middleRow === areaCenters[a]) {
-      return a;
+    if (middleRow < areaCenters[a + 1]) {
+      return (
+        a -
+        (areaCenters[a + 1] - middleRow) / (areaCenters[a + 1] - areaCenters[a])
+      );
     }
   }
 
-  return areas.length - 0.5;
+  return areas.length - 0.9;
 }
 
 function useHeight(ref) {
