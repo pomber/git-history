@@ -1,17 +1,26 @@
 import easing from "./easing";
+const MULTIPLY = "multiply";
+
 /* eslint-disable */
-function mergeResults(results) {
+function mergeResults(results, composite) {
   const firstResult = results[0];
   if (results.length < 2) {
     return firstResult;
   }
   if (Array.isArray(firstResult)) {
-    // console.log("merge", results);
     return firstResult.map((_, i) => {
-      return mergeResults(results.map(result => result[i]));
+      return mergeResults(results.map(result => result[i]), composite);
     });
   } else {
-    return Object.assign({}, ...results);
+    const merged = Object.assign({}, ...results);
+
+    if (composite === MULTIPLY) {
+      const opacities = results.map(x => x.opacity).filter(x => x != null);
+      if (opacities.length !== 0) {
+        merged.opacity = opacities.reduce((a, b) => a * b);
+      }
+    }
+    return merged;
   }
 }
 
@@ -19,7 +28,7 @@ const airframe = {
   parallel: ({ children: fns }) => {
     return (t, ...args) => {
       const styles = fns.map(fn => fn(t, ...args));
-      const result = mergeResults(styles);
+      const result = mergeResults(styles, MULTIPLY);
       return result;
     };
   },

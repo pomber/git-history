@@ -1,5 +1,5 @@
 import { getLanguage, loadLanguage } from "./language-detector";
-import { getSlides } from "./differ";
+import { getSlides, getChanges } from "./differ";
 
 import github from "./github-commit-fetcher";
 import gitlab from "./gitlab-commit-fetcher";
@@ -25,5 +25,9 @@ export async function getVersions(source, params) {
 
   const codes = commits.map(commit => commit.content);
   const slides = getSlides(codes, lang);
-  return commits.map((commit, i) => ({ commit, lines: slides[i] }));
+  return commits.map((commit, i) => ({
+    commit,
+    lines: slides[i],
+    changes: getChanges(slides[i])
+  }));
 }

@@ -36,8 +36,7 @@ function getLine(line, i, { styles }) {
   );
 }
 
-function Slide({ lines, styles }) {
-  const [top, setTop] = React.useState(0);
+function Slide({ lines, styles, changes }) {
   return (
     <pre
       style={{
@@ -66,16 +65,15 @@ function Slide({ lines, styles }) {
           getRow={getLine}
           getRowHeight={getLineHeight}
           data={{ styles }}
-          top={top}
-          setTop={setTop}
+          snapAreas={changes}
         />
       </code>
     </pre>
   );
 }
 
-export default function SlideWrapper({ time, lines }) {
+export default function SlideWrapper({ time, version }) {
+  const { lines, changes } = version;
   const styles = animation((time + 1) / 2, lines);
-
-  return <Slide lines={lines} styles={styles} />;
+  return <Slide lines={lines} styles={styles} changes={changes} />;
 }

@@ -37,12 +37,7 @@ function InnerApp({ gitProvider }) {
     return <Error error={{ status: 404 }} gitProvider={gitProvider} />;
   }
 
-  const commits = versions.map(v => v.commit);
-  const slideLines = versions.map(v => v.lines);
-
-  return (
-    <History commits={commits} slideLines={slideLines} loadMore={loadMore} />
-  );
+  return <History versions={versions} loadMore={loadMore} />;
 }
 
 function useVersionsLoader(gitProvider) {
