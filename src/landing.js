@@ -49,35 +49,34 @@ export default function Landing() {
         <h2>CLI</h2>
         For local git repos use the{" "}
         <a href="https://github.com/pomber/git-history/tree/master/cli">CLI</a>.
-        <h2>Sponsors</h2>
+        <p style={{ textAlign: "center", fontSize: "36px" }}>· · ·</p>
+        <h3>Sponsors</h3>
         <p>
-          No sponsors yet.{" "}
-          <a href="https://opencollective.com/git-history/donate">
+          Support this project by becoming a sponsor. Your logo will show up
+          here with a link to your website.{" "}
+          <a href="https://opencollective.com/git-history#sponsor">
             Become a sponsor
-          </a>{" "}
-          to help us ship more features!
-        </p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingBottom: "20px"
-          }}
-        >
-          <a
-            href="https://opencollective.com/git-history/donate"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <img
-              src="https://opencollective.com/git-history/donate/button.png?color=white"
-              width="300"
-              alt="donate"
-            />
           </a>
-        </div>
+        </p>
+        <a
+          href="https://opencollective.com/git-history/sponsor/0/website"
+          target="_blank"
+        >
+          <img src="https://opencollective.com/git-history/sponsor/0/avatar.svg" />
+        </a>
+        <h3>Backers</h3>
+        <p>
+          Thank you to all our backers! 🙏.{" "}
+          <a href="https://opencollective.com/git-history#sponsor">
+            Become a backer to help us ship more features!
+          </a>
+        </p>
+        <a
+          href="https://opencollective.com/git-history#backers"
+          target="_blank"
+        >
+          <img src="https://opencollective.com/git-history/backers.svg" />
+        </a>
       </div>
     </div>
   );

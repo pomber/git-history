@@ -19,9 +19,9 @@ coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 ## Browser Extensions
 
-You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
+You can also add an `Open in Git History` button to GitHub, GitLab and Bitbucket with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
-Or you can use this bookmarklet([?](https://en.wikipedia.org/wiki/Bookmarklet)):
+<details><summary>Or you can use a bookmarklet.</summary>
 
 ```javascript
 javascript: (function() {
@@ -35,6 +35,8 @@ javascript: (function() {
   }
 })();
 ```
+
+</details>
 
 ## [CLI](https://github.com/pomber/git-history/tree/master/cli)
 
@@ -53,20 +55,24 @@ $ npm install -g git-file-history
 $ git-file-history path/to/file.ext
 ```
 
-## Sponsors
+### Sponsors
 
-[Become a Sponsor](https://opencollective.com/git-history) to help us ship more features!
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-history#sponsor)]
 
-<div align="center">
-<a href="https://opencollective.com/git-history/donate">
-<img
-  src="https://opencollective.com/git-history/donate/button.png?color=blue"
-  width="300"
-/>
-</a>
-</div>
+<a href="https://opencollective.com/git-history/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-history/sponsor/0/avatar.svg"></a>
 
-## Credits
+### Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/git-history#backer)]
+
+<a href="https://opencollective.com/git-history#backers" target="_blank"><img src="https://opencollective.com/git-history/backers.svg?width=890"></a>
+
+### Contributors
+
+This project exists thanks to all the people who contribute.
+<img src="https://opencollective.com/git-history/contributors.svg?width=890&button=false" />
+
+### Credits
 
 Based on these amazing projects:
 
@@ -77,5 +83,3 @@ Based on these amazing projects:
 ## License
 
 MIT
-
-This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with GitHub, or any of its subsidiaries or its affiliates.
