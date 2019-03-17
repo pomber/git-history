@@ -3,6 +3,7 @@ import { createAnimation, Stagger } from "./airframe/airframe";
 import easing from "./airframe/easing";
 
 const dx = 250;
+const offOpacity = 0.6;
 
 /* @jsx createAnimation */
 
@@ -43,7 +44,6 @@ function GrowHeight() {
   );
 }
 
-const offOpacity = 0.4;
 function SwitchLines({ filterExit, filterEnter, filterFadeOut }) {
   return (
     <parallel>
