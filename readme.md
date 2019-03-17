@@ -5,8 +5,6 @@
 </div>
 
 # [Git History](https://githistory.xyz)
-[![Backers on Open Collective](https://opencollective.com/git-history/backers/badge.svg)](#backers)
-[![Sponsors on Open Collective](https://opencollective.com/git-history/sponsors/badge.svg)](#sponsors) 
 
 Quickly browse the history of any GitHub ([GitLab and Bitbucket
 coming soon](https://github.com/pomber/git-history/issues/14)) file:
@@ -21,9 +19,9 @@ coming soon](https://github.com/pomber/git-history/issues/14)) file:
 
 ## Browser Extensions
 
-You can also add an `Open in Git History` button to GitHub with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
+You can also add an `Open in Git History` button to GitHub, GitLab and Bitbucket with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
-Or you can use this bookmarklet([?](https://en.wikipedia.org/wiki/Bookmarklet)):
+<details><summary>Or you can use a bookmarklet.</summary>
 
 ```javascript
 javascript: (function() {
@@ -37,6 +35,8 @@ javascript: (function() {
   }
 })();
 ```
+
+</details>
 
 ## [CLI](https://github.com/pomber/git-history/tree/master/cli)
 
@@ -55,18 +55,11 @@ $ npm install -g git-file-history
 $ git-file-history path/to/file.ext
 ```
 
-## Credits
+### Sponsors
 
-Based on these amazing projects:
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-history#sponsor)]
 
-- [Prism](https://github.com/PrismJS/prism) by [Lea Verou](https://twitter.com/leaverou)
-- [jsdiff](https://github.com/kpdecker/jsdiff) by [Kevin Decker](https://twitter.com/kpdecker)
-- [Night Owl](https://github.com/sdras/night-owl-vscode-theme) by [Sarah Drasner](https://twitter.com/sarah_edo)
-
-### Contributors
-
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
-<img src="https://opencollective.com/git-history/contributors.svg?width=890&button=false" />
+<a href="https://opencollective.com/git-history/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-history/sponsor/0/avatar.svg"></a>
 
 ### Backers
 
@@ -74,16 +67,19 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/git-history#backers" target="_blank"><img src="https://opencollective.com/git-history/backers.svg?width=890"></a>
 
-### Sponsors
+### Contributors
 
-Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-history#sponsor)]
+This project exists thanks to all the people who contribute.
+<img src="https://opencollective.com/git-history/contributors.svg?width=890&button=false" />
 
-<a href="https://opencollective.com/git-history/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-history/sponsor/0/avatar.svg"></a>
+### Credits
 
+Based on these amazing projects:
 
+- [Prism](https://github.com/PrismJS/prism) by [Lea Verou](https://twitter.com/leaverou)
+- [jsdiff](https://github.com/kpdecker/jsdiff) by [Kevin Decker](https://twitter.com/kpdecker)
+- [Night Owl](https://github.com/sdras/night-owl-vscode-theme) by [Sarah Drasner](https://twitter.com/sarah_edo)
 
 ## License
 
 MIT
-
-This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with GitHub, or any of its subsidiaries or its affiliates.
