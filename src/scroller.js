@@ -120,13 +120,14 @@ export default function Scroller({
     });
   }, []);
 
-  React.useLayoutEffect(() => {
-    dispatch({
-      type: "change-area",
-      recalculate: true,
-      changeIndex: closestIndex
-    });
-  }, [snapAreas]);
+  // Auto-scroll to closest change when changing versions:
+  // React.useLayoutEffect(() => {
+  //   dispatch({
+  //     type: "change-area",
+  //     recalculate: true,
+  //     changeIndex: closestIndex
+  //   });
+  // }, [snapAreas]);
 
   React.useLayoutEffect(() => {
     if (snap) {

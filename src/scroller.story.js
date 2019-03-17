@@ -12,7 +12,8 @@ const snapAreas1 = [
 const snapAreas2 = [
   { start: 8, end: 12 },
   { start: 30, end: 32 },
-  { start: 550, end: 552 }
+  { start: 550, end: 552 },
+  { start: 595, end: 599 }
 ];
 
 const items = Array(600)

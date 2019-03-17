@@ -19,7 +19,8 @@ export function getScrollTop(area, contentHeight, containerHeight, heights) {
   const bestTop =
     end - start > containerHeight ? start : middle - halfContainer;
   if (bestTop < 0) return 0;
-  if (bestTop + containerHeight > contentHeight)
-    return containerHeight - contentHeight;
+  if (bestTop + containerHeight > contentHeight) {
+    return contentHeight - containerHeight;
+  }
   return bestTop;
 }
