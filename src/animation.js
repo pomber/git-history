@@ -43,7 +43,8 @@ function GrowHeight() {
   );
 }
 
-function SwitchLines({ filterExit, filterEnter }) {
+const offOpacity = 0.4;
+function SwitchLines({ filterExit, filterEnter, filterFadeOut }) {
   return (
     <parallel>
       <Stagger interval={0.2} filter={filterExit}>
@@ -59,6 +60,19 @@ function SwitchLines({ filterExit, filterEnter }) {
           <SlideFromRight />
         </chain>
       </Stagger>
+      <Stagger interval={0} filter={filterEnter}>
+        <tween from={{ opacity: offOpacity }} to={{ opacity: 1 }} />
+      </Stagger>
+      <Stagger interval={0} filter={filterFadeOut}>
+        <tween
+          from={{ opacity: 1 }}
+          to={{ opacity: offOpacity }}
+          ease={easing.easeOutCubic}
+        />
+      </Stagger>
+      <Stagger interval={0} filter={l => !filterEnter(l) && !filterFadeOut(l)}>
+        <tween from={{ opacity: offOpacity }} to={{ opacity: offOpacity }} />
+      </Stagger>
     </parallel>
   );
 }
@@ -68,10 +82,12 @@ export default (
     <SwitchLines
       filterExit={line => line.left && !line.middle}
       filterEnter={line => !line.left && line.middle}
+      filterFadeOut={line => false}
     />
     <SwitchLines
       filterExit={line => line.middle && !line.right}
       filterEnter={line => !line.middle && line.right}
+      filterFadeOut={line => !line.left && line.middle}
     />
   </chain>
 );
