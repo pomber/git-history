@@ -99,14 +99,13 @@ function CommitList({ commits, currentIndex, selectCommit }) {
   );
 }
 
-export default function History({ commits, slideLines, loadMore }) {
-  return (
-    <Slides slideLines={slideLines} commits={commits} loadMore={loadMore} />
-  );
+export default function History({ versions, loadMore }) {
+  return <Slides versions={versions} loadMore={loadMore} />;
 }
 
-function Slides({ commits, slideLines, loadMore }) {
+function Slides({ versions, loadMore }) {
   const [current, target, setTarget] = useSliderSpring(0);
+  const commits = versions.map(v => v.commit);
   const setClampedTarget = newTarget => {
     setTarget(Math.min(commits.length - 0.75, Math.max(-0.25, newTarget)));
     if (newTarget >= commits.length - 5) {
@@ -140,12 +139,13 @@ function Slides({ commits, slideLines, loadMore }) {
         onSwipedRight={prevSlide}
         style={{ height: "100%" }}
       >
-        <Slide time={index - current} lines={slideLines[index]} />
+        <Slide time={index - current} version={versions[index]} />
       </Swipeable>
     </React.Fragment>
   );
 }
 
+// TODO use ./useSpring
 function useSliderSpring(initial) {
   const [target, setTarget] = useState(initial);
   const tension = 0;

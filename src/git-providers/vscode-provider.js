@@ -1,5 +1,5 @@
 import { getLanguage, loadLanguage } from "./language-detector";
-import { getSlides } from "./differ";
+import { getSlides, getChanges } from "./differ";
 
 const vscode = window.vscode;
 
@@ -43,7 +43,11 @@ async function getVersions(last) {
 
   const codes = commits.map(commit => commit.content);
   const slides = getSlides(codes, lang);
-  return commits.map((commit, i) => ({ commit, lines: slides[i] }));
+  return commits.map((commit, i) => ({
+    commit,
+    lines: slides[i],
+    changes: getChanges(slides[i])
+  }));
 }
 
 export default {
