@@ -89,6 +89,7 @@ export default function Landing() {
           >
             <iframe
               src="https://ghbtns.com/github-btn.html?user=pomber&repo=git-history&type=star&count=true&size=large"
+              title="GitHub Stars"
               frameBorder="0"
               scrolling="0"
               width="160px"
@@ -157,7 +158,7 @@ function Testimony({ link, avatar, name, children }) {
       <blockquote>
         <p>{children}</p>
         <cite style={{ display: "flex", alignItems: "center" }}>
-          <img src={avatar} />
+          <img src={avatar} alt="avatar" />
           <strong style={{ paddingLeft: "10px", fontStyle: "normal" }}>
             {name}
           </strong>
@@ -211,7 +212,11 @@ function Backers() {
         />
         <h3>Backers</h3>
         <p>
-          Thank you to all our backers! 🙏.{" "}
+          Thank you to all our backers!{" "}
+          <span role="img" aria-label="thanks">
+            🙏
+          </span>
+          .{" "}
           <a href="https://opencollective.com/git-history#sponsor">
             Become a backer to help us ship more features!
           </a>
