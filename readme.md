@@ -12,7 +12,7 @@ coming soon](https://github.com/pomber/git-history/issues/14)) file:
 1. Replace `github.com` with `github.githistory.xyz` in any file url
 2. There's no step two
 
-[Try it](https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js)
+Try it: [https://github.__githistory.xyz__/babel/babel/blob/master/packages/babel-core/test/browserify.js](https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js)
 
 > If you like this project consider [backing my open source work on Patreon!](https://patreon.com/pomber)  
 > And follow [@pomber](https://twitter.com/pomber) on twitter for updates.
