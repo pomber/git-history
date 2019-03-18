@@ -105,5 +105,11 @@ export function getChanges(lines) {
     i++;
   }
 
+  if (currentChange) {
+    currentChange.end = i - 1;
+    changes.push(currentChange);
+    currentChange = null;
+  }
+
   return changes;
 }

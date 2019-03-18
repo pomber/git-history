@@ -2,7 +2,7 @@ import React from "react";
 import useChildren from "./use-virtual-children";
 import "./scroller.css";
 import useSpring from "./use-spring";
-import { nextIndex, prevIndex, closestIndex, getScrollTop } from "./utils";
+import { nextIndex, prevIndex, getScrollTop } from "./utils";
 
 const initialState = {
   snap: false,
@@ -23,6 +23,8 @@ export default function Scroller({
 
   const reducer = (prevState, action) => {
     switch (action.type) {
+      case "unsnap":
+        return !prevState.snap ? prevState : { ...prevState, snap: false };
       case "change-area":
         if (snapAreas.length === 0) {
           return prevState;
@@ -128,6 +130,12 @@ export default function Scroller({
   //     changeIndex: closestIndex
   //   });
   // }, [snapAreas]);
+
+  React.useEffect(() => {
+    dispatch({
+      type: "unsnap"
+    });
+  }, [snapAreas]);
 
   React.useLayoutEffect(() => {
     if (snap) {

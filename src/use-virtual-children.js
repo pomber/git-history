@@ -10,7 +10,7 @@ export default function useChildren({
 }) {
   const children = [];
 
-  const extraRender = 1500;
+  const extraRender = 1000;
 
   const topT = top - extraRender;
   const bottomT = top + height + extraRender;

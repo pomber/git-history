@@ -10,7 +10,17 @@ export default function App() {
   if (gitProvider.showLanding()) {
     return <Landing />;
   } else {
-    return <InnerApp gitProvider={gitProvider} />;
+    return (
+      <React.Fragment>
+        <InnerApp gitProvider={gitProvider} />
+        {/* <footer>
+          <a href="https://github.com/pomber/git-history">Git History</a>
+          <br />
+          by
+          <a href="https://twitter.com/pomber">@pomber</a>
+        </footer> */}
+      </React.Fragment>
+    );
   }
 }
 
