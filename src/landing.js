@@ -38,7 +38,10 @@ export default function Landing() {
           <h1>Git History</h1>
           Quickly browse the history of files in any git repo:
           <ol>
-            <li>Go to a file in GitHub (or GitLab, or Bitbucket)</li>
+            <li>
+              Go to a file in <strong>GitHub</strong> (or{" "}
+              <strong>GitLab</strong>, or <strong>Bitbucket</strong>)
+            </li>
             <li>
               Replace <i>github.com</i> with <i>github.githistory.xyz</i>
             </li>
