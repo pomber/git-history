@@ -1,0 +1,137 @@
+.extensions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
+.extensions > * {
+  padding: 4px 10px;
+}
+
+.landing a {
+  color: inherit;
+}
+
+.landing {
+  color: #222;
+  background: #fafafa;
+}
+
+.landing > * {
+  background: linear-gradient(rgba(255, 255, 255), rgba(220, 220, 220));
+}
+
+.landing header {
+  display: flex;
+  padding: 100px 0px;
+}
+.landing h1 {
+  margin-top: 10px;
+}
+
+.landing header a {
+  color: rgb(1, 22, 39);
+}
+
+.landing header a.button {
+  background: rgb(1, 22, 39);
+  color: #fafafa;
+  padding: 9px 16px;
+  margin: 10px auto 15px;
+  width: 80px;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+  display: block;
+}
+
+.landing header video {
+  margin-right: 115px;
+}
+
+@media (max-width: 1130px) {
+  .landing header video {
+    margin-right: 0px;
+    margin-bottom: 20px;
+    max-width: 80%;
+    height: auto !important;
+    min-width: 350px;
+  }
+  .landing header {
+    flex-direction: column;
+    padding: 40px 0px 20px;
+  }
+  .landing header .summary {
+    width: 560px;
+    max-width: 80%;
+  }
+}
+
+.landing .testimonies {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: grid;
+  width: 800px;
+  margin: 10px auto;
+  grid-template-columns: 400px 400px;
+  grid-template-rows: 180px 150px;
+  grid-column-gap: 14px;
+  grid-row-gap: 14px;
+}
+
+@media (max-width: 900px) {
+  .landing .testimonies {
+    grid-template-columns: 400px;
+    grid-template-rows: 180px 180px 150px 150px;
+    width: 400px;
+  }
+}
+@media (max-width: 420px) {
+  .landing .testimonies {
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    width: 90%;
+  }
+}
+
+.landing .testimonies > * {
+  border: 1px solid #e1e8ed;
+  display: inline-block;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.landing blockquote {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 19px;
+  box-sizing: border-box;
+}
+
+.landing blockquote p {
+  flex: 1;
+  margin: 0 0 12px 0;
+}
+
+.landing blockquote img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+}
+
+.landing .support > div {
+  width: 800px;
+}
+
+@media (max-width: 900px) {
+  .landing .support > div {
+    width: 600px;
+  }
+}
+@media (max-width: 600px) {
+  .landing .support > div {
+    width: 350px;
+  }
+}
