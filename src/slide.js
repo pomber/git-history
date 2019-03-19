@@ -49,25 +49,13 @@ function Slide({ lines, styles, changes }) {
         boxSizing: "border-box"
       }}
     >
-      <code
-        style={{
-          display: "block",
-          width: "calc(100% - 20px)",
-          maxWidth: "900px",
-          margin: "auto",
-          padding: "10px",
-          height: "100%",
-          boxSizing: "border-box"
-        }}
-      >
-        <Scroller
-          items={lines}
-          getRow={getLine}
-          getRowHeight={getLineHeight}
-          data={{ styles }}
-          snapAreas={changes}
-        />
-      </code>
+      <Scroller
+        items={lines}
+        getRow={getLine}
+        getRowHeight={getLineHeight}
+        data={{ styles }}
+        snapAreas={changes}
+      />
     </pre>
   );
 }

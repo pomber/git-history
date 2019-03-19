@@ -145,7 +145,11 @@ export default function Scroller({
 
   return (
     <div
-      style={{ height: "100%", overflowY: "auto", overflowX: "hidden" }}
+      style={{
+        height: "100%",
+        overflowY: "auto",
+        overflowX: "hidden"
+      }}
       className="scroller"
       ref={ref}
       onScroll={e => {
@@ -155,8 +159,20 @@ export default function Scroller({
         }
         dispatch({ type: "manual-scroll", newTop });
       }}
-      children={children}
-    />
+    >
+      <code
+        style={{
+          display: "block",
+          width: "calc(100% - 20px)",
+          maxWidth: "900px",
+          margin: "auto",
+          padding: "10px",
+          boxSizing: "border-box",
+          height: "100%"
+        }}
+        children={children}
+      />
+    </div>
   );
 }
 
