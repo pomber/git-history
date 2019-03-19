@@ -1,5 +1,6 @@
 import React from "react";
-import demo from "./demo.gif";
+import demoMp4 from "./demo.mp4";
+import demoWebm from "./demo.webm";
 import { ReactComponent as ChromeLogo } from "./icons/chrome.svg";
 import { ReactComponent as FirefoxLogo } from "./icons/firefox.svg";
 import { ReactComponent as CliLogo } from "./icons/cli.svg";
@@ -32,7 +33,8 @@ export default function Landing() {
             boxShadow: "0 20px 50px 0 rgba(0,0,0,0.2)"
           }}
         >
-          <source src={demo} type="video/mp4" />
+          <source src={demoWebm} type="video/webm" />
+          <source src={demoMp4} type="video/mp4" />
         </video>
         <div className="summary">
           <h1>Git History</h1>
