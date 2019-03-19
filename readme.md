@@ -1,23 +1,25 @@
 <div align="center">
-<a href="https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js">
-<img alt="demo" src="https://user-images.githubusercontent.com/1911623/52460615-f3899d80-2b49-11e9-8c21-06af4097a527.gif" />
+<a href="https://github.githistory.xyz/torvalds/linux/blob/master/kernel/up.c">
+<img alt="demo" src="https://user-images.githubusercontent.com/1911623/54575634-9b10b000-49d3-11e9-8a19-56e40636e45d.gif" width="600" />
 </a>
 </div>
 
 # [Git History](https://githistory.xyz)
 
-Quickly browse the history of any GitHub ([GitLab and Bitbucket
-coming soon](https://github.com/pomber/git-history/issues/14)) file:
+Quickly browse the history of files in any git repo:
 
-1. Replace `github.com` with `github.githistory.xyz` in any file url
-2. There's no step two
+1. Go to a file in **GitHub** (or **GitLab**, or **Bitbucket**)
+1. Replace `github.com` with `github.githistory.xyz`
+1. There's no step three
 
 [Try it](https://github.githistory.xyz/babel/babel/blob/master/packages/babel-core/test/browserify.js)
 
 > If you like this project consider [backing my open source work on Patreon!](https://patreon.com/pomber)  
 > And follow [@pomber](https://twitter.com/pomber) on twitter for updates.
 
-## Browser Extensions
+## Extensions
+
+### Browsers
 
 You can also add an `Open in Git History` button to GitHub, GitLab and Bitbucket with the [Chrome](https://chrome.google.com/webstore/detail/github-history-browser-ex/laghnmifffncfonaoffcndocllegejnf) and [Firefox](https://addons.mozilla.org/firefox/addon/github-history/) extensions.
 
@@ -38,22 +40,11 @@ javascript: (function() {
 
 </details>
 
-## [CLI](https://github.com/pomber/git-history/tree/master/cli)
+### Local Repos
 
-There's also a command line version of Git History that works with any local git repo:
+You can use Git History for local git repos with the [CLI](https://github.com/pomber/git-history/tree/master/cli) or with the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=pomber.git-file-history).
 
-> You need [node](https://nodejs.org/en/) to run this
-
-```bash
-$ npx git-file-history path/to/file.ext
-```
-
-or
-
-```bash
-$ npm install -g git-file-history
-$ git-file-history path/to/file.ext
-```
+## Support Git History
 
 ### Sponsors
 

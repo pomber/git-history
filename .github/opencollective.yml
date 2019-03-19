@@ -1,0 +1,6 @@
+collective: git-history
+tiers:
+  - tiers: "*"
+    labels: ["backer"]
+  - tiers: ["sponsor", "super sponsor"]
+    labels: ["sponsor"]
