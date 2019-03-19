@@ -5,6 +5,10 @@ const getCommits = require("./git");
 const getPort = require("get-port");
 const open = require("open");
 const router = require("koa-router")();
+const argv = require("yargs")
+  .usage("Usage: $0 <some/file.ext> [options]")
+  .describe("port", "Port number (default = 5000)")
+  .default("port", 5000).argv;
 
 const sitePath = pather.join(__dirname, "site/");
 
@@ -28,7 +32,7 @@ app.on("error", err => {
 });
 
 module.exports = async function runServer(path) {
-  const port = await getPort({ port: 5000 });
+  const port = await getPort({ port: argv.port });
   app.listen(port);
   console.log("Running at http://localhost:" + port);
   open(`http://localhost:${port}/?path=${encodeURIComponent(path)}`);
