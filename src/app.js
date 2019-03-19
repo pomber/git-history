@@ -13,12 +13,12 @@ export default function App() {
     return (
       <React.Fragment>
         <InnerApp gitProvider={gitProvider} />
-        {/* <footer>
+        <footer>
           <a href="https://github.com/pomber/git-history">Git History</a>
           <br />
           by
           <a href="https://twitter.com/pomber">@pomber</a>
-        </footer> */}
+        </footer>
       </React.Fragment>
     );
   }

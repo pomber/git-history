@@ -1,3 +1,0 @@
-- make diffing incremental
-- cache all the react elements from the lines + styles
-- only set scrollTop if `top` is different from the last value from the event (and clean the last value from the event after that) https://codesandbox.io/s/r089yvk82m
