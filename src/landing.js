@@ -62,7 +62,7 @@ export default function Landing() {
               <ChromeLogo height={44} width={44} />
             </a>
             <a
-              href="https://addons.mozilla.org/es/firefox/addon/github-history/"
+              href="https://addons.mozilla.org/firefox/addon/github-history/"
               target="_blank"
               rel="noopener noreferrer"
             >
