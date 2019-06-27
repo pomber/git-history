@@ -33,10 +33,11 @@ export default function useChildren({
       bottomPlaceholderH += itemH;
     } else {
       children.push(getRow(item, visibleItemNumber, i, data));
-      // if the middle property is true, the item(line) is shown
-      // and the related counter has to be increased by one
-      if (item.middle) visibleItemNumber++;
     }
+
+    // if the middle property is true, the item(line) is shown
+    // and the related counter has to be increased by one
+    if (item.middle) visibleItemNumber++;
 
     h = nextH;
   });
