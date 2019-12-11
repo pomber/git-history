@@ -23,4 +23,4 @@ execa("git", ["rev-parse", "--is-inside-work-tree"])
   .catch(() => {
     console.log(`Git repository not found: ${path}`);
     process.exit();
-  })
+  });
