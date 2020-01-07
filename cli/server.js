@@ -34,6 +34,6 @@ app.on("error", err => {
 module.exports = async function runServer(path) {
   const port = await getPort({ port: argv.port });
   app.listen(port);
-  console.log("Running at http://localhost:" + port);
+  console.log("Running at http://localhost:" + port + "/?path=" + encodeURIComponent(path));
   open(`http://localhost:${port}/?path=${encodeURIComponent(path)}`);
 };
