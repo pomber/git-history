@@ -1,6 +1,10 @@
 import React from "react";
 import demoMp4 from "./demo.mp4";
 import demoWebm from "./demo.webm";
+import smashing from "./avatar.smashing.jpg";
+import github from "./avatar.github.jpg";
+import addy from "./avatar.addy.jpg";
+import cssTricks from "./avatar.css-tricks.jpg";
 import { ReactComponent as ChromeLogo } from "./icons/chrome.svg";
 import { ReactComponent as FirefoxLogo } from "./icons/firefox.svg";
 import { ReactComponent as CliLogo } from "./icons/cli.svg";
@@ -120,7 +124,7 @@ function Testimonies() {
         <Testimony
           name="GitHub"
           link="https://github.blog/2019-03-01-release-radar-february-2019/#git-history"
-          avatar="https://pbs.twimg.com/profile_images/1017516299143041024/fLFdcGsl_bigger.jpg"
+          avatar={github}
         >
           Git History caught our eye with a beautiful way to tour the history of
           a file in a GitHub repo. ... there’s nothing to download and install:
@@ -130,7 +134,7 @@ function Testimonies() {
         <Testimony
           name="Smashing Magazine"
           link="https://twitter.com/smashingmag/status/1094865325974261761"
-          avatar="https://pbs.twimg.com/profile_images/1057746497884880898/lyruNAFp_bigger.jpg"
+          avatar={smashing}
         >
           Ahh you know when you need to browse your Git history but it takes a
           while to find what you are looking for? Git History lets you browse
@@ -139,7 +143,7 @@ function Testimonies() {
         <Testimony
           name="CSS-Tricks"
           link="https://twitter.com/css/status/1105999990814662656"
-          avatar="https://pbs.twimg.com/profile_images/1080202898372362240/akqRGyta_bigger.jpg"
+          avatar={cssTricks}
         >
           I love little apps like this that copy the URL structure of another
           app, so you can replace just the TLD and it does something useful.
@@ -147,7 +151,7 @@ function Testimonies() {
         <Testimony
           name="Addy Osmani"
           link="https://twitter.com/addyosmani/status/1093970927413387264"
-          avatar="https://pbs.twimg.com/profile_images/1053159168197111808/8eipWrau_bigger.jpg"
+          avatar={addy}
         >
           There's something really satisfying about browsing file history with
           this timeline UI. It's super nice.
