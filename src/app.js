@@ -16,8 +16,7 @@ export default function App() {
         <footer>
           <a href="https://github.com/pomber/git-history">Git History</a>
           <br />
-          by
-          <a href="https://twitter.com/pomber">@pomber</a>
+          by <a href="https://twitter.com/pomber">@pomber</a>
         </footer>
       </React.Fragment>
     );
