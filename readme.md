@@ -50,6 +50,8 @@ You can use Git History for local git repos with the [CLI](https://github.com/po
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/git-history#sponsor)]
 
+<a href="https://github.com/selefra/selefra" target="_blank"><img src="https://github.com/selefra.png" style="border-radius: 50%" alt="selefra" title="Selefra" width="100"></a>
+
 <a href="https://opencollective.com/git-history/sponsor/0/website" target="_blank"><img src="https://opencollective.com/git-history/sponsor/0/avatar.svg"></a>
 
 ### Backers

@@ -21,7 +21,7 @@ export default function Landing() {
         style={{
           alignItems: "center",
           justifyContent: "center",
-          color: "#222"
+          color: "#222",
         }}
       >
         <video
@@ -34,7 +34,7 @@ export default function Landing() {
           style={{
             borderRadius: "3px",
             height: "350",
-            boxShadow: "0 20px 50px 0 rgba(0,0,0,0.2)"
+            boxShadow: "0 20px 50px 0 rgba(0,0,0,0.2)",
           }}
         >
           <source src={demoWebm} type="video/webm" />
@@ -93,7 +93,7 @@ export default function Landing() {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <iframe
@@ -200,7 +200,7 @@ function Backers() {
     <section
       style={{
         padding: "28px 0px",
-        background: "linear-gradient(rgba(220, 220, 220),rgba(255, 255, 255))"
+        background: "linear-gradient(rgba(220, 220, 220),rgba(255, 255, 255))",
       }}
       className="support"
     >
@@ -214,6 +214,16 @@ function Backers() {
             Become a sponsor
           </a>
         </p>
+        <a href="https://github.com/selefra/selefra" target="_blank">
+          <img
+            src="https://github.com/selefra.png"
+            style={{ borderRadius: "50%" }}
+            alt="selefra"
+            title="Selefra"
+            width="100"
+          />
+        </a>
+        <br />
         <ResponsivePicture
           link="https://opencollective.com/git-history/sponsor/0/website"
           alt="sponsors"
