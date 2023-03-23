@@ -214,7 +214,11 @@ function Backers() {
             Become a sponsor
           </a>
         </p>
-        <a href="https://github.com/selefra/selefra" target="_blank">
+        <a
+          href="https://github.com/selefra/selefra"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             src="https://github.com/selefra.png"
             style={{ borderRadius: "50%" }}
