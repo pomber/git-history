@@ -29,6 +29,7 @@ function activate(context) {
           `${path.basename(currentPath)} (Git History)`,
           vscode.ViewColumn.One,
           {
+            enableFindWidget: true,
             enableScripts: true,
             retainContextWhenHidden: true,
             localResourceRoots: [
