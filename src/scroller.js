@@ -147,8 +147,9 @@ export default function Scroller({
     <div
       style={{
         height: "100%",
+        width: "fit-content",
         overflowY: "auto",
-        overflowX: "hidden"
+        overflowX: "scroll"
       }}
       className="scroller"
       ref={ref}
@@ -163,8 +164,9 @@ export default function Scroller({
       <code
         style={{
           display: "block",
-          width: "calc(100% - 20px)",
-          maxWidth: "900px",
+          //width: "calc(100% - 20px)",
+          width: "100%",
+          //maxWidth: "900px",
           margin: "auto",
           padding: "10px",
           boxSizing: "border-box",
