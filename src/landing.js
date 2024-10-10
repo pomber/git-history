@@ -252,7 +252,11 @@ function Backers() {
         <h3>Thanks</h3>
         <p>
           Browser testing via{" "}
-          <a href="https://www.lambdatest.com/" target="_blank">
+          <a
+            href="https://www.lambdatest.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img
               src="https://www.lambdatest.com/resources/images/logos/logo.svg"
               style={{
