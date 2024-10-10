@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "craco --openssl-legacy-provider start",
-    "build": "craco build",
+    "build": "craco --openssl-legacy-provider build",
     "format": "prettier --write \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
     "test-prettier": "prettier --check \"**/*.{js,jsx,md,json,html,css,yml}\" --ignore-path .gitignore",
     "test-cra": "react-scripts test",
