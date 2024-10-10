@@ -60,16 +60,12 @@ Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com
 
 <a href="https://opencollective.com/git-history#backers" target="_blank"><img src="https://opencollective.com/git-history/backers.svg?width=890"></a>
 
-### Contributors
-
-This project exists thanks to all the people who contribute.
-<img src="https://opencollective.com/git-history/contributors.svg?width=890&button=false" />
-
 ### Thanks
 
-<a href="https://www.browserstack.com/"><img src="https://user-images.githubusercontent.com/1911623/66797775-4d651300-eee2-11e9-9072-ef1dc670af1d.png" width="250" height="auto"/></a>
-
-[BrowserStack](https://www.browserstack.com/) for letting open source projects use their services for free. Now I can test, debug and fix Safari issues from my Chrome running on Linux!
+<p>Browser testing via <a href="https://www.lambdatest.com/" target="_blank"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://www.lambdatest.com/resources/images/logo-white.svg">
+  <img alt="LambdaTest" src="https://www.lambdatest.com/resources/images/logos/logo.svg" style="vertical-align: middle;margin-left:5px" width="147" height="26" >
+</picture></a></p>
 
 ### Credits
 

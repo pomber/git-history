@@ -249,15 +249,22 @@ function Backers() {
           alt="Backers"
           src="https://opencollective.com/git-history/backers.svg"
         />
-        <h3>Contributors</h3>
-        <p>This project exists thanks to all the people who contribute.</p>
-
-        <ResponsivePicture
-          link="https://github.com/pomber/git-history/graphs/contributors"
-          alt="contributors"
-          src="https://opencollective.com/git-history/contributors.svg"
-          append="&button=false"
-        />
+        <h3>Thanks</h3>
+        <p>
+          Browser testing via{" "}
+          <a href="https://www.lambdatest.com/" target="_blank">
+            <img
+              src="https://www.lambdatest.com/resources/images/logos/logo.svg"
+              style={{
+                verticalAlign: "middle",
+                marginLeft: "5px",
+              }}
+              width="147"
+              height="26"
+              alt="LambdaTest"
+            />
+          </a>
+        </p>
       </div>
     </section>
   );
