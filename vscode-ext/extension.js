@@ -52,11 +52,7 @@ function activate(context) {
           )
           .replace(
             "<head>",
-            `<head><base href="${vscode.Uri.file(
-              path.join(context.extensionPath, "site")
-            ).with({
-              scheme: "vscode-resource"
-            })}/"/>`
+            `<head><base href="${panel.webview.asWebviewUri(vscode.Uri.file(path.join(context.extensionPath,'site')))}/"/>`
           );
 
         panel.webview.html = newIndex;
