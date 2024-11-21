@@ -2,7 +2,7 @@
 import { createAnimation, Stagger } from "./airframe/airframe";
 import easing from "./airframe/easing";
 
-const dx = 250;
+const dx = 250000;
 const offOpacity = 0.6;
 
 /* @jsx createAnimation */

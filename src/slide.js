@@ -20,10 +20,7 @@ function getLineHeight(line, i, { styles }) {
 function getLine(line, i, { styles }) {
   const style = styles[i];
   return (
-    <div
-      style={Object.assign({ overflow: "hidden", height: "15px" }, style)}
-      key={line.key}
-    >
+    <div style={Object.assign({ height: "15px" }, style)} key={line.key}>
       {!line.tokens.length && <br />}
       {line.tokens.map((token, i) => {
         const style = themeStylesByType[token.type] || {};
